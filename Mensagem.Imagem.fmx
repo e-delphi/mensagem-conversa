@@ -1,0 +1,19 @@
+object Imagem: TImagem
+  Align = Top
+  Size.Width = 446.000000000000000000
+  Size.Height = 240.000000000000000000
+  Size.PlatformDefault = False
+  object img: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Align = Client
+    Margins.Left = 10.000000000000000000
+    Margins.Top = 5.000000000000000000
+    Margins.Right = 10.000000000000000000
+    Size.Width = 426.000000000000000000
+    Size.Height = 235.000000000000000000
+    Size.PlatformDefault = False
+    OnDblClick = imgDblClick
+  end
+end
