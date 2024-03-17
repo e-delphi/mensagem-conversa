@@ -61,14 +61,14 @@ begin
   try
     bmp.LoadFromFile('D:\teste.png');
 
-    for I := 1 to 50 do
+    for I := 1 to 2 do
     begin
       if I mod 10 = 0 then
       begin
         msg := FConteudo.NovaMensagem;
         msg.Remetente('Usuario1');
         msg.Minha(False);
-        msg.NovaImagem.Imagem(bmp);
+//        msg.NovaImagem.Imagem(bmp);
         msg.NovoTexto.Conteudo(I.ToString +' - '+ 'Mensagem de teste para validar as quebras de linha!');
       end
       else

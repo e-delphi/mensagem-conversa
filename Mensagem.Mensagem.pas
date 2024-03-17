@@ -43,6 +43,9 @@ type
 
 implementation
 
+uses
+  System.Math;
+
 {$R *.fmx}
 
 { TMensagem }
@@ -74,6 +77,10 @@ end;
 function TMensagem.Minha(Value: Boolean): TMensagem;
 begin
   FMinha := Value;
+  if FMinha then
+    rtgMensagem.Align := TAlignLayout.Right
+  else
+    rtgMensagem.Align := TAlignLayout.Left;
   Result := Self;
 end;
 
@@ -97,26 +104,50 @@ procedure TMensagem.Redimencionar;
 var
   iSoma: Integer;
   I: Integer;
+  sz: TSize;
+  iWidth: Integer;
+  iHeight: Integer;
 begin
+  iWidth := 0;
+  iHeight := 0;
   for var Item in FItens do
     if Item is TTexto then
-      TTexto(Item).Redimencionar
+    begin
+      sz := TTexto(Item).Redimencionar;
+      iWidth := Max(iWidth, sz.cx);
+      iHeight := Max(iHeight, sz.cy)
+    end
     else
     if Item is TImagem then
       TImagem(Item).Redimencionar;
 
-  iSoma := 0;
-  for I := 0 to Pred(lytConteudo.ControlsCount) do
-    iSoma := iSoma + Round(TFrame(lytConteudo.Controls[I]).Size.Height);
   Height :=
     lbRemetente.Margins.Top +
     lbRemetente.Height +
     lbRemetente.Margins.Bottom +
-    iSoma +
+    iHeight +
     lbHorario.Margins.Top +
     lbHorario.Height +
     lbHorario.Margins.Bottom +
     10;
+
+  if iWidth > 0 then
+    rtgMensagem.Width := iWidth + 25;
+
+  lbHorario.RecalcSize;
+
+//  iSoma := 0;
+//  for I := 0 to Pred(lytConteudo.ControlsCount) do
+//    iSoma := iSoma + Round(TFrame(lytConteudo.Controls[I]).Size.Height);
+//  Height :=
+//    lbRemetente.Margins.Top +
+//    lbRemetente.Height +
+//    lbRemetente.Margins.Bottom +
+//    iSoma +
+//    lbHorario.Margins.Top +
+//    lbHorario.Height +
+//    lbHorario.Margins.Bottom +
+//    10;
 end;
 
 procedure TMensagem.lytConteudoResized(Sender: TObject);

@@ -26,7 +26,7 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     function Conteudo(Value: String): TTexto;
-    procedure Redimencionar;
+    function Redimencionar: TSize;
   end;
 
 implementation
@@ -55,20 +55,18 @@ begin
   TTema.Atualizar;
 end;
 
-procedure TTexto.Redimencionar;
+function TTexto.Redimencionar: TSize;
 var
   R: TRectF;
 begin
   if not Assigned(txtMensagem.Canvas) then
     Exit;
 
-  R := RectF(0, 0, txtMensagem.Width, 10000);
+  R := RectF(0, 0, 10000, 10000);
   txtMensagem.Canvas.MeasureText(R, txtMensagem.Text, True, [], TTextAlign.Leading, TTextAlign.Leading);
 
-  if R.Bottom < 10 then
-    Exit;
-
-  Height := R.Bottom + 10;
+  Result.cx := Round(R.Width);
+  Result.cy := Round(R.Bottom + 10);
 end;
 
 end.
