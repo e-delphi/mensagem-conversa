@@ -1,0 +1,98 @@
+object Inicio: TInicio
+  Left = 0
+  Top = 0
+  Caption = 'Form2'
+  ClientHeight = 572
+  ClientWidth = 976
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object Panel1: TPanel
+    Align = Top
+    Size.Width = 976.000000000000000000
+    Size.Height = 30.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object btnTextoEsquerdo: TButton
+      Align = Left
+      Position.X = 110.000000000000000000
+      Size.Width = 110.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 7
+      Text = 'Texto Esquerdo'
+      OnClick = btnTextoEsquerdoClick
+    end
+    object btnTextoDireito: TButton
+      Align = Left
+      Size.Width = 110.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 5
+      Text = 'Texto Direito'
+      OnClick = btnTextoDireitoClick
+    end
+    object btnImagemDireito: TButton
+      Align = Left
+      Position.X = 695.000000000000000000
+      Size.Width = 110.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 4
+      Text = 'Imagem Direito'
+      OnClick = btnImagemDireitoClick
+    end
+    object Button1: TButton
+      Align = Left
+      Position.X = 330.000000000000000000
+      Size.Width = 102.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      Text = 'Mudar Status'
+      OnClick = Button1Click
+    end
+    object Button2: TButton
+      Align = Left
+      Position.X = 432.000000000000000000
+      Size.Width = 110.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      Text = 'Mudar Lado'
+      OnClick = Button2Click
+    end
+    object Button3: TButton
+      Align = Left
+      Position.X = 542.000000000000000000
+      Size.Width = 153.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      Text = 'Mudar Visibilidade Nome'
+      OnClick = Button3Click
+    end
+    object Button4: TButton
+      Align = Left
+      Position.X = 220.000000000000000000
+      Size.Width = 110.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 6
+      Text = 'Ir para'
+      OnClick = Button4Click
+    end
+    object Button5: TButton
+      Align = Left
+      Position.X = 805.000000000000000000
+      Size.Width = 110.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+      Text = 'Visiveis'
+      OnClick = Button5Click
+    end
+  end
+end

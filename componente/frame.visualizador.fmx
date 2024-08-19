@@ -1,0 +1,5 @@
+inherited FrameVisualizador: TFrameVisualizador
+  Align = Client
+  Size.Width = 624.000000000000000000
+  Size.Height = 624.000000000000000000
+end
