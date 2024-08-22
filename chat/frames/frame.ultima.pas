@@ -24,6 +24,9 @@ type
     rtgUltima: TRectangle;
     pthUltima: TPath;
     procedure FrameClick(Sender: TObject);
+  private const
+    MARGEM = 5;
+    ABAIXO = 30;
   private
     FScroll: TScrollBar;
     FAlvo: Single;
@@ -77,16 +80,16 @@ end;
 function TFrameUltima.PosicaoExibicao: TPoint;
 begin
   Result := TPoint.Create(
-    Round(FScroll.Position.X - Self.Width - 10),
-    Round(FScroll.Position.Y + FScroll.Size.Height - Self.Height - 10)
+    Round(FScroll.Position.X - Self.Width - MARGEM),
+    Round(FScroll.Position.Y + FScroll.Size.Height - Self.Height - MARGEM)
   );
 end;
 
 function TFrameUltima.PosicaoOculta: TPoint;
 begin
   Result := TPoint.Create(
-    Round(FScroll.Position.X - Self.Width - 10),
-    Round(FScroll.Position.Y + FScroll.Size.Height)
+    Round(FScroll.Position.X - Self.Width - MARGEM),
+    Round(FScroll.Position.Y + FScroll.Size.Height + ABAIXO)
   );
 end;
 

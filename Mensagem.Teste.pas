@@ -16,7 +16,8 @@ uses
   FMX.Dialogs,
   FMX.Controls.Presentation,
   FMX.StdCtrls,
-  visualizador;
+  chat.visualizador,
+  chat.editor;
 
 type
   TInicio = class(TForm)
@@ -39,7 +40,8 @@ type
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
   private
-    Visualizador: TVisualizador;
+    Visualizador: TChatVisualizador;
+    Editor: TChatEditor;
     procedure AoVisualizar(Index: Integer);
   end;
 
@@ -49,16 +51,22 @@ var
 implementation
 
 uses
-  visualizador.tipos;
+  chat.tipos;
 
 {$R *.fmx}
 
 procedure TInicio.FormCreate(Sender: TObject);
 begin
-  Visualizador := TVisualizador.Create(Self);
+  Visualizador := TChatVisualizador.Create(Self);
   Self.AddObject(Visualizador);
   Visualizador.Align := TAlignLayout.Client;
   Visualizador.AoVisualizar := AoVisualizar;
+  Visualizador.LarguraMaximaConteudo := 500;
+
+  Editor := TChatEditor.Create(Self);
+  Self.AddObject(Editor);
+  Editor.Align := TAlignLayout.Bottom;
+  Editor.LarguraMaximaConteudo := 500;
 end;
 
 procedure TInicio.AoVisualizar(Index: Integer);

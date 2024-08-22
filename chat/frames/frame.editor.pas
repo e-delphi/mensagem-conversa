@@ -39,14 +39,17 @@ type
     procedure mmMensagemChangeTracking(Sender: TObject);
     procedure mmMensagemKeyDown(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
   private
+    FLarguraMaximaConteudo: Integer;
     function GetOnAnexoClick: TNotifyEvent;
     procedure SetOnAnexoClick(const Value: TNotifyEvent);
     function GetOnEmojiClick: TNotifyEvent;
     procedure SetOnEmojiClick(const Value: TNotifyEvent);
     function GetOnEnviarClick: TNotifyEvent;
     procedure SetOnEnviarClick(const Value: TNotifyEvent);
+    procedure SetLarguraMaximaConteudo(const Value: Integer);
   public
     procedure AfterConstruction; override;
+    property LarguraMaximaConteudo: Integer read FLarguraMaximaConteudo write SetLarguraMaximaConteudo;
     property OnAnexoClick: TNotifyEvent read GetOnAnexoClick write SetOnAnexoClick;
     property OnEmojiClick: TNotifyEvent read GetOnEmojiClick write SetOnEmojiClick;
     property OnEnviarClick: TNotifyEvent read GetOnEnviarClick write SetOnEnviarClick;
@@ -74,7 +77,7 @@ var
   TamanhoTexto: TRectF;
   cHeight: Single;
 begin
-  rtgMensagem.Width := Min(500, Self.Width);
+  rtgMensagem.Width := Min(LarguraMaximaConteudo, Self.Width);
 
   if not Assigned(mmMensagem.Canvas) then
     Exit;
@@ -107,6 +110,12 @@ begin
     if Assigned(lytEnviar.OnClick) then
       lytEnviar.OnClick(lytEnviar);
   end;
+end;
+
+procedure TFrameEditor.SetLarguraMaximaConteudo(const Value: Integer);
+begin
+  FLarguraMaximaConteudo := Value;
+  FrameResized(Self);
 end;
 
 function TFrameEditor.GetOnAnexoClick: TNotifyEvent;

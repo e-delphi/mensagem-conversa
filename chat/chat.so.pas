@@ -1,5 +1,5 @@
 ﻿// Eduardo - 17/08/2024
-unit visualizador.so;
+unit chat.so;
 
 interface
 

@@ -187,72 +187,43 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="componente\frame.chat.pas">
-            <Form>FrameChat</Form>
-            <FormType>fmx</FormType>
-            <DesignClass>TFrame</DesignClass>
-        </DCCReference>
         <DCCReference Include="Mensagem.Teste.pas">
             <Form>Inicio</Form>
             <FormType>fmx</FormType>
         </DCCReference>
-        <DCCReference Include="componente\frame.mensagem.pas">
+        <DCCReference Include="chat\chat.so.pas"/>
+        <DCCReference Include="chat\chat.tipos.pas"/>
+        <DCCReference Include="chat\chat.visualizador.pas"/>
+        <DCCReference Include="chat\frames\frame.base.pas">
+            <Form>FrameBase</Form>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="chat\frames\frame.anexo.item.pas"/>
+        <DCCReference Include="chat\frames\frame.anexo.pas"/>
+        <DCCReference Include="chat\frames\frame.chat.pas">
+            <Form>FrameChat</Form>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="chat\frames\frame.conteudo.anexo.pas"/>
+        <DCCReference Include="chat\frames\frame.conteudo.imagem.pas"/>
+        <DCCReference Include="chat\frames\frame.conteudo.texto.pas"/>
+        <DCCReference Include="chat\frames\frame.editor.pas">
+            <Form>FrameEditor</Form>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="chat\frames\frame.mensagem.conteudo.pas">
+            <Form>FrameConteudo</Form>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="chat\frames\frame.mensagem.pas">
             <Form>FrameMensagem</Form>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
-        <DCCReference Include="componente\frame.mensagem.conteudo.pas">
-            <Form>FrameConteudo</Form>
-            <FormType>fmx</FormType>
-            <DesignClass>TFrame</DesignClass>
-        </DCCReference>
-        <DCCReference Include="componente\frame.conteudo.texto.pas">
-            <Form>FrameConteudoTexto</Form>
-            <FormType>fmx</FormType>
-            <DesignClass>TFrame</DesignClass>
-        </DCCReference>
-        <DCCReference Include="componente\frame.conteudo.imagem.pas">
-            <Form>FrameConteudoImagem</Form>
-            <FormType>fmx</FormType>
-            <DesignClass>TFrame</DesignClass>
-        </DCCReference>
-        <DCCReference Include="componente\frame.editor.pas">
-            <Form>FrameEditor</Form>
-            <FormType>fmx</FormType>
-            <DesignClass>TFrame</DesignClass>
-        </DCCReference>
-        <DCCReference Include="componente\frame.conteudo.anexo.pas">
-            <Form>FrameConteudoAnexo</Form>
-            <FormType>fmx</FormType>
-            <DesignClass>TFrame</DesignClass>
-        </DCCReference>
-        <DCCReference Include="componente\frame.anexo.pas">
-            <Form>FrameAnexo</Form>
-            <FormType>fmx</FormType>
-            <DesignClass>TFrame</DesignClass>
-        </DCCReference>
-        <DCCReference Include="componente\frame.anexo.item.pas">
-            <Form>FrameAnexoItem</Form>
-            <FormType>fmx</FormType>
-            <DesignClass>TFrame</DesignClass>
-        </DCCReference>
-        <DCCReference Include="componente\frame.ultima.pas">
+        <DCCReference Include="chat\frames\frame.ultima.pas">
             <Form>FrameUltima</Form>
-            <FormType>fmx</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
-        <DCCReference Include="componente\frame.visualizador.pas">
-            <Form>FrameVisualizador</Form>
-            <FormType>fmx</FormType>
-            <DesignClass>TFrame</DesignClass>
-        </DCCReference>
-        <DCCReference Include="componente\visualizador.pas"/>
-        <DCCReference Include="componente\visualizador.tipos.pas"/>
-        <DCCReference Include="componente\frame.base.pas">
-            <Form>FrameBase</Form>
-            <FormType>fmx</FormType>
-            <DesignClass>TFrame</DesignClass>
-        </DCCReference>
-        <DCCReference Include="componente\visualizador.so.pas"/>
+        <DCCReference Include="chat\chat.editor.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -14,8 +14,8 @@ uses
   FMX.Forms,
   FMX.Graphics,
   FMX.Ani,
-  visualizador.tipos,
-  visualizador.so,
+  chat.tipos,
+  chat.so,
   frame.base,
   frame.mensagem.conteudo;
 

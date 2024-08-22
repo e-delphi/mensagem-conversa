@@ -1,5 +1,5 @@
 ﻿// Eduardo - 10/08/2024
-unit visualizador;
+unit chat.visualizador;
 
 interface
 
@@ -8,8 +8,7 @@ uses
   System.UITypes,
   FMX.Types,
   FMX.Controls,
-  visualizador.tipos,
-  frame.visualizador,
+  chat.tipos,
   frame.chat,
   frame.editor,
   frame.anexo,
@@ -20,11 +19,12 @@ uses
   frame.conteudo.anexo;
 
 type
-  TVisualizador = class(TControl, IControl)
+  TChatVisualizador = class(TControl, IControl)
   strict private
     FMensagens: TArray<TFrameMensagem>;
   private
-    FFrame: TFrameVisualizador;
+    Chat: TFrameChat;
+    Ultima: TFrameUltima;
     FAoVisualizar: TEventoMensagem;
     function GetStatus(const Index: Integer): TStatus;
     procedure SetStatus(const Index: Integer; const Value: TStatus);
@@ -38,9 +38,13 @@ type
     function GetCount: Integer;
     function GetVisivel(const Index: Integer): Boolean;
     procedure AoVisualizarInterno(Index: Integer);
+    procedure ChatScrollChange(Sender: TObject);
+    function GetLarguraMaximaConteudo: Integer;
+    procedure SetLarguraMaximaConteudo(const Value: Integer);
   public
     constructor Create(AOwner: TComponent); override;
     function AdicionarMensagem(Usuario: String; Hora: TDateTime; Conteudos: TArray<TConteudo>; PosTop: Single = -1): Integer; // retorna o index da mensagem, para quem criar a mensagem armazernar e recupera-la depois
+    property LarguraMaximaConteudo: Integer read GetLarguraMaximaConteudo write SetLarguraMaximaConteudo;
     property Status[const Index: Integer]: TStatus read GetStatus write SetStatus;
     property Lado[const Index: Integer]: TLado read GetLado write SetLado;
     property Nome[const Index: Integer]: String read GetNome write SetNome;
@@ -60,16 +64,26 @@ implementation
 uses
   System.SysUtils;
 
-{ TVisualizador }
+{ TChatVisualizador }
 
-constructor TVisualizador.Create(AOwner: TComponent);
+constructor TChatVisualizador.Create(AOwner: TComponent);
 begin
   inherited;
-  FFrame := TFrameVisualizador.Create(AOwner);
-  Self.AddObject(FFrame);
+  Chat := TFrameChat.Create(Self);
+  Self.AddObject(Chat);
+
+  Ultima := TFrameUltima.Create(Chat.scroll);
+  Chat.AddObject(Ultima);
+
+  Chat.OnScrollChange := ChatScrollChange;
 end;
 
-function TVisualizador.AdicionarMensagem(Usuario: String; Hora: TDateTime; Conteudos: TArray<TConteudo>; PosTop: Single = -1): Integer;
+procedure TChatVisualizador.ChatScrollChange(Sender: TObject);
+begin
+  Ultima.Change;
+end;
+
+function TChatVisualizador.AdicionarMensagem(Usuario: String; Hora: TDateTime; Conteudos: TArray<TConteudo>; PosTop: Single = -1): Integer;
 var
   Item: TConteudo;
   frmMensagem: TFrameMensagem;
@@ -106,7 +120,7 @@ begin
     end;
   end;
 
-  FFrame.Chat.sbxCentro.Content.AddObject(frmMensagem);
+  Chat.sbxCentro.Content.AddObject(frmMensagem);
   FMensagens := FMensagens + [frmMensagem];
   Result := Pred(Length(FMensagens));
 
@@ -114,44 +128,44 @@ begin
   frmMensagem.Tag := Result;
 
   if PosTop = -1 then
-    frmMensagem.Position.Y := FFrame.Chat.scroll.Max
+    frmMensagem.Position.Y := Chat.scroll.Max
   else
     frmMensagem.Position.Y := PosTop;
 end;
 
-procedure TVisualizador.AoVisualizarInterno(Index: Integer);
+procedure TChatVisualizador.AoVisualizarInterno(Index: Integer);
 begin
   if Assigned(AoVisualizar) then
     AoVisualizar(Index);
 end;
 
-procedure TVisualizador.Posicionar(Index: Integer = -1);
+procedure TChatVisualizador.Posicionar(Index: Integer = -1);
 begin
   if Index = -1 then
-    FFrame.Chat.scroll.Value := FFrame.Chat.scroll.Max - FFrame.Chat.scroll.ViewportSize
+    Chat.scroll.Value := Chat.scroll.Max - Chat.scroll.ViewportSize
   else
   begin
     if Visivel[Index] then
       Exit;
 
-    if FFrame.Chat.scroll.Value < FMensagens[Index].Position.Y then
-      FFrame.Chat.scroll.Value := FMensagens[Index].Position.Y - FFrame.Chat.scroll.ViewportSize + FMensagens[Index].Size.Height
+    if Chat.scroll.Value < FMensagens[Index].Position.Y then
+      Chat.scroll.Value := FMensagens[Index].Position.Y - Chat.scroll.ViewportSize + FMensagens[Index].Size.Height
     else
-      FFrame.Chat.scroll.Value := FMensagens[Index].Position.Y;
+      Chat.scroll.Value := FMensagens[Index].Position.Y;
   end;
 end;
 
-procedure TVisualizador.Piscar(Index: Integer; Cor: TAlphaColor; Tempo: Single);
+procedure TChatVisualizador.Piscar(Index: Integer; Cor: TAlphaColor; Tempo: Single);
 begin
   FMensagens[Index].Piscar(Cor, Tempo);
 end;
 
-function TVisualizador.GetCount: Integer;
+function TChatVisualizador.GetCount: Integer;
 begin
   Result := Length(FMensagens);
 end;
 
-function TVisualizador.Visiveis: TArray<Integer>;
+function TChatVisualizador.Visiveis: TArray<Integer>;
 var
   I: Integer;
 begin
@@ -161,14 +175,14 @@ begin
       Result := Result + [I];
 end;
 
-function TVisualizador.GetVisivel(const Index: Integer): Boolean;
+function TChatVisualizador.GetVisivel(const Index: Integer): Boolean;
 begin
   Result :=
-    (FMensagens[Index].Position.Y > FFrame.Chat.scroll.Value) and
-    (FMensagens[Index].Position.Y + FMensagens[Index].Size.Height < FFrame.Chat.scroll.Value + FFrame.Chat.scroll.ViewportSize);
+    (FMensagens[Index].Position.Y > Chat.scroll.Value) and
+    (FMensagens[Index].Position.Y + FMensagens[Index].Size.Height < Chat.scroll.Value + Chat.scroll.ViewportSize);
 end;
 
-function TVisualizador.Listar: TArray<Integer>;
+function TChatVisualizador.Listar: TArray<Integer>;
 var
   I: Integer;
 begin
@@ -177,47 +191,57 @@ begin
     Result := Result + [I];
 end;
 
-function TVisualizador.GetStatus(const Index: Integer): TStatus;
+function TChatVisualizador.GetLarguraMaximaConteudo: Integer;
+begin
+  Result := Chat.LarguraMaximaConteudo;
+end;
+
+procedure TChatVisualizador.SetLarguraMaximaConteudo(const Value: Integer);
+begin
+  Chat.LarguraMaximaConteudo := Value;
+end;
+
+function TChatVisualizador.GetStatus(const Index: Integer): TStatus;
 begin
   Result := FMensagens[Index].Status;
 end;
 
-function TVisualizador.GetPosTop(const Index: Integer): Single;
+function TChatVisualizador.GetPosTop(const Index: Integer): Single;
 begin
   Result := FMensagens[Index].Position.Y;
 end;
 
-procedure TVisualizador.SetStatus(const Index: Integer; const Value: TStatus);
+procedure TChatVisualizador.SetStatus(const Index: Integer; const Value: TStatus);
 begin
   FMensagens[Index].Status := Value;
 end;
 
-function TVisualizador.GetLado(const Index: Integer): TLado;
+function TChatVisualizador.GetLado(const Index: Integer): TLado;
 begin
   Result := FMensagens[Index].Lado;
 end;
 
-procedure TVisualizador.SetLado(const Index: Integer; const Value: TLado);
+procedure TChatVisualizador.SetLado(const Index: Integer; const Value: TLado);
 begin
   FMensagens[Index].Lado := Value;
 end;
 
-function TVisualizador.GetNome(const Index: Integer): String;
+function TChatVisualizador.GetNome(const Index: Integer): String;
 begin
   Result := FMensagens[Index].Nome;
 end;
 
-procedure TVisualizador.SetNome(const Index: Integer; const Value: String);
+procedure TChatVisualizador.SetNome(const Index: Integer; const Value: String);
 begin
   FMensagens[Index].Nome := Value;
 end;
 
-function TVisualizador.GetNomeVisivel(const Index: Integer): Boolean;
+function TChatVisualizador.GetNomeVisivel(const Index: Integer): Boolean;
 begin
   Result := FMensagens[Index].NomeVisivel;
 end;
 
-procedure TVisualizador.SetNomeVisivel(const Index: Integer; const Value: Boolean);
+procedure TChatVisualizador.SetNomeVisivel(const Index: Integer; const Value: Boolean);
 begin
   FMensagens[Index].NomeVisivel := Value;
 end;

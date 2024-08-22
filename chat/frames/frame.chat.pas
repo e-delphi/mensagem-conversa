@@ -22,8 +22,12 @@ type
     procedure FrameMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; var Handled: Boolean);
     procedure sbxCentroViewportPositionChange(Sender: TObject; const OldViewportPosition, NewViewportPosition: TPointF; const ContentSizeChanged: Boolean);
     procedure scrollChange(Sender: TObject);
+  private
+    FLarguraMaximaConteudo: Integer;
+    procedure SetLarguraMaximaConteudo(const Value: Integer);
   public
     OnScrollChange: TNotifyEvent;
+    property LarguraMaximaConteudo: Integer read FLarguraMaximaConteudo write SetLarguraMaximaConteudo;
   end;
 
 implementation
@@ -33,6 +37,16 @@ uses
   FMX.Objects;
 
 {$R *.fmx}
+
+procedure TFrameChat.FrameResized(Sender: TObject);
+begin
+  sbxCentro.Width := Min(LarguraMaximaConteudo, Self.Width);
+end;
+
+procedure TFrameChat.FrameMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; var Handled: Boolean);
+begin
+  scroll.Value := scroll.Value - WheelDelta;
+end;
 
 procedure TFrameChat.sbxCentroViewportPositionChange(Sender: TObject; const OldViewportPosition, NewViewportPosition: TPointF; const ContentSizeChanged: Boolean);
 begin
@@ -48,14 +62,10 @@ begin
     OnScrollChange(Sender);
 end;
 
-procedure TFrameChat.FrameMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; var Handled: Boolean);
+procedure TFrameChat.SetLarguraMaximaConteudo(const Value: Integer);
 begin
-  scroll.Value := scroll.Value - WheelDelta;
-end;
-
-procedure TFrameChat.FrameResized(Sender: TObject);
-begin
-  sbxCentro.Width := Min(500, Self.Width);
+  FLarguraMaximaConteudo := Value;
+  FrameResized(Self);
 end;
 
 end.

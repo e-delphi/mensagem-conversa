@@ -1,5 +1,5 @@
 ﻿// Eduardo - 10/08/2024
-unit visualizador.tipos;
+unit chat.tipos;
 
 interface
 
