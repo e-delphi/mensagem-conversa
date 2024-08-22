@@ -9,6 +9,7 @@ uses
   FMX.Types,
   FMX.Controls,
   chat.tipos,
+  frame.base,
   frame.chat,
   frame.editor,
   frame.anexo,
@@ -16,12 +17,14 @@ uses
   frame.mensagem,
   frame.conteudo.texto,
   frame.conteudo.imagem,
-  frame.conteudo.anexo;
+  frame.conteudo.anexo,
+  frame.separador.data;
 
 type
   TChatVisualizador = class(TControl, IControl)
   strict private
     FMensagens: TArray<TFrameMensagem>;
+    FSeparadores: TArray<TFrameBase>;
   private
     Chat: TFrameChat;
     Ultima: TFrameUltima;
@@ -43,7 +46,11 @@ type
     procedure SetLarguraMaximaConteudo(const Value: Integer);
   public
     constructor Create(AOwner: TComponent); override;
-    function AdicionarMensagem(Usuario: String; Hora: TDateTime; Conteudos: TArray<TConteudo>; PosTop: Single = -1): Integer; // retorna o index da mensagem, para quem criar a mensagem armazernar e recupera-la depois
+    function AdicionarMensagem(Usuario: String; Data: TDateTime; Conteudos: TArray<TConteudo>; PosTop: Single = -1): Integer; // retorna o index da mensagem, para quem criar a armazernar e recupera-la depois
+    procedure RemoverMensagem(Index: Integer);
+    function AdicionarSeparadorData(Data: TDateTime; PosTop: Single): Integer; // retorna o index do separador, para quem criar armazenar e recupera-lo depois
+    function AdicionarSeparadorVisualizacao(PosTop: Single): Integer; // retorna o index do separador, para quem criar armazenar e recupera-lo depois
+    procedure RemoveSeparador(Index: Integer);
     property LarguraMaximaConteudo: Integer read GetLarguraMaximaConteudo write SetLarguraMaximaConteudo;
     property Status[const Index: Integer]: TStatus read GetStatus write SetStatus;
     property Lado[const Index: Integer]: TLado read GetLado write SetLado;
@@ -83,7 +90,7 @@ begin
   Ultima.Change;
 end;
 
-function TChatVisualizador.AdicionarMensagem(Usuario: String; Hora: TDateTime; Conteudos: TArray<TConteudo>; PosTop: Single = -1): Integer;
+function TChatVisualizador.AdicionarMensagem(Usuario: String; Data: TDateTime; Conteudos: TArray<TConteudo>; PosTop: Single = -1): Integer;
 var
   Item: TConteudo;
   frmMensagem: TFrameMensagem;
@@ -93,7 +100,7 @@ var
 begin
   frmMensagem := TFrameMensagem.Create(Self);
   frmMensagem.Nome := Usuario;
-  frmMensagem.txtHora.Text := FormatDateTime('hh:nn', Hora);
+  frmMensagem.txtHora.Text := FormatDateTime('hh:nn', Data);
   frmMensagem.AoVisualizar := AoVisualizarInterno;
 
   for Item in Conteudos do
@@ -131,6 +138,47 @@ begin
     frmMensagem.Position.Y := Chat.scroll.Max
   else
     frmMensagem.Position.Y := PosTop;
+end;
+
+procedure TChatVisualizador.RemoverMensagem(Index: Integer);
+var
+  frmMensagem: TFrameMensagem;
+begin
+  frmMensagem := FMensagens[Index];
+  Chat.sbxCentro.Content.RemoveObject(frmMensagem);
+  FreeAndNil(frmMensagem);
+  FMensagens[Index] := nil;
+end;
+
+function TChatVisualizador.AdicionarSeparadorData(Data: TDateTime; PosTop: Single): Integer;
+var
+  frmData: TFrameSeparadorData;
+begin
+  frmData := TFrameSeparadorData.Create(Self);
+  Chat.sbxCentro.Content.AddObject(frmData);
+  frmData.Data := Data;
+  FSeparadores := FSeparadores + [frmData];
+  Result := Pred(Length(FSeparadores));
+
+  // Armazena no separador o index dele para poder remover depois
+  frmData.Tag := Result;
+
+  frmData.Position.Y := PosTop;
+end;
+
+function TChatVisualizador.AdicionarSeparadorVisualizacao(PosTop: Single): Integer;
+begin
+  Result := -1;
+end;
+
+procedure TChatVisualizador.RemoveSeparador(Index: Integer);
+var
+  frmBase: TFrameBase;
+begin
+  frmBase := FSeparadores[Index];
+  Chat.sbxCentro.Content.RemoveObject(frmBase);
+  FreeAndNil(frmBase);
+  FSeparadores[Index] := nil;
 end;
 
 procedure TChatVisualizador.AoVisualizarInterno(Index: Integer);

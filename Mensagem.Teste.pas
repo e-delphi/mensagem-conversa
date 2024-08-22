@@ -17,7 +17,8 @@ uses
   FMX.Controls.Presentation,
   FMX.StdCtrls,
   chat.visualizador,
-  chat.editor;
+  chat.editor,
+  chat.tipos;
 
 type
   TInicio = class(TForm)
@@ -30,6 +31,9 @@ type
     Button3: TButton;
     Button4: TButton;
     Button5: TButton;
+    Button6: TButton;
+    Button7: TButton;
+    Button8: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnTextoEsquerdoClick(Sender: TObject);
     procedure btnTextoDireitoClick(Sender: TObject);
@@ -39,19 +43,20 @@ type
     procedure Button2Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
+    procedure Button6Click(Sender: TObject);
+    procedure Button7Click(Sender: TObject);
+    procedure Button8Click(Sender: TObject);
   private
     Visualizador: TChatVisualizador;
     Editor: TChatEditor;
     procedure AoVisualizar(Index: Integer);
+    procedure AoEnviar(Conteudos: TArray<TConteudo>);
   end;
 
 var
   Inicio: TInicio;
 
 implementation
-
-uses
-  chat.tipos;
 
 {$R *.fmx}
 
@@ -66,12 +71,22 @@ begin
   Editor := TChatEditor.Create(Self);
   Self.AddObject(Editor);
   Editor.Align := TAlignLayout.Bottom;
+  Editor.AoEnviar := AoEnviar;
   Editor.LarguraMaximaConteudo := 500;
 end;
 
 procedure TInicio.AoVisualizar(Index: Integer);
 begin
   Visualizador.Piscar(Index, TAlphaColorRec.Blue, 0.5);
+end;
+
+procedure TInicio.AoEnviar(Conteudos: TArray<TConteudo>);
+var
+  Index: Integer;
+begin
+  Index := Visualizador.AdicionarMensagem('ChatEditor', Now, Conteudos);
+  Visualizador.Lado[Index] := TLado.Direito;
+  Visualizador.Posicionar(Index);
 end;
 
 procedure TInicio.btnTextoDireitoClick(Sender: TObject);
@@ -158,6 +173,21 @@ begin
   );
   Visualizador.Lado[Index] := TLado.Direito;
   Visualizador.NomeVisivel[Index] := True;
+end;
+
+procedure TInicio.Button6Click(Sender: TObject);
+begin
+  Visualizador.RemoverMensagem(5);
+end;
+
+procedure TInicio.Button7Click(Sender: TObject);
+begin
+  Visualizador.AdicionarSeparadorData(EncodeDate(2024, 08, 01), 100);
+end;
+
+procedure TInicio.Button8Click(Sender: TObject);
+begin
+  Visualizador.RemoveSeparador(0);
 end;
 
 end.

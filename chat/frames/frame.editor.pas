@@ -40,19 +40,19 @@ type
     procedure mmMensagemKeyDown(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
   private
     FLarguraMaximaConteudo: Integer;
-    function GetOnAnexoClick: TNotifyEvent;
-    procedure SetOnAnexoClick(const Value: TNotifyEvent);
-    function GetOnEmojiClick: TNotifyEvent;
-    procedure SetOnEmojiClick(const Value: TNotifyEvent);
-    function GetOnEnviarClick: TNotifyEvent;
-    procedure SetOnEnviarClick(const Value: TNotifyEvent);
+    function GetAoAnexoClick: TNotifyEvent;
+    procedure SetAoAnexoClick(const Value: TNotifyEvent);
+    function GetAoEmojiClick: TNotifyEvent;
+    procedure SetAoEmojiClick(const Value: TNotifyEvent);
+    function GetAoEnviarClick: TNotifyEvent;
+    procedure SetAoEnviarClick(const Value: TNotifyEvent);
     procedure SetLarguraMaximaConteudo(const Value: Integer);
   public
     procedure AfterConstruction; override;
     property LarguraMaximaConteudo: Integer read FLarguraMaximaConteudo write SetLarguraMaximaConteudo;
-    property OnAnexoClick: TNotifyEvent read GetOnAnexoClick write SetOnAnexoClick;
-    property OnEmojiClick: TNotifyEvent read GetOnEmojiClick write SetOnEmojiClick;
-    property OnEnviarClick: TNotifyEvent read GetOnEnviarClick write SetOnEnviarClick;
+    property AoAnexoClick: TNotifyEvent read GetAoAnexoClick write SetAoAnexoClick;
+    property AoEmojiClick: TNotifyEvent read GetAoEmojiClick write SetAoEmojiClick;
+    property AoEnviarClick: TNotifyEvent read GetAoEnviarClick write SetAoEnviarClick;
   end;
 
 implementation
@@ -118,32 +118,32 @@ begin
   FrameResized(Self);
 end;
 
-function TFrameEditor.GetOnAnexoClick: TNotifyEvent;
+function TFrameEditor.GetAoAnexoClick: TNotifyEvent;
 begin
   Result := lytAnexo.OnClick;
 end;
 
-procedure TFrameEditor.SetOnAnexoClick(const Value: TNotifyEvent);
+procedure TFrameEditor.SetAoAnexoClick(const Value: TNotifyEvent);
 begin
   lytAnexo.OnClick := Value;
 end;
 
-function TFrameEditor.GetOnEmojiClick: TNotifyEvent;
+function TFrameEditor.GetAoEmojiClick: TNotifyEvent;
 begin
   Result := lytCarinha.OnClick;
 end;
 
-procedure TFrameEditor.SetOnEmojiClick(const Value: TNotifyEvent);
+procedure TFrameEditor.SetAoEmojiClick(const Value: TNotifyEvent);
 begin
   lytCarinha.OnClick := Value;
 end;
 
-function TFrameEditor.GetOnEnviarClick: TNotifyEvent;
+function TFrameEditor.GetAoEnviarClick: TNotifyEvent;
 begin
   Result := lytEnviar.OnClick;
 end;
 
-procedure TFrameEditor.SetOnEnviarClick(const Value: TNotifyEvent);
+procedure TFrameEditor.SetAoEnviarClick(const Value: TNotifyEvent);
 begin
   lytEnviar.OnClick := Value;
 end;

@@ -43,14 +43,14 @@ type
     procedure AdicionarItem(sArquivo: String);
     procedure RemoverItens;
     procedure AnexoRemoverClick(Sender: TObject);
-    function GetOnEnviarClick: TNotifyEvent;
-    procedure SetOnEnviarClick(const Value: TNotifyEvent);
+    function GetAoEnviarClick: TNotifyEvent;
+    procedure SetAoEnviarClick(const Value: TNotifyEvent);
   public
     destructor Destroy; override;
     procedure AfterConstruction; override;
     procedure Exibir;
     function Selecionados: TArray<String>;
-    property OnEnviarClick: TNotifyEvent read GetOnEnviarClick write SetOnEnviarClick;
+    property AoEnviarClick: TNotifyEvent read GetAoEnviarClick write SetAoEnviarClick;
   end;
 
 implementation
@@ -147,12 +147,12 @@ begin
   Self.Visible := False;
 end;
 
-function TFrameAnexo.GetOnEnviarClick: TNotifyEvent;
+function TFrameAnexo.GetAoEnviarClick: TNotifyEvent;
 begin
   Result := FEnviar;
 end;
 
-procedure TFrameAnexo.SetOnEnviarClick(const Value: TNotifyEvent);
+procedure TFrameAnexo.SetAoEnviarClick(const Value: TNotifyEvent);
 begin
   FEnviar := Value;
 end;

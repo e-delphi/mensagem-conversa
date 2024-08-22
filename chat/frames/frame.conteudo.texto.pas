@@ -26,8 +26,8 @@ type
   private
     FontLink: TFont;
     Links: TArray<TTextLink>;
-    function GetNewText: string;
-    procedure SetNewText(const Value: string);
+    function GetNewText: String;
+    procedure SetNewText(const Value: String);
   protected
     procedure Click; override;
     procedure DblClick; override;
@@ -35,7 +35,7 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    property Text: string read GetNewText write SetNewText;
+    property Text: String read GetNewText write SetNewText;
   end;
 
   TFrameConteudoTexto = class(TFrameConteudo)
@@ -132,7 +132,7 @@ var
 begin
   if TPlatformServices.Current.SupportsPlatformService(IFMXExtendedClipboardService, svc) then
   begin
-    svc.SetText(Text);
+    svc.SetText(Text.Replace('&', '&&'));
     Def := Self.Color;
     Color := TAlphaColors.Green;
     TAnimator.AnimateColor(Self, 'Color', Def, 1, TAnimationType.InOut, TInterpolationType.Cubic);
@@ -175,7 +175,7 @@ var
   I: Integer;
   Matches: TMatchCollection;
 begin
-  inherited Text := Value;
+  inherited Text := Value.Replace('&', '&&');
 
   // Pinta hiperlink
   Matches := TRegEx.Matches(Value, '(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])');

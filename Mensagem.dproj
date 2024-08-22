@@ -224,6 +224,11 @@
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="chat\chat.editor.pas"/>
+        <DCCReference Include="chat\frames\frame.separador.data.pas">
+            <Form>FrameSeparadorData</Form>
+            <FormType>fmx</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

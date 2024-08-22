@@ -23,6 +23,8 @@ type
     constructor Create(ATipo: TTipo; AConteudo: String);
   end;
 
+  TEventoEnvio = procedure(Conteudos: TArray<TConteudo>) of object;
+
 implementation
 
 { TConteudo }

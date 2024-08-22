@@ -18,7 +18,8 @@ uses
   frame.mensagem.conteudo in 'chat\frames\frame.mensagem.conteudo.pas' {FrameConteudo: TFrame},
   frame.mensagem in 'chat\frames\frame.mensagem.pas' {FrameMensagem: TFrame},
   frame.ultima in 'chat\frames\frame.ultima.pas' {FrameUltima: TFrame},
-  chat.editor in 'chat\chat.editor.pas';
+  chat.editor in 'chat\chat.editor.pas',
+  frame.separador.data in 'chat\frames\frame.separador.data.pas' {FrameSeparadorData: TFrame};
 
 {$R *.res}
 
