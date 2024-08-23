@@ -29,21 +29,13 @@ type
     Chat: TFrameChat;
     Ultima: TFrameUltima;
     FAoVisualizar: TEventoMensagem;
-    function GetStatus(const Index: Integer): TStatus;
-    procedure SetStatus(const Index: Integer; const Value: TStatus);
-    function GetLado(const Index: Integer): TLado;
-    procedure SetLado(const Index: Integer; const Value: TLado);
-    function GetNomeVisivel(const Index: Integer): Boolean;
-    procedure SetNomeVisivel(const Index: Integer; const Value: Boolean);
-    function GetNome(const Index: Integer): String;
-    procedure SetNome(const Index: Integer; const Value: String);
-    function GetPosTop(const Index: Integer): Single;
     function GetCount: Integer;
     function GetVisivel(const Index: Integer): Boolean;
     procedure AoVisualizarInterno(Index: Integer);
     procedure ChatScrollChange(Sender: TObject);
     function GetLarguraMaximaConteudo: Integer;
     procedure SetLarguraMaximaConteudo(const Value: Integer);
+    function GetMensagem(const Index: Integer): TFrameMensagem;
   public
     constructor Create(AOwner: TComponent); override;
     function AdicionarMensagem(Usuario: String; Data: TDateTime; Conteudos: TArray<TConteudo>; PosTop: Single = -1): Integer; // retorna o index da mensagem, para quem criar a armazernar e recupera-la depois
@@ -52,12 +44,8 @@ type
     function AdicionarSeparadorVisualizacao(PosTop: Single): Integer; // retorna o index do separador, para quem criar armazenar e recupera-lo depois
     procedure RemoveSeparador(Index: Integer);
     property LarguraMaximaConteudo: Integer read GetLarguraMaximaConteudo write SetLarguraMaximaConteudo;
-    property Status[const Index: Integer]: TStatus read GetStatus write SetStatus;
-    property Lado[const Index: Integer]: TLado read GetLado write SetLado;
-    property Nome[const Index: Integer]: String read GetNome write SetNome;
-    property NomeVisivel[const Index: Integer]: Boolean read GetNomeVisivel write SetNomeVisivel;
+    property Mensagem[const Index: Integer]: TFrameMensagem read GetMensagem;
     property Visivel[const Index: Integer]: Boolean read GetVisivel;
-    property Top[const Index: Integer]: Single read GetPosTop;
     property Count: Integer read GetCount;
     procedure Posicionar(Index: Integer = -1);
     procedure Piscar(Index: Integer; Cor: TAlphaColor; Tempo: Single = 0.2);
@@ -249,49 +237,10 @@ begin
   Chat.LarguraMaximaConteudo := Value;
 end;
 
-function TChatVisualizador.GetStatus(const Index: Integer): TStatus;
+function TChatVisualizador.GetMensagem(const Index: Integer): TFrameMensagem;
 begin
-  Result := FMensagens[Index].Status;
+  Result := FMensagens[Index];
 end;
 
-function TChatVisualizador.GetPosTop(const Index: Integer): Single;
-begin
-  Result := FMensagens[Index].Position.Y;
-end;
-
-procedure TChatVisualizador.SetStatus(const Index: Integer; const Value: TStatus);
-begin
-  FMensagens[Index].Status := Value;
-end;
-
-function TChatVisualizador.GetLado(const Index: Integer): TLado;
-begin
-  Result := FMensagens[Index].Lado;
-end;
-
-procedure TChatVisualizador.SetLado(const Index: Integer; const Value: TLado);
-begin
-  FMensagens[Index].Lado := Value;
-end;
-
-function TChatVisualizador.GetNome(const Index: Integer): String;
-begin
-  Result := FMensagens[Index].Nome;
-end;
-
-procedure TChatVisualizador.SetNome(const Index: Integer; const Value: String);
-begin
-  FMensagens[Index].Nome := Value;
-end;
-
-function TChatVisualizador.GetNomeVisivel(const Index: Integer): Boolean;
-begin
-  Result := FMensagens[Index].NomeVisivel;
-end;
-
-procedure TChatVisualizador.SetNomeVisivel(const Index: Integer; const Value: Boolean);
-begin
-  FMensagens[Index].NomeVisivel := Value;
-end;
 
 end.

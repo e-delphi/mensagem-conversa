@@ -85,7 +85,7 @@ var
   Index: Integer;
 begin
   Index := Visualizador.AdicionarMensagem('ChatEditor', Now, Conteudos);
-  Visualizador.Lado[Index] := TLado.Direito;
+  Visualizador.Mensagem[Index].Lado := TLado.Direito;
   Visualizador.Posicionar(Index);
 end;
 
@@ -102,7 +102,7 @@ begin
     ],
     0
   );
-  Visualizador.Lado[Index] := TLado.Direito;
+  Visualizador.Mensagem[Index].Lado := TLado.Direito;
   Visualizador.Posicionar(Index);
 end;
 
@@ -118,29 +118,29 @@ begin
       TConteudo.Create(TTipo.Texto, 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout')
     ]
   );
-  Visualizador.Lado[Index] := TLado.Esquerdo;
+  Visualizador.Mensagem[Index].Lado := TLado.Esquerdo;
 end;
 
 procedure TInicio.Button1Click(Sender: TObject);
 begin
-  case Visualizador.Status[5] of
-    TStatus.Pendente:    Visualizador.Status[5] := TStatus.Recebida;
-    TStatus.Recebida:    Visualizador.Status[5] := TStatus.Visualizada;
-    TStatus.Visualizada: Visualizador.Status[5] := TStatus.Pendente;
+  case Visualizador.Mensagem[5].Status of
+    TStatus.Pendente:    Visualizador.Mensagem[5].Status := TStatus.Recebida;
+    TStatus.Recebida:    Visualizador.Mensagem[5].Status := TStatus.Visualizada;
+    TStatus.Visualizada: Visualizador.Mensagem[5].Status := TStatus.Pendente;
   end;
 end;
 
 procedure TInicio.Button2Click(Sender: TObject);
 begin
-  case Visualizador.Lado[5] of
-    TLado.Direito:  Visualizador.Lado[5] := TLado.Esquerdo;
-    TLado.Esquerdo: Visualizador.Lado[5] := TLado.Direito;
+  case Visualizador.Mensagem[5].Lado of
+    TLado.Direito:  Visualizador.Mensagem[5].Lado := TLado.Esquerdo;
+    TLado.Esquerdo: Visualizador.Mensagem[5].Lado := TLado.Direito;
   end;
 end;
 
 procedure TInicio.Button3Click(Sender: TObject);
 begin
-  Visualizador.NomeVisivel[5] := not Visualizador.NomeVisivel[5];
+  Visualizador.Mensagem[5].NomeVisivel := not Visualizador.Mensagem[5].NomeVisivel;
 end;
 
 procedure TInicio.Button4Click(Sender: TObject);
@@ -171,8 +171,8 @@ begin
       TConteudo.Create(TTipo.Texto, 'Ayla')
     ]
   );
-  Visualizador.Lado[Index] := TLado.Direito;
-  Visualizador.NomeVisivel[Index] := True;
+  Visualizador.Mensagem[Index].Lado := TLado.Direito;
+  Visualizador.Mensagem[Index].NomeVisivel := True;
 end;
 
 procedure TInicio.Button6Click(Sender: TObject);
