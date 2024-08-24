@@ -1,4 +1,4 @@
-inherited FrameUltima: TFrameUltima
+inherited ChatUltima: TChatUltima
   Size.Width = 44.000000000000000000
   Size.Height = 44.000000000000000000
   OnClick = FrameClick

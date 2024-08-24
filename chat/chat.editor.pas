@@ -9,14 +9,14 @@ uses
   FMX.Types,
   FMX.Controls,
   chat.tipos,
-  frame.editor,
-  frame.anexo;
+  chat.editor.entrada,
+  chat.anexo;
 
 type
   TChatEditor = class(TControl, IControl)
   private
-    Editor: TFrameEditor;
-    Anexo: TFrameAnexo;
+    Editor: TChatEditorEntrada;
+    Anexo: TChatAnexo;
     FAoEnviar: TEventoEnvio;
     procedure AnexoEnviarClick(Sender: TObject);
     procedure EditorAnexoClick(Sender: TObject);
@@ -42,10 +42,10 @@ uses
 constructor TChatEditor.Create(AOwner: TComponent);
 begin
   inherited;
-  Editor := TFrameEditor.Create(Self);
+  Editor := TChatEditorEntrada.Create(Self);
   Self.AddObject(Editor);
 
-  Anexo := TFrameAnexo.Create(Self);
+  Anexo := TChatAnexo.Create(Self);
   Self.AddObject(Anexo);
 
   Anexo.AoEnviarClick := AnexoEnviarClick;

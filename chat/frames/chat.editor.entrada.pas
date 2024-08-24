@@ -1,5 +1,5 @@
 ﻿// Eduardo - 04/08/2024
-unit frame.editor;
+unit chat.editor.entrada;
 
 interface
 
@@ -21,10 +21,10 @@ uses
   FMX.Controls.Presentation,
   FMX.ScrollBox,
   FMX.Memo,
-  frame.base;
+  chat.base;
 
 type
-  TFrameEditor = class(TFrameBase)
+  TChatEditorEntrada = class(TChatBase)
     rtgFundo: TRectangle;
     rtgMensagem: TRectangle;
     mmMensagem: TMemo;
@@ -64,7 +64,7 @@ uses
 
 { TEditor }
 
-procedure TFrameEditor.AfterConstruction;
+procedure TChatEditorEntrada.AfterConstruction;
 begin
   inherited;
   mmMensagem.NeedStyleLookup;
@@ -72,7 +72,7 @@ begin
   mmMensagem.StylesData['background.Source'] := nil;
 end;
 
-procedure TFrameEditor.FrameResized(Sender: TObject);
+procedure TChatEditorEntrada.FrameResized(Sender: TObject);
 var
   TamanhoTexto: TRectF;
   cHeight: Single;
@@ -95,13 +95,13 @@ begin
   mmMensagem.ShowScrollBars := Self.Height > 200;
 end;
 
-procedure TFrameEditor.mmMensagemChangeTracking(Sender: TObject);
+procedure TChatEditorEntrada.mmMensagemChangeTracking(Sender: TObject);
 begin
   txtMensagem.Visible := mmMensagem.Lines.Text.IsEmpty;
   FrameResized(Self);
 end;
 
-procedure TFrameEditor.mmMensagemKeyDown(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
+procedure TChatEditorEntrada.mmMensagemKeyDown(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
 begin
   if (Key = vkReturn) and (Shift = []) then
   begin
@@ -112,38 +112,38 @@ begin
   end;
 end;
 
-procedure TFrameEditor.SetLarguraMaximaConteudo(const Value: Integer);
+procedure TChatEditorEntrada.SetLarguraMaximaConteudo(const Value: Integer);
 begin
   FLarguraMaximaConteudo := Value;
   FrameResized(Self);
 end;
 
-function TFrameEditor.GetAoAnexoClick: TNotifyEvent;
+function TChatEditorEntrada.GetAoAnexoClick: TNotifyEvent;
 begin
   Result := lytAnexo.OnClick;
 end;
 
-procedure TFrameEditor.SetAoAnexoClick(const Value: TNotifyEvent);
+procedure TChatEditorEntrada.SetAoAnexoClick(const Value: TNotifyEvent);
 begin
   lytAnexo.OnClick := Value;
 end;
 
-function TFrameEditor.GetAoEmojiClick: TNotifyEvent;
+function TChatEditorEntrada.GetAoEmojiClick: TNotifyEvent;
 begin
   Result := lytCarinha.OnClick;
 end;
 
-procedure TFrameEditor.SetAoEmojiClick(const Value: TNotifyEvent);
+procedure TChatEditorEntrada.SetAoEmojiClick(const Value: TNotifyEvent);
 begin
   lytCarinha.OnClick := Value;
 end;
 
-function TFrameEditor.GetAoEnviarClick: TNotifyEvent;
+function TChatEditorEntrada.GetAoEnviarClick: TNotifyEvent;
 begin
   Result := lytEnviar.OnClick;
 end;
 
-procedure TFrameEditor.SetAoEnviarClick(const Value: TNotifyEvent);
+procedure TChatEditorEntrada.SetAoEnviarClick(const Value: TNotifyEvent);
 begin
   lytEnviar.OnClick := Value;
 end;

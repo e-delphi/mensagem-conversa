@@ -1,8 +1,8 @@
-inherited FrameConteudo: TFrameConteudo
+inherited ChatConteudo: TChatConteudo
   Align = Top
   Margins.Left = 15.000000000000000000
   Margins.Right = 15.000000000000000000
   Position.X = 15.000000000000000000
-  Size.Width = 260.000000000000000000
+  Size.Width = 362.000000000000000000
   Size.Height = 168.000000000000000000
 end

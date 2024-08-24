@@ -8,13 +8,14 @@ interface
 uses
   System.Classes,
   FMX.Types,
-  FMX.Graphics;
+  FMX.Graphics,
+  FMX.Forms;
 
 type
   TLado = (Direito = Integer(TAlignLayout.Right), Esquerdo = Integer(TAlignLayout.Left));
   TStatus = (Pendente, Recebida, Visualizada);
   TTipo = (Texto, Imagem, Arquivo);
-  TEventoMensagem = procedure(Index: Integer) of object;
+  TEvento = procedure(Frame: TFrame) of object;
 
   TConteudo = record
   public

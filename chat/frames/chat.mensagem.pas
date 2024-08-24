@@ -1,5 +1,5 @@
 ﻿// Eduardo - 03/08/2024
-unit frame.mensagem;
+unit chat.mensagem;
 
 interface
 
@@ -16,11 +16,11 @@ uses
   FMX.Ani,
   chat.tipos,
   chat.so,
-  frame.base,
-  frame.mensagem.conteudo;
+  chat.base,
+  chat.mensagem.conteudo;
 
 type
-  TFrameMensagem = class(TFrameBase)
+  TChatMensagem = class(TChatBase)
     lytLargura: TLayout;
     rtgFundo: TRectangle;
     txtNome: TText;
@@ -30,12 +30,13 @@ type
     procedure FrameResized(Sender: TObject);
     procedure FramePaint(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);
   private
-    FConteudos: TArray<TFrameConteudo>;
+    FID: Integer;
+    FConteudos: TArray<TChatConteudo>;
     FStatus: TStatus;
     FNome: String;
     FNomeVisivel: Boolean;
     FVisualizada: Boolean;
-    FAoVisualizar: TEventoMensagem;
+    FAoVisualizar: TEvento;
     function GetLado: TLado;
     procedure SetLado(const Value: TLado);
     procedure SetStatus(const Value: TStatus);
@@ -45,14 +46,16 @@ type
     procedure SetVisualizada(const Value: Boolean);
     function CorFundo(const Value: TLado): TAlphaColor;
   public
+    constructor Create(AOwner: TComponent; AID: Integer); reintroduce;
     procedure AfterConstruction; override;
+    property ID: Integer read FID;
     property Lado: TLado read GetLado write SetLado;
     property Status: TStatus read FStatus write SetStatus;
     property Nome: String read FNome write SetNome;
     property NomeVisivel: Boolean read GetNomeVisivel write SetNomeVisivel;
     property Visualizada: Boolean read FVisualizada write SetVisualizada;
-    property AoVisualizar: TEventoMensagem read FAoVisualizar write FAoVisualizar;
-    procedure AddConteudo(Conteudo: TFrameConteudo);
+    property AoVisualizar: TEvento read FAoVisualizar write FAoVisualizar;
+    procedure AddConteudo(Conteudo: TChatConteudo);
     procedure Piscar(Cor: TAlphaColor; Tempo: Single = 0.2);
   end;
 
@@ -64,19 +67,25 @@ uses
 
 {$R *.fmx}
 
-procedure TFrameMensagem.AfterConstruction;
+constructor TChatMensagem.Create(AOwner: TComponent; AID: Integer);
+begin
+  inherited Create(AOwner);
+  FID := AID;
+end;
+
+procedure TChatMensagem.AfterConstruction;
 begin
   inherited;
   FNomeVisivel := True;
   FVisualizada := False;
 end;
 
-function TFrameMensagem.GetLado: TLado;
+function TChatMensagem.GetLado: TLado;
 begin
   Result := TLado(lytLargura.Align);
 end;
 
-function TFrameMensagem.CorFundo(const Value: TLado): TAlphaColor;
+function TChatMensagem.CorFundo(const Value: TLado): TAlphaColor;
 begin
   case Value of
     TLado.Direito:  Result := $FFCFE7FF;
@@ -86,7 +95,7 @@ begin
   end;
 end;
 
-procedure TFrameMensagem.SetLado(const Value: TLado);
+procedure TChatMensagem.SetLado(const Value: TLado);
 begin
   lytLargura.Align := TAlignLayout(Value);
 
@@ -108,7 +117,7 @@ begin
   rtgFundo.Fill.Color := CorFundo(Value);
 end;
 
-procedure TFrameMensagem.SetStatus(const Value: TStatus);
+procedure TChatMensagem.SetStatus(const Value: TStatus);
 begin
   FStatus := Value;
 
@@ -151,18 +160,18 @@ begin
   end;
 end;
 
-function TFrameMensagem.GetNomeVisivel: Boolean;
+function TChatMensagem.GetNomeVisivel: Boolean;
 begin
   Result := FNomeVisivel;
 end;
 
-procedure TFrameMensagem.SetNome(const Value: String);
+procedure TChatMensagem.SetNome(const Value: String);
 begin
   FNome := Value;
   SetNomeVisivel(FNomeVisivel);
 end;
 
-procedure TFrameMensagem.SetNomeVisivel(const Value: Boolean);
+procedure TChatMensagem.SetNomeVisivel(const Value: Boolean);
 begin
   FNomeVisivel := Value;
   if FNomeVisivel then
@@ -179,30 +188,30 @@ begin
   FrameResized(Self);
 end;
 
-procedure TFrameMensagem.SetVisualizada(const Value: Boolean);
+procedure TChatMensagem.SetVisualizada(const Value: Boolean);
 begin
   FVisualizada := Value;
   if Assigned(AoVisualizar) then
-    AoVisualizar(Self.Tag);
+    AoVisualizar(Self);
 end;
 
-procedure TFrameMensagem.AddConteudo(Conteudo: TFrameConteudo);
+procedure TChatMensagem.AddConteudo(Conteudo: TChatConteudo);
 begin
   FConteudos := FConteudos + [Conteudo];
   rtgFundo.AddObject(Conteudo);
 end;
 
-procedure TFrameMensagem.Piscar(Cor: TAlphaColor; Tempo: Single);
+procedure TChatMensagem.Piscar(Cor: TAlphaColor; Tempo: Single);
 begin
   rtgFundo.Fill.Color := Cor;
   TAnimator.StopPropertyAnimation(rtgFundo, 'Fill.Color');
   TAnimator.AnimateColor(rtgFundo, 'Fill.Color', CorFundo(Lado), Tempo, TAnimationType.InOut, TInterpolationType.Cubic);
 end;
 
-procedure TFrameMensagem.FrameResized(Sender: TObject);
+procedure TChatMensagem.FrameResized(Sender: TObject);
 var
   Target: TTarget;
-  Conteudo: TFrameConteudo;
+  Conteudo: TChatConteudo;
   iSomaAltura: Single;
   iMaxLargura: Single;
   Largura: Single;
@@ -231,7 +240,7 @@ begin
   Self.Height := iSomaAltura;
 end;
 
-procedure TFrameMensagem.FramePaint(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);
+procedure TChatMensagem.FramePaint(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);
 begin
   inherited;
   if not Visualizada {$IFDEF MSWINDOWS} and IsFormActive(Self) {$ENDIF} then

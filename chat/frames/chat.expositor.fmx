@@ -1,4 +1,4 @@
-inherited FrameChat: TFrameChat
+inherited ChatExpositor: TChatExpositor
   Align = Client
   Size.Width = 532.000000000000000000
   Size.Height = 566.000000000000000000

@@ -1,4 +1,4 @@
-inherited FrameAnexo: TFrameAnexo
+inherited ChatAnexo: TChatAnexo
   Align = Center
   Size.Width = 276.000000000000000000
   Size.Height = 202.000000000000000000

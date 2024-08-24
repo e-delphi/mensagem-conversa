@@ -1,4 +1,4 @@
-inherited FrameSeparadorData: TFrameSeparadorData
+inherited ChatSeparadorData: TChatSeparadorData
   Align = Top
   Size.Width = 312.000000000000000000
   Size.Height = 22.000000000000000000
@@ -8,8 +8,8 @@ inherited FrameSeparadorData: TFrameSeparadorData
     Size.Height = 19.000000000000000000
     Size.PlatformDefault = False
     Stroke.Kind = None
-    XRadius = 10.000000000000000000
-    YRadius = 10.000000000000000000
+    XRadius = 9.500000000000000000
+    YRadius = 9.500000000000000000
     object txtData: TText
       Align = Client
       Size.Width = 55.000000000000000000

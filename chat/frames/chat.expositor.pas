@@ -1,5 +1,5 @@
 ﻿// Eduardo - 03/08/2024
-unit frame.chat;
+unit chat.expositor;
 
 interface
 
@@ -11,11 +11,11 @@ uses
   FMX.Forms,
   FMX.StdCtrls,
   FMX.Layouts,
-  frame.base,
-  frame.ultima;
+  chat.base,
+  chat.ultima;
 
 type
-  TFrameChat = class(TFrameBase)
+  TChatExpositor = class(TChatBase)
     sbxCentro: TVertScrollBox;
     scroll: TSmallScrollBar;
     procedure FrameResized(Sender: TObject);
@@ -38,31 +38,31 @@ uses
 
 {$R *.fmx}
 
-procedure TFrameChat.FrameResized(Sender: TObject);
+procedure TChatExpositor.FrameResized(Sender: TObject);
 begin
   sbxCentro.Width := Min(LarguraMaximaConteudo, Self.Width);
 end;
 
-procedure TFrameChat.FrameMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; var Handled: Boolean);
+procedure TChatExpositor.FrameMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; var Handled: Boolean);
 begin
   scroll.Value := scroll.Value - WheelDelta;
 end;
 
-procedure TFrameChat.sbxCentroViewportPositionChange(Sender: TObject; const OldViewportPosition, NewViewportPosition: TPointF; const ContentSizeChanged: Boolean);
+procedure TChatExpositor.sbxCentroViewportPositionChange(Sender: TObject; const OldViewportPosition, NewViewportPosition: TPointF; const ContentSizeChanged: Boolean);
 begin
   scroll.Max := sbxCentro.ContentBounds.Height;
   scroll.ViewportSize := Self.Height;
   scroll.Value := NewViewportPosition.Y;
 end;
 
-procedure TFrameChat.scrollChange(Sender: TObject);
+procedure TChatExpositor.scrollChange(Sender: TObject);
 begin
   sbxCentro.ViewportPosition := TPointF.Create(0, scroll.Value);
   if Assigned(OnScrollChange) then
     OnScrollChange(Sender);
 end;
 
-procedure TFrameChat.SetLarguraMaximaConteudo(const Value: Integer);
+procedure TChatExpositor.SetLarguraMaximaConteudo(const Value: Integer);
 begin
   FLarguraMaximaConteudo := Value;
   FrameResized(Self);

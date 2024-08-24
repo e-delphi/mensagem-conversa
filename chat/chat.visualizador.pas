@@ -8,50 +8,51 @@ uses
   System.UITypes,
   FMX.Types,
   FMX.Controls,
+  FMX.Forms,
+  System.Generics.Collections,
   chat.tipos,
-  frame.base,
-  frame.chat,
-  frame.editor,
-  frame.anexo,
-  frame.ultima,
-  frame.mensagem,
-  frame.conteudo.texto,
-  frame.conteudo.imagem,
-  frame.conteudo.anexo,
-  frame.separador.data;
+  chat.base,
+  chat.expositor,
+  chat.editor.entrada,
+  chat.anexo,
+  chat.ultima,
+  chat.mensagem,
+  chat.conteudo.texto,
+  chat.conteudo.imagem,
+  chat.conteudo.anexo,
+  chat.separador.data;
 
 type
   TChatVisualizador = class(TControl, IControl)
   strict private
-    FMensagens: TArray<TFrameMensagem>;
-    FSeparadores: TArray<TFrameBase>;
+    FMensagens: TDictionary<Integer, TChatMensagem>;
+    FSeparadorData: TDictionary<TDate, TChatSeparadorData>;
   private
-    Chat: TFrameChat;
-    Ultima: TFrameUltima;
-    FAoVisualizar: TEventoMensagem;
+    Chat: TChatExpositor;
+    Ultima: TChatUltima;
+    FAoVisualizar: TEvento;
     function GetCount: Integer;
-    function GetVisivel(const Index: Integer): Boolean;
-    procedure AoVisualizarInterno(Index: Integer);
+    function GetVisivel(const ID: Integer): Boolean;
+    procedure AoVisualizarInterno(Frame: TFrame);
     procedure ChatScrollChange(Sender: TObject);
     function GetLarguraMaximaConteudo: Integer;
     procedure SetLarguraMaximaConteudo(const Value: Integer);
-    function GetMensagem(const Index: Integer): TFrameMensagem;
+    function GetMensagem(const ID: Integer): TChatMensagem;
   public
     constructor Create(AOwner: TComponent); override;
-    function AdicionarMensagem(Usuario: String; Data: TDateTime; Conteudos: TArray<TConteudo>; PosTop: Single = -1): Integer; // retorna o index da mensagem, para quem criar a armazernar e recupera-la depois
-    procedure RemoverMensagem(Index: Integer);
-    function AdicionarSeparadorData(Data: TDateTime; PosTop: Single): Integer; // retorna o index do separador, para quem criar armazenar e recupera-lo depois
-    function AdicionarSeparadorVisualizacao(PosTop: Single): Integer; // retorna o index do separador, para quem criar armazenar e recupera-lo depois
-    procedure RemoveSeparador(Index: Integer);
+    destructor Destroy; override;
+    procedure AdicionarMensagem(ID: Integer; Usuario: String; Data: TDateTime; Conteudos: TArray<TConteudo>; PosTop: Single = -1);
+    procedure RemoverMensagem(ID: Integer);
+    procedure AdicionarSeparadorData(Data: TDate; PosTop: Single);
+    procedure RemoveSeparadorData(Data: TDate);
     property LarguraMaximaConteudo: Integer read GetLarguraMaximaConteudo write SetLarguraMaximaConteudo;
-    property Mensagem[const Index: Integer]: TFrameMensagem read GetMensagem;
-    property Visivel[const Index: Integer]: Boolean read GetVisivel;
+    property Mensagem[const ID: Integer]: TChatMensagem read GetMensagem;
+    property Visivel[const ID: Integer]: Boolean read GetVisivel;
     property Count: Integer read GetCount;
-    procedure Posicionar(Index: Integer = -1);
-    procedure Piscar(Index: Integer; Cor: TAlphaColor; Tempo: Single = 0.2);
+    procedure Posicionar(ID: Integer = -1);
     function Visiveis: TArray<Integer>;
     function Listar: TArray<Integer>;
-    property AoVisualizar: TEventoMensagem read FAoVisualizar write FAoVisualizar;
+    property AoVisualizar: TEvento read FAoVisualizar write FAoVisualizar;
   end;
 
 implementation
@@ -64,13 +65,23 @@ uses
 constructor TChatVisualizador.Create(AOwner: TComponent);
 begin
   inherited;
-  Chat := TFrameChat.Create(Self);
+  FMensagens := TDictionary<Integer, TChatMensagem>.Create;
+  FSeparadorData := TDictionary<TDate, TChatSeparadorData>.Create;
+
+  Chat := TChatExpositor.Create(Self);
   Self.AddObject(Chat);
 
-  Ultima := TFrameUltima.Create(Chat.scroll);
+  Ultima := TChatUltima.Create(Chat.scroll);
   Chat.AddObject(Ultima);
 
   Chat.OnScrollChange := ChatScrollChange;
+end;
+
+destructor TChatVisualizador.Destroy;
+begin
+  FreeAndNil(FMensagens);
+  FreeAndNil(FSeparadorData);
+  inherited;
 end;
 
 procedure TChatVisualizador.ChatScrollChange(Sender: TObject);
@@ -78,15 +89,18 @@ begin
   Ultima.Change;
 end;
 
-function TChatVisualizador.AdicionarMensagem(Usuario: String; Data: TDateTime; Conteudos: TArray<TConteudo>; PosTop: Single = -1): Integer;
+procedure TChatVisualizador.AdicionarMensagem(ID: Integer; Usuario: String; Data: TDateTime; Conteudos: TArray<TConteudo>; PosTop: Single = -1);
 var
   Item: TConteudo;
-  frmMensagem: TFrameMensagem;
-  frmTexto: TFrameConteudoTexto;
-  frmImagem: TFrameConteudoImagem;
-  frmAnexo: TFrameConteudoAnexo;
+  frmMensagem: TChatMensagem;
+  frmTexto: TChatConteudoTexto;
+  frmImagem: TChatConteudoImagem;
+  frmAnexo: TChatConteudoAnexo;
 begin
-  frmMensagem := TFrameMensagem.Create(Self);
+  if FMensagens.ContainsKey(ID) then
+    raise Exception.Create('Mensagem já inserida!');
+
+  frmMensagem := TChatMensagem.Create(Self, ID);
   frmMensagem.Nome := Usuario;
   frmMensagem.txtHora.Text := FormatDateTime('hh:nn', Data);
   frmMensagem.AoVisualizar := AoVisualizarInterno;
@@ -96,19 +110,19 @@ begin
     case Item.Tipo of
       TTipo.Texto:
       begin
-        frmTexto := TFrameConteudoTexto.Create(Self);
+        frmTexto := TChatConteudoTexto.Create(Self);
         frmTexto.txtMensagem.Text := Item.Conteudo;
         frmMensagem.AddConteudo(frmTexto);
       end;
       TTipo.Imagem:
       begin
-        frmImagem := TFrameConteudoImagem.Create(Self);
+        frmImagem := TChatConteudoImagem.Create(Self);
         frmImagem.imgImagem.Bitmap.LoadFromFile(Item.Conteudo);
         frmMensagem.AddConteudo(frmImagem);
       end;
       TTipo.Arquivo:
       begin
-        frmAnexo := TFrameConteudoAnexo.Create(Self);
+        frmAnexo := TChatConteudoAnexo.Create(Self);
         frmAnexo.lbNome.Text := ExtractFileName(Item.Conteudo);
         frmMensagem.AddConteudo(frmAnexo);
       end;
@@ -116,11 +130,7 @@ begin
   end;
 
   Chat.sbxCentro.Content.AddObject(frmMensagem);
-  FMensagens := FMensagens + [frmMensagem];
-  Result := Pred(Length(FMensagens));
-
-  // Armazena na mensagem o index dela para retornar nos eventos
-  frmMensagem.Tag := Result;
+  FMensagens.Add(ID, frmMensagem);
 
   if PosTop = -1 then
     frmMensagem.Position.Y := Chat.scroll.Max
@@ -128,77 +138,61 @@ begin
     frmMensagem.Position.Y := PosTop;
 end;
 
-procedure TChatVisualizador.RemoverMensagem(Index: Integer);
-var
-  frmMensagem: TFrameMensagem;
+procedure TChatVisualizador.RemoverMensagem(ID: Integer);
 begin
-  frmMensagem := FMensagens[Index];
-  Chat.sbxCentro.Content.RemoveObject(frmMensagem);
-  FreeAndNil(frmMensagem);
-  FMensagens[Index] := nil;
+  Chat.sbxCentro.Content.RemoveObject(FMensagens[ID]);
+  FreeAndNil(FMensagens[ID]);
+  FMensagens.Remove(ID);
 end;
 
-function TChatVisualizador.AdicionarSeparadorData(Data: TDateTime; PosTop: Single): Integer;
+procedure TChatVisualizador.AdicionarSeparadorData(Data: TDate; PosTop: Single);
 var
-  frmData: TFrameSeparadorData;
+  frmData: TChatSeparadorData;
 begin
-  frmData := TFrameSeparadorData.Create(Self);
+  if FSeparadorData.ContainsKey(Data) then
+    raise Exception.Create('Separador de data já inserido!');
+
+  frmData := TChatSeparadorData.Create(Self);
   Chat.sbxCentro.Content.AddObject(frmData);
   frmData.Data := Data;
-  FSeparadores := FSeparadores + [frmData];
-  Result := Pred(Length(FSeparadores));
-
-  // Armazena no separador o index dele para poder remover depois
-  frmData.Tag := Result;
-
+  FSeparadorData.Add(Data, frmData);
   frmData.Position.Y := PosTop;
 end;
 
-function TChatVisualizador.AdicionarSeparadorVisualizacao(PosTop: Single): Integer;
+procedure TChatVisualizador.RemoveSeparadorData(Data: TDate);
 begin
-  Result := -1;
+  if not FSeparadorData.ContainsKey(Data) then
+    Exit;
+  Chat.sbxCentro.Content.RemoveObject(FSeparadorData.Items[Data]);
+  FreeAndNil(FSeparadorData.Items[Data]);
+  FSeparadorData.Remove(Data);
 end;
 
-procedure TChatVisualizador.RemoveSeparador(Index: Integer);
-var
-  frmBase: TFrameBase;
-begin
-  frmBase := FSeparadores[Index];
-  Chat.sbxCentro.Content.RemoveObject(frmBase);
-  FreeAndNil(frmBase);
-  FSeparadores[Index] := nil;
-end;
-
-procedure TChatVisualizador.AoVisualizarInterno(Index: Integer);
+procedure TChatVisualizador.AoVisualizarInterno(Frame: TFrame);
 begin
   if Assigned(AoVisualizar) then
-    AoVisualizar(Index);
+    AoVisualizar(Frame);
 end;
 
-procedure TChatVisualizador.Posicionar(Index: Integer = -1);
+procedure TChatVisualizador.Posicionar(ID: Integer = -1);
 begin
-  if Index = -1 then
+  if ID = -1 then
     Chat.scroll.Value := Chat.scroll.Max - Chat.scroll.ViewportSize
   else
   begin
-    if Visivel[Index] then
+    if Visivel[ID] then
       Exit;
 
-    if Chat.scroll.Value < FMensagens[Index].Position.Y then
-      Chat.scroll.Value := FMensagens[Index].Position.Y - Chat.scroll.ViewportSize + FMensagens[Index].Size.Height
+    if Chat.scroll.Value < FMensagens[ID].Position.Y then
+      Chat.scroll.Value := FMensagens[ID].Position.Y - Chat.scroll.ViewportSize + FMensagens[ID].Size.Height
     else
-      Chat.scroll.Value := FMensagens[Index].Position.Y;
+      Chat.scroll.Value := FMensagens[ID].Position.Y;
   end;
-end;
-
-procedure TChatVisualizador.Piscar(Index: Integer; Cor: TAlphaColor; Tempo: Single);
-begin
-  FMensagens[Index].Piscar(Cor, Tempo);
 end;
 
 function TChatVisualizador.GetCount: Integer;
 begin
-  Result := Length(FMensagens);
+  Result := FMensagens.Count;
 end;
 
 function TChatVisualizador.Visiveis: TArray<Integer>;
@@ -211,11 +205,14 @@ begin
       Result := Result + [I];
 end;
 
-function TChatVisualizador.GetVisivel(const Index: Integer): Boolean;
+function TChatVisualizador.GetVisivel(const ID: Integer): Boolean;
 begin
+  if not Assigned(FMensagens[ID]) then
+    Exit(False);
+
   Result :=
-    (FMensagens[Index].Position.Y > Chat.scroll.Value) and
-    (FMensagens[Index].Position.Y + FMensagens[Index].Size.Height < Chat.scroll.Value + Chat.scroll.ViewportSize);
+    (FMensagens[ID].Position.Y > Chat.scroll.Value) and
+    (FMensagens[ID].Position.Y + FMensagens[ID].Size.Height < Chat.scroll.Value + Chat.scroll.ViewportSize);
 end;
 
 function TChatVisualizador.Listar: TArray<Integer>;
@@ -237,9 +234,9 @@ begin
   Chat.LarguraMaximaConteudo := Value;
 end;
 
-function TChatVisualizador.GetMensagem(const Index: Integer): TFrameMensagem;
+function TChatVisualizador.GetMensagem(const ID: Integer): TChatMensagem;
 begin
-  Result := FMensagens[Index];
+  Result := FMensagens[ID];
 end;
 
 

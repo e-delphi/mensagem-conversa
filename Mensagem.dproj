@@ -4,7 +4,7 @@
         <ProjectVersion>19.5</ProjectVersion>
         <FrameworkType>FMX</FrameworkType>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">Release</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>32787</TargetedPlatforms>
         <AppType>Application</AppType>
@@ -194,39 +194,48 @@
         <DCCReference Include="chat\chat.so.pas"/>
         <DCCReference Include="chat\chat.tipos.pas"/>
         <DCCReference Include="chat\chat.visualizador.pas"/>
-        <DCCReference Include="chat\frames\frame.base.pas">
-            <Form>FrameBase</Form>
+        <DCCReference Include="chat\frames\chat.base.pas">
+            <Form>ChatBase</Form>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
-        <DCCReference Include="chat\frames\frame.anexo.item.pas"/>
-        <DCCReference Include="chat\frames\frame.anexo.pas"/>
-        <DCCReference Include="chat\frames\frame.chat.pas">
-            <Form>FrameChat</Form>
+        <DCCReference Include="chat\frames\chat.anexo.item.pas">
+            <Form>ChatAnexoItem</Form>
+        </DCCReference>
+        <DCCReference Include="chat\frames\chat.anexo.pas">
+            <Form>ChatAnexo</Form>
+        </DCCReference>
+        <DCCReference Include="chat\frames\chat.expositor.pas">
+            <Form>ChatExpositor</Form>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
-        <DCCReference Include="chat\frames\frame.conteudo.anexo.pas"/>
-        <DCCReference Include="chat\frames\frame.conteudo.imagem.pas"/>
-        <DCCReference Include="chat\frames\frame.conteudo.texto.pas"/>
-        <DCCReference Include="chat\frames\frame.editor.pas">
-            <Form>FrameEditor</Form>
+        <DCCReference Include="chat\frames\chat.conteudo.anexo.pas">
+            <Form>ChatConteudoAnexo</Form>
+        </DCCReference>
+        <DCCReference Include="chat\frames\chat.conteudo.imagem.pas">
+            <Form>ChatConteudoImagem</Form>
+        </DCCReference>
+        <DCCReference Include="chat\frames\chat.conteudo.texto.pas">
+            <Form>ChatConteudoTexto</Form>
+        </DCCReference>
+        <DCCReference Include="chat\frames\chat.editor.entrada.pas">
+            <Form>ChatEditorEntrada</Form>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
-        <DCCReference Include="chat\frames\frame.mensagem.conteudo.pas">
-            <Form>FrameConteudo</Form>
+        <DCCReference Include="chat\frames\chat.mensagem.conteudo.pas">
+            <Form>ChatConteudo</Form>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
-        <DCCReference Include="chat\frames\frame.mensagem.pas">
-            <Form>FrameMensagem</Form>
+        <DCCReference Include="chat\frames\chat.mensagem.pas">
+            <Form>ChatMensagem</Form>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
-        <DCCReference Include="chat\frames\frame.ultima.pas">
-            <Form>FrameUltima</Form>
+        <DCCReference Include="chat\frames\chat.ultima.pas">
+            <Form>ChatUltima</Form>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="chat\chat.editor.pas"/>
-        <DCCReference Include="chat\frames\frame.separador.data.pas">
-            <Form>FrameSeparadorData</Form>
-            <FormType>fmx</FormType>
+        <DCCReference Include="chat\frames\chat.separador.data.pas">
+            <Form>ChatSeparadorData</Form>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <BuildConfiguration Include="Base">

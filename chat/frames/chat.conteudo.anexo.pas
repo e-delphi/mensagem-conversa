@@ -1,5 +1,5 @@
 ﻿// Eduardo - 04/08/2024
-unit frame.conteudo.anexo;
+unit chat.conteudo.anexo;
 
 interface
 
@@ -11,10 +11,10 @@ uses
   FMX.Controls.Presentation,
   FMX.StdCtrls,
   FMX.Layouts,
-  frame.mensagem.conteudo;
+  chat.mensagem.conteudo;
 
 type
-  TFrameConteudoAnexo = class(TFrameConteudo)
+  TChatConteudoAnexo = class(TChatConteudo)
     Path: TPath;
     Layout: TLayout;
     lbTamanho: TLabel;
@@ -29,7 +29,7 @@ implementation
 
 { TAnexo }
 
-function TFrameConteudoAnexo.Target(Largura: Single): TTarget;
+function TChatConteudoAnexo.Target(Largura: Single): TTarget;
 begin
   Result.Width := 250;
   Result.Height := 20;

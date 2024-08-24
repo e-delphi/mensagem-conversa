@@ -7,19 +7,19 @@ uses
   chat.so in 'chat\chat.so.pas',
   chat.tipos in 'chat\chat.tipos.pas',
   chat.visualizador in 'chat\chat.visualizador.pas',
-  frame.base in 'chat\frames\frame.base.pas' {FrameBase: TFrame},
-  frame.anexo.item in 'chat\frames\frame.anexo.item.pas',
-  frame.anexo in 'chat\frames\frame.anexo.pas',
-  frame.chat in 'chat\frames\frame.chat.pas' {FrameChat: TFrame},
-  frame.conteudo.anexo in 'chat\frames\frame.conteudo.anexo.pas',
-  frame.conteudo.imagem in 'chat\frames\frame.conteudo.imagem.pas',
-  frame.conteudo.texto in 'chat\frames\frame.conteudo.texto.pas',
-  frame.editor in 'chat\frames\frame.editor.pas' {FrameEditor: TFrame},
-  frame.mensagem.conteudo in 'chat\frames\frame.mensagem.conteudo.pas' {FrameConteudo: TFrame},
-  frame.mensagem in 'chat\frames\frame.mensagem.pas' {FrameMensagem: TFrame},
-  frame.ultima in 'chat\frames\frame.ultima.pas' {FrameUltima: TFrame},
+  chat.base in 'chat\frames\chat.base.pas' {ChatBase: TFrame},
+  chat.anexo.item in 'chat\frames\chat.anexo.item.pas' {ChatAnexoItem},
+  chat.anexo in 'chat\frames\chat.anexo.pas' {ChatAnexo},
+  chat.expositor in 'chat\frames\chat.expositor.pas' {ChatExpositor: TFrame},
+  chat.conteudo.anexo in 'chat\frames\chat.conteudo.anexo.pas' {ChatConteudoAnexo},
+  chat.conteudo.imagem in 'chat\frames\chat.conteudo.imagem.pas' {ChatConteudoImagem},
+  chat.conteudo.texto in 'chat\frames\chat.conteudo.texto.pas' {ChatConteudoTexto},
+  chat.editor.entrada in 'chat\frames\chat.editor.entrada.pas' {ChatEditorEntrada: TFrame},
+  chat.mensagem.conteudo in 'chat\frames\chat.mensagem.conteudo.pas' {ChatConteudo: TFrame},
+  chat.mensagem in 'chat\frames\chat.mensagem.pas' {ChatMensagem: TFrame},
+  chat.ultima in 'chat\frames\chat.ultima.pas' {ChatUltima: TFrame},
   chat.editor in 'chat\chat.editor.pas',
-  frame.separador.data in 'chat\frames\frame.separador.data.pas' {FrameSeparadorData: TFrame};
+  chat.separador.data in 'chat\frames\chat.separador.data.pas' {ChatSeparadorData: TFrame};
 
 {$R *.res}
 

@@ -1,5 +1,5 @@
 ﻿// Eduardo - 04/08/2024
-unit frame.anexo;
+unit chat.anexo;
 
 interface
 
@@ -22,11 +22,11 @@ uses
   FMX.ScrollBox,
   FMX.Memo,
   FMX.Controls.Presentation,
-  frame.base,
-  frame.anexo.item;
+  chat.base,
+  chat.anexo.item;
 
 type
-  TFrameAnexo = class(TFrameBase)
+  TChatAnexo = class(TChatBase)
     odlgArquivo: TOpenDialog;
     rtgEditor: TRectangle;
     lytBotoes: TLayout;
@@ -65,23 +65,23 @@ uses
 const
   QUANTIDADE_VISIVEL = 5;
 
-procedure TFrameAnexo.AfterConstruction;
+procedure TChatAnexo.AfterConstruction;
 begin
   inherited;
   Self.Visible := False;
 end;
 
-destructor TFrameAnexo.Destroy;
+destructor TChatAnexo.Destroy;
 begin
   RemoverItens;
   inherited;
 end;
 
-procedure TFrameAnexo.AdicionarItem(sArquivo: String);
+procedure TChatAnexo.AdicionarItem(sArquivo: String);
 var
-  Anexo: TFrameAnexoItem;
+  Anexo: TChatAnexoItem;
 begin
-  Anexo := TFrameAnexoItem.Create(vsbxConteudo, sArquivo);
+  Anexo := TChatAnexoItem.Create(vsbxConteudo, sArquivo);
   vsbxConteudo.Position.Y := Pred(vsbxConteudo.ComponentCount) * Anexo.Height;
   Anexo.OnRemoverClick := AnexoRemoverClick;
 
@@ -94,10 +94,10 @@ begin
     Self.Width := 310;
 end;
 
-procedure TFrameAnexo.AnexoRemoverClick(Sender: TObject);
+procedure TChatAnexo.AnexoRemoverClick(Sender: TObject);
 begin
-  vsbxConteudo.RemoveObject(TFrameAnexoItem(Sender));
-  TFrameAnexoItem(Sender).Free;
+  vsbxConteudo.RemoveObject(TChatAnexoItem(Sender));
+  TChatAnexoItem(Sender).Free;
 
   if Pred(vsbxConteudo.ComponentCount) < QUANTIDADE_VISIVEL then
     Self.Height := Self.Height - 55;
@@ -108,36 +108,36 @@ begin
     Self.Width := 310;
 end;
 
-procedure TFrameAnexo.RemoverItens;
+procedure TChatAnexo.RemoverItens;
 var
   I: Integer;
-  Item: TFrameAnexoItem;
+  Item: TChatAnexoItem;
 begin
   for I := Pred(vsbxConteudo.ComponentCount) downto 0 do
   begin
-    if vsbxConteudo.Components[I] is TFrameAnexoItem then
+    if vsbxConteudo.Components[I] is TChatAnexoItem then
     begin
-      Item := vsbxConteudo.Components[I] as TFrameAnexoItem;
+      Item := vsbxConteudo.Components[I] as TChatAnexoItem;
       vsbxConteudo.RemoveObject(Item);
       Item.Free;
     end;
   end;
 end;
 
-procedure TFrameAnexo.sbtAdicionarClick(Sender: TObject);
+procedure TChatAnexo.sbtAdicionarClick(Sender: TObject);
 begin
   if odlgArquivo.Execute then
     for var sArquivo in odlgArquivo.Files do
       AdicionarItem(sArquivo);
 end;
 
-procedure TFrameAnexo.sbtCancelarClick(Sender: TObject);
+procedure TChatAnexo.sbtCancelarClick(Sender: TObject);
 begin
   RemoverItens;
   Self.Visible := False;
 end;
 
-procedure TFrameAnexo.sbtEnviarClick(Sender: TObject);
+procedure TChatAnexo.sbtEnviarClick(Sender: TObject);
 begin
   if Assigned(FEnviar) then
     FEnviar(Self);
@@ -147,33 +147,33 @@ begin
   Self.Visible := False;
 end;
 
-function TFrameAnexo.GetAoEnviarClick: TNotifyEvent;
+function TChatAnexo.GetAoEnviarClick: TNotifyEvent;
 begin
   Result := FEnviar;
 end;
 
-procedure TFrameAnexo.SetAoEnviarClick(const Value: TNotifyEvent);
+procedure TChatAnexo.SetAoEnviarClick(const Value: TNotifyEvent);
 begin
   FEnviar := Value;
 end;
 
-function TFrameAnexo.Selecionados: TArray<String>;
+function TChatAnexo.Selecionados: TArray<String>;
 var
   I: Integer;
-  Item: TFrameAnexoItem;
+  Item: TChatAnexoItem;
 begin
   Result := [];
   for I := 0 to Pred(vsbxConteudo.ComponentCount) do
   begin
-    if vsbxConteudo.Components[I] is TFrameAnexoItem then
+    if vsbxConteudo.Components[I] is TChatAnexoItem then
     begin
-      Item := vsbxConteudo.Components[I] as TFrameAnexoItem;
+      Item := vsbxConteudo.Components[I] as TChatAnexoItem;
       Result := Result + [Item.Arquivo];
     end;
   end;
 end;
 
-procedure TFrameAnexo.Exibir;
+procedure TChatAnexo.Exibir;
 begin
   Self.Visible := True;
   Self.Height := 70;

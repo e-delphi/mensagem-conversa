@@ -1,5 +1,5 @@
 ﻿// Eduardo - 07/08/2024
-unit frame.ultima;
+unit chat.ultima;
 
 interface
 
@@ -17,10 +17,10 @@ uses
   FMX.StdCtrls,
   FMX.Objects,
   FMX.Ani,
-  frame.base;
+  chat.base;
 
 type
-  TFrameUltima = class(TFrameBase)
+  TChatUltima = class(TChatBase)
     rtgUltima: TRectangle;
     pthUltima: TPath;
     procedure FrameClick(Sender: TObject);
@@ -41,7 +41,7 @@ implementation
 
 {$R *.fmx}
 
-constructor TFrameUltima.Create(AScroll: TScrollBar);
+constructor TChatUltima.Create(AScroll: TScrollBar);
 var
   Pos: TPoint;
 begin
@@ -54,7 +54,7 @@ begin
   Self.Anchors := [TAnchorKind.akRight, TAnchorKind.akBottom];
 end;
 
-procedure TFrameUltima.Change;
+procedure TChatUltima.Change;
 var
   Pos: TPoint;
 begin
@@ -72,12 +72,12 @@ begin
   TAnimator.AnimateFloat(Self, 'Position.Y', Pos.Y, 0.5, TAnimationType.InOut, TInterpolationType.Cubic);
 end;
 
-procedure TFrameUltima.FrameClick(Sender: TObject);
+procedure TChatUltima.FrameClick(Sender: TObject);
 begin
   TAnimator.AnimateFloat(FScroll, 'Value', FScroll.Max - FScroll.ViewportSize, 0.5, TAnimationType.InOut, TInterpolationType.Cubic);
 end;
 
-function TFrameUltima.PosicaoExibicao: TPoint;
+function TChatUltima.PosicaoExibicao: TPoint;
 begin
   Result := TPoint.Create(
     Round(FScroll.Position.X - Self.Width - MARGEM),
@@ -85,7 +85,7 @@ begin
   );
 end;
 
-function TFrameUltima.PosicaoOculta: TPoint;
+function TChatUltima.PosicaoOculta: TPoint;
 begin
   Result := TPoint.Create(
     Round(FScroll.Position.X - Self.Width - MARGEM),

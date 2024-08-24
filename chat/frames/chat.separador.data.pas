@@ -1,5 +1,5 @@
 ﻿// Eduardo - 21/08/2024
-unit frame.separador.data;
+unit chat.separador.data;
 
 interface
 
@@ -16,14 +16,14 @@ uses
   FMX.Dialogs,
   FMX.StdCtrls,
   FMX.Objects,
-  frame.base;
+  chat.base;
 
 type
-  TFrameSeparadorData = class(TFrameBase)
+  TChatSeparadorData = class(TChatBase)
     rtgFundo: TRectangle;
     txtData: TText;
   private
-    FData: TDateTime;
+    FData: TDate;
     function GetData: TDateTime; reintroduce;
     procedure SetData(const Value: TDateTime); reintroduce;
   public
@@ -36,12 +36,12 @@ implementation
 
 { TFrameSeparadorData }
 
-function TFrameSeparadorData.GetData: TDateTime;
+function TChatSeparadorData.GetData: TDateTime;
 begin
   Result := FData;
 end;
 
-procedure TFrameSeparadorData.SetData(const Value: TDateTime);
+procedure TChatSeparadorData.SetData(const Value: TDateTime);
 begin
   FData := Value;
   txtData.Text := FormatDateTime('dd/mm', Value);

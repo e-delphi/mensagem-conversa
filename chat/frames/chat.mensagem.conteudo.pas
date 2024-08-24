@@ -1,5 +1,5 @@
 ﻿// Eduardo - 03/08/2024
-unit frame.mensagem.conteudo;
+unit chat.mensagem.conteudo;
 
 interface
 
@@ -15,7 +15,7 @@ uses
   FMX.Forms,
   FMX.Dialogs,
   FMX.StdCtrls,
-  frame.base;
+  chat.base;
 
 type
   TTarget = record
@@ -23,7 +23,7 @@ type
     Height: Single;
   end;
 
-  TFrameConteudo = class(TFrameBase)
+  TChatConteudo = class(TChatBase)
   public
     function Target(Largura: Single): TTarget; virtual; abstract;
   end;

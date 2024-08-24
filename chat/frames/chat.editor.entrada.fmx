@@ -1,4 +1,4 @@
-inherited FrameEditor: TFrameEditor
+inherited ChatEditorEntrada: TChatEditorEntrada
   Align = Bottom
   Size.Width = 516.000000000000000000
   Size.Height = 40.000000000000000000

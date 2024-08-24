@@ -1,5 +1,5 @@
 ﻿// Eduardo - 04/08/2024
-unit frame.conteudo.imagem;
+unit chat.conteudo.imagem;
 
 interface
 
@@ -8,10 +8,10 @@ uses
   FMX.Types,
   FMX.Controls,
   FMX.Objects,
-  frame.mensagem.conteudo;
+  chat.mensagem.conteudo;
 
 type
-  TFrameConteudoImagem = class(TFrameConteudo)
+  TChatConteudoImagem = class(TChatConteudo)
     imgImagem: TImage;
   public
     function Target(Largura: Single): TTarget; override;
@@ -26,7 +26,7 @@ uses
 
 { TConteudoImagem }
 
-function TFrameConteudoImagem.Target(Largura: Single): TTarget;
+function TChatConteudoImagem.Target(Largura: Single): TTarget;
 var
   Proporcao: Single;
 begin

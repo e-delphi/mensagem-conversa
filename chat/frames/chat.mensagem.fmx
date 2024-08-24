@@ -1,4 +1,4 @@
-inherited FrameMensagem: TFrameMensagem
+inherited ChatMensagem: TChatMensagem
   Align = Top
   Margins.Top = 5.000000000000000000
   Margins.Bottom = 5.000000000000000000

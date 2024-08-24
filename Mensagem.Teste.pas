@@ -47,9 +47,10 @@ type
     procedure Button7Click(Sender: TObject);
     procedure Button8Click(Sender: TObject);
   private
+    FID: Integer;
     Visualizador: TChatVisualizador;
     Editor: TChatEditor;
-    procedure AoVisualizar(Index: Integer);
+    procedure AoVisualizar(Frame: TFrame);
     procedure AoEnviar(Conteudos: TArray<TConteudo>);
   end;
 
@@ -57,6 +58,9 @@ var
   Inicio: TInicio;
 
 implementation
+
+uses
+  chat.mensagem;
 
 {$R *.fmx}
 
@@ -73,27 +77,29 @@ begin
   Editor.Align := TAlignLayout.Bottom;
   Editor.AoEnviar := AoEnviar;
   Editor.LarguraMaximaConteudo := 500;
+
+  FID := -1;
 end;
 
-procedure TInicio.AoVisualizar(Index: Integer);
+procedure TInicio.AoVisualizar(Frame: TFrame);
 begin
-  Visualizador.Piscar(Index, TAlphaColorRec.Blue, 0.5);
+  if Frame is TChatMensagem then
+    TChatMensagem(Frame).Piscar(TAlphaColorRec.Blue, 0.5);
 end;
 
 procedure TInicio.AoEnviar(Conteudos: TArray<TConteudo>);
-var
-  Index: Integer;
 begin
-  Index := Visualizador.AdicionarMensagem('ChatEditor', Now, Conteudos);
-  Visualizador.Mensagem[Index].Lado := TLado.Direito;
-  Visualizador.Posicionar(Index);
+  Inc(FID);
+  Visualizador.AdicionarMensagem(FID, 'ChatEditor', Now, Conteudos);
+  Visualizador.Mensagem[FID].Lado := TLado.Direito;
+  Visualizador.Posicionar(FID);
 end;
 
 procedure TInicio.btnTextoDireitoClick(Sender: TObject);
-var
-  Index: Integer;
 begin
-  Index := Visualizador.AdicionarMensagem(
+  Inc(FID);
+  Visualizador.AdicionarMensagem(
+    FID,
     'Eduardo',
      Now,
     [
@@ -102,15 +108,15 @@ begin
     ],
     0
   );
-  Visualizador.Mensagem[Index].Lado := TLado.Direito;
-  Visualizador.Posicionar(Index);
+  Visualizador.Mensagem[FID].Lado := TLado.Direito;
+  Visualizador.Posicionar(FID);
 end;
 
 procedure TInicio.btnTextoEsquerdoClick(Sender: TObject);
-var
-  Index: Integer;
 begin
-  Index := Visualizador.AdicionarMensagem(
+  Inc(FID);
+  Visualizador.AdicionarMensagem(
+    FID,
     'Eduardo',
      Now,
     [
@@ -118,7 +124,7 @@ begin
       TConteudo.Create(TTipo.Texto, 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout')
     ]
   );
-  Visualizador.Mensagem[Index].Lado := TLado.Esquerdo;
+  Visualizador.Mensagem[FID].Lado := TLado.Esquerdo;
 end;
 
 procedure TInicio.Button1Click(Sender: TObject);
@@ -158,10 +164,10 @@ begin
 end;
 
 procedure TInicio.btnImagemDireitoClick(Sender: TObject);
-var
-  Index: Integer;
 begin
-  Index := Visualizador.AdicionarMensagem(
+  Inc(FID);
+  Visualizador.AdicionarMensagem(
+    FID,
     'Eduardo',
     Now,
     [
@@ -171,8 +177,8 @@ begin
       TConteudo.Create(TTipo.Texto, 'Ayla')
     ]
   );
-  Visualizador.Mensagem[Index].Lado := TLado.Direito;
-  Visualizador.Mensagem[Index].NomeVisivel := True;
+  Visualizador.Mensagem[FID].Lado := TLado.Direito;
+  Visualizador.Mensagem[FID].NomeVisivel := True;
 end;
 
 procedure TInicio.Button6Click(Sender: TObject);
@@ -182,12 +188,12 @@ end;
 
 procedure TInicio.Button7Click(Sender: TObject);
 begin
-  Visualizador.AdicionarSeparadorData(EncodeDate(2024, 08, 01), 100);
+  Visualizador.AdicionarSeparadorData(EncodeDate(2024, 08, 01), 200);
 end;
 
 procedure TInicio.Button8Click(Sender: TObject);
 begin
-  Visualizador.RemoveSeparador(0);
+  Visualizador.RemoveSeparadorData(EncodeDate(2024, 08, 01));
 end;
 
 end.

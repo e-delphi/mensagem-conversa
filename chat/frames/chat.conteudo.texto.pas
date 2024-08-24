@@ -1,5 +1,5 @@
 ﻿// Eduardo - 03/08/2024
-unit frame.conteudo.texto;
+unit chat.conteudo.texto;
 
 interface
 
@@ -11,7 +11,7 @@ uses
   FMX.Graphics,
   FMX.Objects,
   FMX.TextLayout,
-  frame.mensagem.conteudo;
+  chat.mensagem.conteudo;
 
 type
   TTextLink = record
@@ -38,7 +38,7 @@ type
     property Text: String read GetNewText write SetNewText;
   end;
 
-  TFrameConteudoTexto = class(TFrameConteudo)
+  TChatConteudoTexto = class(TChatConteudo)
     txtMensagem: TText;
   public
     function Target(Largura: Single): TTarget; override;
@@ -196,7 +196,7 @@ end;
 
 { TConteudoTexto }
 
-function TFrameConteudoTexto.Target(Largura: Single): TTarget;
+function TChatConteudoTexto.Target(Largura: Single): TTarget;
 var
   TamanhoTexto: TRectF;
 begin

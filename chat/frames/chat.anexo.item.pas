@@ -1,5 +1,5 @@
 ﻿// Eduardo - 07/08/2024
-unit frame.anexo.item;
+unit chat.anexo.item;
 
 interface
 
@@ -18,10 +18,10 @@ uses
   FMX.Controls.Presentation,
   FMX.Objects,
   FMX.Layouts,
-  frame.base;
+  chat.base;
 
 type
-  TFrameAnexoItem = class(TFrameBase)
+  TChatAnexoItem = class(TChatBase)
     imgIcon: TImage;
     Layout: TLayout;
     lbTamanho: TLabel;
@@ -48,7 +48,7 @@ uses
 
 {$R *.fmx}
 
-constructor TFrameAnexoItem.Create(AOwner: TVertScrollBox; sArquivo: String);
+constructor TChatAnexoItem.Create(AOwner: TVertScrollBox; sArquivo: String);
 var
   bmp: TBitmap;
 begin
@@ -66,17 +66,17 @@ begin
   lbTamanho.Text := FormatFloat('#,##0.00', TFile.GetSize(sArquivo) / 1024 / 1024) +' MB';
 end;
 
-function TFrameAnexoItem.GetOnRemoverClick: TNotifyEvent;
+function TChatAnexoItem.GetOnRemoverClick: TNotifyEvent;
 begin
   Result := FOnRemover;
 end;
 
-procedure TFrameAnexoItem.SetOnRemoverClick(const Value: TNotifyEvent);
+procedure TChatAnexoItem.SetOnRemoverClick(const Value: TNotifyEvent);
 begin
   FOnRemover := Value;
 end;
 
-procedure TFrameAnexoItem.lytRemoverClick(Sender: TObject);
+procedure TChatAnexoItem.lytRemoverClick(Sender: TObject);
 begin
   if Assigned(FOnRemover) then
     FOnRemover(Self);

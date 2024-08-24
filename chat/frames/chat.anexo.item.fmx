@@ -1,4 +1,4 @@
-inherited FrameAnexoItem: TFrameAnexoItem
+inherited ChatAnexoItem: TChatAnexoItem
   Align = Top
   Size.Width = 208.000000000000000000
   Size.Height = 50.000000000000000000
