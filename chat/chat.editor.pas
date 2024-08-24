@@ -35,7 +35,9 @@ implementation
 uses
   System.SysUtils,
   System.StrUtils,
-  FMX.Dialogs;
+  FMX.Dialogs,
+  FMX.Forms,
+  chat.so;
 
 { TChatEditor }
 
@@ -84,7 +86,7 @@ end;
 
 procedure TChatEditor.EditorEmojiClick(Sender: TObject);
 begin
-  //
+  ShowEmoji(Editor.mmMensagem);
 end;
 
 procedure TChatEditor.EditorEnviarClick(Sender: TObject);
