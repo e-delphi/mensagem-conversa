@@ -19,7 +19,8 @@ uses
   chat.mensagem in 'chat\frames\chat.mensagem.pas' {ChatMensagem: TFrame},
   chat.ultima in 'chat\frames\chat.ultima.pas' {ChatUltima: TFrame},
   chat.editor in 'chat\chat.editor.pas',
-  chat.separador.data in 'chat\frames\chat.separador.data.pas' {ChatSeparadorData: TFrame};
+  chat.separador.data in 'chat\frames\chat.separador.data.pas' {ChatSeparadorData: TFrame},
+  chat.ordenador in 'chat\chat.ordenador.pas';
 
 {$R *.res}
 

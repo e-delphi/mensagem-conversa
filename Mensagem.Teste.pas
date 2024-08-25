@@ -18,7 +18,8 @@ uses
   FMX.StdCtrls,
   chat.visualizador,
   chat.editor,
-  chat.tipos;
+  chat.tipos,
+  FMX.DateTimeCtrls;
 
 type
   TInicio = class(TForm)
@@ -32,8 +33,9 @@ type
     Button4: TButton;
     Button5: TButton;
     Button6: TButton;
-    Button7: TButton;
-    Button8: TButton;
+    Panel2: TPanel;
+    dtEditor: TDateEdit;
+    tmEditor: TTimeEdit;
     procedure FormCreate(Sender: TObject);
     procedure btnTextoEsquerdoClick(Sender: TObject);
     procedure btnTextoDireitoClick(Sender: TObject);
@@ -44,8 +46,6 @@ type
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
-    procedure Button7Click(Sender: TObject);
-    procedure Button8Click(Sender: TObject);
   private
     FID: Integer;
     Visualizador: TChatVisualizador;
@@ -61,6 +61,7 @@ var
 implementation
 
 uses
+  System.DateUtils,
   chat.mensagem;
 
 {$R *.fmx}
@@ -109,15 +110,17 @@ begin
   Visualizador.AdicionarMensagem(
     FID,
     'Eduardo',
-     Now,
+    dtEditor.Date + tmEditor.DateTime,
     [
+      TConteudo.Create(TTipo.Texto, dtEditor.Text),
       TConteudo.Create(TTipo.Texto, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam finibus lectus sit amet purus convallis auctor.'),
       TConteudo.Create(TTipo.Texto, 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout')
-    ],
-    0
+    ]
   );
   Visualizador.Mensagem[FID].Lado := TLado.Direito;
   Visualizador.Posicionar(FID);
+
+  dtEditor.Date := IncDay(dtEditor.Date, -1);
 end;
 
 procedure TInicio.btnTextoEsquerdoClick(Sender: TObject);
@@ -126,13 +129,17 @@ begin
   Visualizador.AdicionarMensagem(
     FID,
     'Eduardo',
-     Now,
+    dtEditor.Date + tmEditor.DateTime,
     [
+      TConteudo.Create(TTipo.Texto, dtEditor.Text),
       TConteudo.Create(TTipo.Texto, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam finibus lectus sit amet purus convallis auctor.'),
       TConteudo.Create(TTipo.Texto, 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout')
     ]
   );
   Visualizador.Mensagem[FID].Lado := TLado.Esquerdo;
+  Visualizador.Posicionar(FID);
+
+  tmEditor.DateTime := IncMinute(tmEditor.DateTime);
 end;
 
 procedure TInicio.Button1Click(Sender: TObject);
@@ -192,16 +199,6 @@ end;
 procedure TInicio.Button6Click(Sender: TObject);
 begin
   Visualizador.RemoverMensagem(5);
-end;
-
-procedure TInicio.Button7Click(Sender: TObject);
-begin
-  Visualizador.AdicionarSeparadorData(EncodeDate(2024, 08, 01), 200);
-end;
-
-procedure TInicio.Button8Click(Sender: TObject);
-begin
-  Visualizador.RemoveSeparadorData(EncodeDate(2024, 08, 01));
 end;
 
 end.

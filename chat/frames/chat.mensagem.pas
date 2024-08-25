@@ -34,6 +34,7 @@ type
     FConteudos: TArray<TChatConteudo>;
     FStatus: TStatus;
     FNome: String;
+    FDataEnvio: TDateTime;
     FNomeVisivel: Boolean;
     FVisualizada: Boolean;
     FAoVisualizar: TEvento;
@@ -45,6 +46,7 @@ type
     procedure SetNome(const Value: String);
     procedure SetVisualizada(const Value: Boolean);
     function CorFundo(const Value: TLado): TAlphaColor;
+    procedure SetDataEnvio(const Value: TDateTime);
   public
     constructor Create(AOwner: TComponent; AID: Integer); reintroduce;
     procedure AfterConstruction; override;
@@ -52,6 +54,7 @@ type
     property Lado: TLado read GetLado write SetLado;
     property Status: TStatus read FStatus write SetStatus;
     property Nome: String read FNome write SetNome;
+    property DataEnvio: TDateTime read FDataEnvio write SetDataEnvio;
     property NomeVisivel: Boolean read GetNomeVisivel write SetNomeVisivel;
     property Visualizada: Boolean read FVisualizada write SetVisualizada;
     property AoVisualizar: TEvento read FAoVisualizar write FAoVisualizar;
@@ -93,6 +96,12 @@ begin
   else
     Result := 0;
   end;
+end;
+
+procedure TChatMensagem.SetDataEnvio(const Value: TDateTime);
+begin
+  FDataEnvio := Value;
+  txtHora.Text := FormatDateTime('hh:nn', Value);
 end;
 
 procedure TChatMensagem.SetLado(const Value: TLado);

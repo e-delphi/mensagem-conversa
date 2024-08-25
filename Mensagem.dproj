@@ -238,6 +238,7 @@
             <Form>ChatSeparadorData</Form>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
+        <DCCReference Include="chat\chat.ordenador.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

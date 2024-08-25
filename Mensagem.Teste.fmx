@@ -3,7 +3,7 @@ object Inicio: TInicio
   Top = 0
   Caption = 'Form2'
   ClientHeight = 572
-  ClientWidth = 1312
+  ClientWidth = 1038
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
@@ -11,7 +11,7 @@ object Inicio: TInicio
   DesignerMasterStyle = 0
   object Panel1: TPanel
     Align = Top
-    Size.Width = 1312.000000000000000000
+    Size.Width = 1038.000000000000000000
     Size.Height = 30.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 0
@@ -21,7 +21,7 @@ object Inicio: TInicio
       Size.Width = 110.000000000000000000
       Size.Height = 30.000000000000000000
       Size.PlatformDefault = False
-      TabOrder = 10
+      TabOrder = 8
       Text = 'Texto Esquerdo'
       OnClick = btnTextoEsquerdoClick
     end
@@ -30,7 +30,7 @@ object Inicio: TInicio
       Size.Width = 110.000000000000000000
       Size.Height = 30.000000000000000000
       Size.PlatformDefault = False
-      TabOrder = 8
+      TabOrder = 6
       Text = 'Texto Direito'
       OnClick = btnTextoDireitoClick
     end
@@ -40,7 +40,7 @@ object Inicio: TInicio
       Size.Width = 110.000000000000000000
       Size.Height = 30.000000000000000000
       Size.PlatformDefault = False
-      TabOrder = 7
+      TabOrder = 5
       Text = 'Imagem Direito'
       OnClick = btnImagemDireitoClick
     end
@@ -80,7 +80,7 @@ object Inicio: TInicio
       Size.Width = 110.000000000000000000
       Size.Height = 30.000000000000000000
       Size.PlatformDefault = False
-      TabOrder = 9
+      TabOrder = 7
       Text = 'Ir para'
       OnClick = Button4Click
     end
@@ -90,7 +90,7 @@ object Inicio: TInicio
       Size.Width = 110.000000000000000000
       Size.Height = 30.000000000000000000
       Size.PlatformDefault = False
-      TabOrder = 6
+      TabOrder = 4
       Text = 'Visiveis'
       OnClick = Button5Click
     end
@@ -100,29 +100,32 @@ object Inicio: TInicio
       Size.Width = 110.000000000000000000
       Size.Height = 30.000000000000000000
       Size.PlatformDefault = False
-      TabOrder = 5
+      TabOrder = 3
       Text = 'Remover'
       OnClick = Button6Click
     end
-    object Button7: TButton
-      Align = Left
-      Position.X = 1025.000000000000000000
-      Size.Width = 110.000000000000000000
-      Size.Height = 30.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 4
-      Text = 'Separador Data'
-      OnClick = Button7Click
+  end
+  object Panel2: TPanel
+    Align = Top
+    Position.Y = 30.000000000000000000
+    Size.Width = 1038.000000000000000000
+    Size.Height = 40.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object dtEditor: TDateEdit
+      Date = 45529.000000000000000000
+      Position.X = 8.000000000000000000
+      Position.Y = 8.000000000000000000
+      TabOrder = 0
     end
-    object Button8: TButton
-      Align = Left
-      Position.X = 1135.000000000000000000
-      Size.Width = 130.000000000000000000
-      Size.Height = 30.000000000000000000
+    object tmEditor: TTimeEdit
+      Time = 0.535830393518518500
+      Position.X = 116.000000000000000000
+      Position.Y = 8.000000000000000000
+      Size.Width = 77.000000000000000000
+      Size.Height = 22.000000000000000000
       Size.PlatformDefault = False
-      TabOrder = 3
-      Text = 'Remover Separador'
-      OnClick = Button8Click
+      TabOrder = 2
     end
   end
 end
