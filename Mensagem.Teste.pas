@@ -36,6 +36,8 @@ type
     Panel2: TPanel;
     dtEditor: TDateEdit;
     tmEditor: TTimeEdit;
+    Button7: TButton;
+    Button8: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnTextoEsquerdoClick(Sender: TObject);
     procedure btnTextoDireitoClick(Sender: TObject);
@@ -46,8 +48,11 @@ type
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
+    procedure Button7Click(Sender: TObject);
+    procedure Button8Click(Sender: TObject);
   private
     FID: Integer;
+    FUltimaSelecionada: Integer;
     Visualizador: TChatVisualizador;
     Editor: TChatEditor;
     procedure AoVisualizar(Frame: TFrame);
@@ -68,6 +73,8 @@ uses
 
 procedure TInicio.FormCreate(Sender: TObject);
 begin
+  FUltimaSelecionada := 0;
+
   Visualizador := TChatVisualizador.Create(Self);
   Self.AddObject(Visualizador);
   Visualizador.Align := TAlignLayout.Client;
@@ -93,7 +100,10 @@ end;
 procedure TInicio.AoClicar(Frame: TFrame; Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
 begin
   if Frame is TChatMensagem then
-    TChatMensagem(Frame).Piscar(TAlphaColorRec.Pink, 0.5);
+  begin
+    FUltimaSelecionada := TChatMensagem(Frame).ID;
+    TChatMensagem(Frame).Piscar(TAlphaColorRec.Red, 0.5);
+  end;
 end;
 
 procedure TInicio.AoEnviar(Conteudos: TArray<TConteudo>);
@@ -144,29 +154,30 @@ end;
 
 procedure TInicio.Button1Click(Sender: TObject);
 begin
-  case Visualizador.Mensagem[5].Status of
-    TStatus.Pendente:    Visualizador.Mensagem[5].Status := TStatus.Recebida;
-    TStatus.Recebida:    Visualizador.Mensagem[5].Status := TStatus.Visualizada;
-    TStatus.Visualizada: Visualizador.Mensagem[5].Status := TStatus.Pendente;
+  case Visualizador.Mensagem[FUltimaSelecionada].Status of
+    TStatus.Pendente:    Visualizador.Mensagem[FUltimaSelecionada].Status := TStatus.Recebida;
+    TStatus.Recebida:    Visualizador.Mensagem[FUltimaSelecionada].Status := TStatus.Visualizada;
+    TStatus.Visualizada: Visualizador.Mensagem[FUltimaSelecionada].Status := TStatus.Pendente;
   end;
 end;
 
 procedure TInicio.Button2Click(Sender: TObject);
 begin
-  case Visualizador.Mensagem[5].Lado of
-    TLado.Direito:  Visualizador.Mensagem[5].Lado := TLado.Esquerdo;
-    TLado.Esquerdo: Visualizador.Mensagem[5].Lado := TLado.Direito;
+  case Visualizador.Mensagem[FUltimaSelecionada].Lado of
+    TLado.Direito:  Visualizador.Mensagem[FUltimaSelecionada].Lado := TLado.Esquerdo;
+    TLado.Esquerdo: Visualizador.Mensagem[FUltimaSelecionada].Lado := TLado.Direito;
   end;
 end;
 
 procedure TInicio.Button3Click(Sender: TObject);
 begin
-  Visualizador.Mensagem[5].NomeVisivel := not Visualizador.Mensagem[5].NomeVisivel;
+  Visualizador.Mensagem[FUltimaSelecionada].NomeVisivel := not Visualizador.Mensagem[FUltimaSelecionada].NomeVisivel;
 end;
 
 procedure TInicio.Button4Click(Sender: TObject);
 begin
-  Visualizador.Posicionar(5);
+  Visualizador.Posicionar(FUltimaSelecionada);
+  Visualizador.Mensagem[FUltimaSelecionada].Piscar(TAlphaColorRec.Green, 0.5)
 end;
 
 procedure TInicio.Button5Click(Sender: TObject);
@@ -198,7 +209,17 @@ end;
 
 procedure TInicio.Button6Click(Sender: TObject);
 begin
-  Visualizador.RemoverMensagem(5);
+  Visualizador.RemoverMensagem(FUltimaSelecionada);
+end;
+
+procedure TInicio.Button7Click(Sender: TObject);
+begin
+  Visualizador.ExibirSeparadorLidas(FUltimaSelecionada);
+end;
+
+procedure TInicio.Button8Click(Sender: TObject);
+begin
+  Visualizador.OcultarSeparadorLidas;
 end;
 
 end.

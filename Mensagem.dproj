@@ -239,6 +239,11 @@
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="chat\chat.ordenador.pas"/>
+        <DCCReference Include="chat\frames\chat.separador.lidas.pas">
+            <Form>ChatSeparadorLidas</Form>
+            <FormType>fmx</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

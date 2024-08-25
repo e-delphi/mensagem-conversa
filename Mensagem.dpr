@@ -20,7 +20,8 @@ uses
   chat.ultima in 'chat\frames\chat.ultima.pas' {ChatUltima: TFrame},
   chat.editor in 'chat\chat.editor.pas',
   chat.separador.data in 'chat\frames\chat.separador.data.pas' {ChatSeparadorData: TFrame},
-  chat.ordenador in 'chat\chat.ordenador.pas';
+  chat.ordenador in 'chat\chat.ordenador.pas',
+  chat.separador.lidas in 'chat\frames\chat.separador.lidas.pas' {ChatSeparadorLidas: TFrame};
 
 {$R *.res}
 

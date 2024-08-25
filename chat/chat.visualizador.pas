@@ -21,6 +21,7 @@ uses
   chat.conteudo.imagem,
   chat.conteudo.anexo,
   chat.separador.data,
+  chat.separador.lidas,
   chat.ordenador;
 
 type
@@ -28,6 +29,7 @@ type
   strict private
     FMensagens: TDictionary<Integer, TChatMensagem>;
     FSeparadorData: TDictionary<TDate, TChatSeparadorData>;
+    FSeparadorLidas: TChatSeparadorLidas;
   private
     Chat: TChatExpositor;
     Ultima: TChatUltima;
@@ -55,6 +57,8 @@ type
     procedure Posicionar(ID: Integer = -1);
     function Visiveis: TArray<Integer>;
     function Listar: TArray<Integer>;
+    procedure ExibirSeparadorLidas(ID: Integer);
+    procedure OcultarSeparadorLidas;
     property AoVisualizar: TEvento read FAoVisualizar write FAoVisualizar;
     property AoClicar: TEventoMouseDown read FAoClicar write FAoClicar;
   end;
@@ -79,6 +83,8 @@ begin
   Chat.AddObject(Ultima);
 
   Chat.OnScrollChange := ChatScrollChange;
+
+  FSeparadorLidas := TChatSeparadorLidas.Create(Self);
 end;
 
 destructor TChatVisualizador.Destroy;
@@ -197,6 +203,17 @@ begin
   for Item in Itens do
     if Data <= Item.Data then
       Exit(Item.Top - 1);
+end;
+
+procedure TChatVisualizador.ExibirSeparadorLidas(ID: Integer);
+begin
+  Chat.sbxCentro.Content.AddObject(FSeparadorLidas);
+  FSeparadorLidas.Position.Y := FMensagens[ID].Position.Y - 1;
+end;
+
+procedure TChatVisualizador.OcultarSeparadorLidas;
+begin
+  Chat.sbxCentro.Content.RemoveObject(FSeparadorLidas);
 end;
 
 procedure TChatVisualizador.AtualizaSeparadoresData;
