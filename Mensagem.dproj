@@ -201,9 +201,6 @@
         <DCCReference Include="chat\frames\chat.anexo.item.pas">
             <Form>ChatAnexoItem</Form>
         </DCCReference>
-        <DCCReference Include="chat\frames\chat.anexo.pas">
-            <Form>ChatAnexo</Form>
-        </DCCReference>
         <DCCReference Include="chat\frames\chat.expositor.pas">
             <Form>ChatExpositor</Form>
             <DesignClass>TFrame</DesignClass>
@@ -217,8 +214,8 @@
         <DCCReference Include="chat\frames\chat.conteudo.texto.pas">
             <Form>ChatConteudoTexto</Form>
         </DCCReference>
-        <DCCReference Include="chat\frames\chat.editor.entrada.pas">
-            <Form>ChatEditorEntrada</Form>
+        <DCCReference Include="chat\frames\chat.editor.pas">
+            <Form>ChatEditor</Form>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="chat\frames\chat.mensagem.conteudo.pas">
@@ -233,7 +230,6 @@
             <Form>ChatUltima</Form>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
-        <DCCReference Include="chat\chat.editor.pas"/>
         <DCCReference Include="chat\frames\chat.separador.data.pas">
             <Form>ChatSeparadorData</Form>
             <DesignClass>TFrame</DesignClass>
