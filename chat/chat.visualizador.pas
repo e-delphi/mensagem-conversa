@@ -35,6 +35,7 @@ type
     Ultima: TChatUltima;
     FAoVisualizar: TEvento;
     FAoClicar: TEventoMouseDown;
+    FAoChegarLimite: TEventoLimite;
     function GetCount: Integer;
     function GetVisivel(const ID: Integer): Boolean;
     procedure AoVisualizarInterno(Frame: TFrame);
@@ -61,6 +62,7 @@ type
     procedure OcultarSeparadorLidas;
     property AoVisualizar: TEvento read FAoVisualizar write FAoVisualizar;
     property AoClicar: TEventoMouseDown read FAoClicar write FAoClicar;
+    property AoChegarLimite: TEventoLimite read FAoChegarLimite write FAoChegarLimite;
   end;
 
 implementation
@@ -97,6 +99,13 @@ end;
 procedure TChatVisualizador.ChatScrollChange(Sender: TObject);
 begin
   Ultima.Change;
+
+  if Assigned(AoChegarLimite) then
+    if Chat.scroll.Value = 0 then
+      AoChegarLimite(TLimite.Superior)
+    else
+    if Chat.scroll.Value = Chat.scroll.Max - Chat.scroll.ViewportSize then
+      AoChegarLimite(TLimite.Inferior);
 end;
 
 procedure TChatVisualizador.AdicionarMensagem(ID: Integer; Usuario: String; Data: TDateTime; Conteudos: TArray<TConteudo>);

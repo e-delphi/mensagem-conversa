@@ -38,6 +38,7 @@ type
     tmEditor: TTimeEdit;
     Button7: TButton;
     Button8: TButton;
+    Label1: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnTextoEsquerdoClick(Sender: TObject);
     procedure btnTextoDireitoClick(Sender: TObject);
@@ -58,6 +59,7 @@ type
     procedure AoVisualizar(Frame: TFrame);
     procedure AoEnviar(Conteudos: TArray<TConteudo>);
     procedure AoClicar(Frame: TFrame; Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
+    procedure AoChegarLimite(Limite: TLimite);
   end;
 
 var
@@ -67,6 +69,7 @@ implementation
 
 uses
   System.DateUtils,
+  System.TypInfo,
   chat.mensagem;
 
 {$R *.fmx}
@@ -78,15 +81,16 @@ begin
   Visualizador := TChatVisualizador.Create(Self);
   Self.AddObject(Visualizador);
   Visualizador.Align := TAlignLayout.Client;
+  Visualizador.LarguraMaximaConteudo := 500;
   Visualizador.AoVisualizar := AoVisualizar;
   Visualizador.AoClicar := AoClicar;
-  Visualizador.LarguraMaximaConteudo := 500;
+  Visualizador.AoChegarLimite := AoChegarLimite;
 
   Editor := TChatEditor.Create(Self);
   Self.AddObject(Editor);
   Editor.Align := TAlignLayout.Bottom;
-  Editor.AoEnviar := AoEnviar;
   Editor.LarguraMaximaConteudo := 500;
+  Editor.AoEnviar := AoEnviar;
 
   FID := -1;
 end;
@@ -95,6 +99,11 @@ procedure TInicio.AoVisualizar(Frame: TFrame);
 begin
   if Frame is TChatMensagem then
     TChatMensagem(Frame).Piscar(TAlphaColorRec.Blue, 0.5);
+end;
+
+procedure TInicio.AoChegarLimite(Limite: TLimite);
+begin
+  Label1.Text := 'Limite: '+ GetEnumName(TypeInfo(TLimite), Integer(Limite)) +' às '+ FormatDateTime('hh:nn:ss.zzz', Now);
 end;
 
 procedure TInicio.AoClicar(Frame: TFrame; Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);

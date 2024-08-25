@@ -147,5 +147,14 @@ object Inicio: TInicio
       Size.PlatformDefault = False
       TabOrder = 2
     end
+    object Label1: TLabel
+      Position.X = 201.000000000000000000
+      Position.Y = 10.000000000000000000
+      Size.Width = 208.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Limite: '
+      TabOrder = 4
+    end
   end
 end
