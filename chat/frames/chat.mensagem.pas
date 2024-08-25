@@ -215,17 +215,14 @@ var
   iSomaAltura: Single;
   iMaxLargura: Single;
   Largura: Single;
-  TamanhoTexto: TRectF;
 begin
   if Length(FConteudos) = 0 then
     Exit;
 
-  Largura := Self.Width - (lytLargura.Margins.Left + lytLargura.Margins.Right);
-
-  TamanhoTexto := RectF(0, 0, Largura + (txtNome.Margins.Left + txtNome.Margins.Right), 10000);
-  txtNome.Canvas.MeasureText(TamanhoTexto, txtNome.Text, False, [], TTextAlign.Leading, TTextAlign.Center);
   iSomaAltura := 0;
-  iMaxLargura := TamanhoTexto.Width + (txtNome.Margins.Left + txtNome.Margins.Right);
+  iMaxLargura := 0;
+
+  Largura := Self.Width - lytLargura.Margins.Left - lytLargura.Margins.Right;
 
   for Conteudo in FConteudos do
   begin
@@ -236,7 +233,13 @@ begin
   end;
 
   if txtNome.Visible then
+  begin
     iSomaAltura := iSomaAltura + txtNome.Height;
+    iMaxLargura := Max(iMaxLargura, txtNome.Canvas.TextWidth(txtNome.Text) + txtNome.Margins.Left + txtNome.Margins.Right);
+  end;
+
+  iMaxLargura := Max(iMaxLargura, lytBottom.Margins.Left + lytBottom.Margins.Right + txtHora.Canvas.TextWidth(txtHora.Text) + pthStatus.Width);
+
   iSomaAltura := iSomaAltura + txtHora.Height;
 
   lytLargura.Width := iMaxLargura;

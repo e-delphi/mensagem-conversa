@@ -207,7 +207,7 @@ var
 begin
   TamanhoTexto := RectF(0, 0, Largura - (Self.Margins.Left + Self.Margins.Right), 10000);
   txtMensagem.Canvas.MeasureText(TamanhoTexto, txtMensagem.Text, True, [], TTextAlign.Center, TTextAlign.Leading);
-  Result.Width := TamanhoTexto.Width + (Self.Margins.Left + Self.Margins.Right);
+  Result.Width := TamanhoTexto.Width + Self.Margins.Left + Self.Margins.Right;
   Result.Height := TamanhoTexto.Bottom;
 end;
 
