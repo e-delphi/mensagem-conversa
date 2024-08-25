@@ -200,7 +200,7 @@ var
   I: Integer;
 begin
   Result := [];
-  for I := 0 to Pred(Count) do
+  for I in FMensagens.Keys do
     if Visivel[I] then
       Result := Result + [I];
 end;

@@ -79,6 +79,11 @@ var
 begin
   rtgMensagem.Width := Min(LarguraMaximaConteudo, Self.Width);
 
+  if Self.Width > LarguraMaximaConteudo then
+    rtgMensagem.Corners := [TCorner.TopLeft, TCorner.TopRight]
+  else
+    rtgMensagem.Corners := [];
+
   if not Assigned(mmMensagem.Canvas) then
     Exit;
 

@@ -39,6 +39,7 @@ inherited ChatEditorEntrada: TChatEditorEntrada
       Viewport.Height = 16.000000000000000000
       object txtMensagem: TText
         Align = Left
+        HitTest = False
         Size.Width = 65.000000000000000000
         Size.Height = 16.000000000000000000
         Size.PlatformDefault = False

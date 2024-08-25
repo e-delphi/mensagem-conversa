@@ -215,17 +215,20 @@ var
   iSomaAltura: Single;
   iMaxLargura: Single;
   Largura: Single;
+  TamanhoTexto: TRectF;
 begin
   if Length(FConteudos) = 0 then
     Exit;
 
-  iSomaAltura := 0;
-  iMaxLargura := 0;
-
   Largura := Self.Width - (lytLargura.Margins.Left + lytLargura.Margins.Right);
-  
+
+  TamanhoTexto := RectF(0, 0, Largura + (txtNome.Margins.Left + txtNome.Margins.Right), 10000);
+  txtNome.Canvas.MeasureText(TamanhoTexto, txtNome.Text, False, [], TTextAlign.Leading, TTextAlign.Center);
+  iSomaAltura := 0;
+  iMaxLargura := TamanhoTexto.Width + (txtNome.Margins.Left + txtNome.Margins.Right);
+
   for Conteudo in FConteudos do
-  begin    
+  begin
     Target := Conteudo.Target(Largura);
     iSomaAltura := iSomaAltura + Target.Height;
     iMaxLargura := Max(iMaxLargura, Min(Target.Width, Largura));
