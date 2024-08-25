@@ -52,6 +52,7 @@ type
     Editor: TChatEditor;
     procedure AoVisualizar(Frame: TFrame);
     procedure AoEnviar(Conteudos: TArray<TConteudo>);
+    procedure AoClicar(Frame: TFrame; Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
   end;
 
 var
@@ -70,6 +71,7 @@ begin
   Self.AddObject(Visualizador);
   Visualizador.Align := TAlignLayout.Client;
   Visualizador.AoVisualizar := AoVisualizar;
+  Visualizador.AoClicar := AoClicar;
   Visualizador.LarguraMaximaConteudo := 500;
 
   Editor := TChatEditor.Create(Self);
@@ -85,6 +87,12 @@ procedure TInicio.AoVisualizar(Frame: TFrame);
 begin
   if Frame is TChatMensagem then
     TChatMensagem(Frame).Piscar(TAlphaColorRec.Blue, 0.5);
+end;
+
+procedure TInicio.AoClicar(Frame: TFrame; Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
+begin
+  if Frame is TChatMensagem then
+    TChatMensagem(Frame).Piscar(TAlphaColorRec.Pink, 0.5);
 end;
 
 procedure TInicio.AoEnviar(Conteudos: TArray<TConteudo>);

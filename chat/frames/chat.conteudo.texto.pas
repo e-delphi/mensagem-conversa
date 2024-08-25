@@ -84,6 +84,8 @@ var
   I: Integer;
   sLink: String;
 begin
+  inherited;
+
   if Length(Links) = 0 then
     Exit;
 
@@ -130,6 +132,8 @@ var
   svc: IFMXExtendedClipboardService;
   Def: TAlphaColor;
 begin
+  inherited;
+
   if TPlatformServices.Current.SupportsPlatformService(IFMXExtendedClipboardService, svc) then
   begin
     svc.SetText(Text.Replace('&', '&&'));
@@ -146,6 +150,7 @@ var
   cr: TCursor;
 begin
   inherited;
+
   cr := crDefault;
   try
     if Length(Links) = 0 then

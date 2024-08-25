@@ -31,6 +31,7 @@ type
     Chat: TChatExpositor;
     Ultima: TChatUltima;
     FAoVisualizar: TEvento;
+    FAoClicar: TEventoMouseDown;
     function GetCount: Integer;
     function GetVisivel(const ID: Integer): Boolean;
     procedure AoVisualizarInterno(Frame: TFrame);
@@ -38,6 +39,7 @@ type
     function GetLarguraMaximaConteudo: Integer;
     procedure SetLarguraMaximaConteudo(const Value: Integer);
     function GetMensagem(const ID: Integer): TChatMensagem;
+    procedure AoClicarInterno(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -53,6 +55,7 @@ type
     function Visiveis: TArray<Integer>;
     function Listar: TArray<Integer>;
     property AoVisualizar: TEvento read FAoVisualizar write FAoVisualizar;
+    property AoClicar: TEventoMouseDown read FAoClicar write FAoClicar;
   end;
 
 implementation
@@ -104,6 +107,10 @@ begin
   frmMensagem.Nome := Usuario;
   frmMensagem.txtHora.Text := FormatDateTime('hh:nn', Data);
   frmMensagem.AoVisualizar := AoVisualizarInterno;
+  frmMensagem.rtgFundo.OnMouseDown := AoClicarInterno;
+  frmMensagem.txtNome.OnMouseDown := AoClicarInterno;
+  frmMensagem.txtHora.OnMouseDown := AoClicarInterno;
+  frmMensagem.pthStatus.OnMouseDown := AoClicarInterno;
 
   for Item in Conteudos do
   begin
@@ -113,18 +120,28 @@ begin
         frmTexto := TChatConteudoTexto.Create(Self);
         frmTexto.txtMensagem.Text := Item.Conteudo;
         frmMensagem.AddConteudo(frmTexto);
+
+        frmTexto.OnMouseDown := AoClicarInterno;
+        frmTexto.txtMensagem.OnMouseDown := AoClicarInterno;
       end;
       TTipo.Imagem:
       begin
         frmImagem := TChatConteudoImagem.Create(Self);
         frmImagem.imgImagem.Bitmap.LoadFromFile(Item.Conteudo);
         frmMensagem.AddConteudo(frmImagem);
+
+        frmImagem.OnMouseDown := AoClicarInterno;
+        frmImagem.imgImagem.OnMouseDown := AoClicarInterno;
       end;
       TTipo.Arquivo:
       begin
         frmAnexo := TChatConteudoAnexo.Create(Self);
         frmAnexo.lbNome.Text := ExtractFileName(Item.Conteudo);
         frmMensagem.AddConteudo(frmAnexo);
+
+        frmAnexo.OnMouseDown := AoClicarInterno;
+        frmAnexo.Path.OnMouseDown := AoClicarInterno;
+        frmAnexo.Layout.OnMouseDown := AoClicarInterno;
       end;
     end;
   end;
@@ -172,6 +189,23 @@ procedure TChatVisualizador.AoVisualizarInterno(Frame: TFrame);
 begin
   if Assigned(AoVisualizar) then
     AoVisualizar(Frame);
+end;
+
+procedure TChatVisualizador.AoClicarInterno(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
+var
+  Item: TFmxObject;
+begin
+  if Assigned(AoClicar) then
+  begin
+    Item := Sender as TFmxObject;
+    while Assigned(Item) do
+    begin
+      Item := Item.Parent;
+      if Item is TChatMensagem then
+        Break;
+    end;
+    AoClicar(Item as TFrame, Sender, Button, Shift, X, Y);
+  end;
 end;
 
 procedure TChatVisualizador.Posicionar(ID: Integer = -1);
