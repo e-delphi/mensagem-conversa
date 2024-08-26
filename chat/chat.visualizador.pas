@@ -43,7 +43,7 @@ type
     procedure SetLarguraMaximaConteudo(const Value: Integer);
     function GetMensagem(const ID: Integer): TChatMensagem;
     procedure AoClicarInterno(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
-    procedure AtualizaSeparadoresData;
+    procedure AtualizaSeparadoresData(ID: Integer; bAdd: Boolean);
     function ObtemTopMensagem(ID: Integer; Data: TDateTime; Max: Single): Single;
   public
     constructor Create(AOwner: TComponent); override;
@@ -174,22 +174,23 @@ begin
 
   frmMensagem.Position.Y := ObtemTopMensagem(ID, Data, Chat.scroll.Max);
 
-  AtualizaSeparadoresData;
+  AtualizaSeparadoresData(ID, True);
 end;
 
 procedure TChatVisualizador.RemoverMensagem(ID: Integer);
 begin
+  AtualizaSeparadoresData(ID, False);
+
   Chat.sbxCentro.Content.RemoveObject(FMensagens[ID]);
   FreeAndNil(FMensagens[ID]);
   FMensagens.Remove(ID);
-
-  AtualizaSeparadoresData;
 end;
 
 function TChatVisualizador.ObtemTopMensagem(ID: Integer; Data: TDateTime; Max: Single): Single;
 var
   Item: TOrdenador;
   Itens: TArrayOrdenador;
+  Separador: TChatSeparadorData;
 begin
   Result := Max;
 
@@ -209,14 +210,27 @@ begin
   Itens.Sort(TTipoOrdenacao.Data);
 
   for Item in Itens do
+  begin
     if Data <= Item.Data then
-      Exit(Item.Top - 1);
+    begin
+      if FSeparadorData.TryGetValue(Trunc(Item.Data), Separador) then
+        Exit(Separador.Position.Y - 1)
+      else
+        Exit(Item.Top - 1);
+    end;
+  end;
 end;
 
 procedure TChatVisualizador.ExibirSeparadorLidas(ID: Integer);
+var
+  Separador: TChatSeparadorData;
 begin
   Chat.sbxCentro.Content.AddObject(FSeparadorLidas);
-  FSeparadorLidas.Position.Y := FMensagens[ID].Position.Y - 1;
+
+  if FSeparadorData.TryGetValue(Trunc(FMensagens[ID].DataEnvio), Separador) and (Separador.Position.Y + Separador.Height + 10 > FMensagens[ID].Position.Y) then
+    FSeparadorLidas.Position.Y := Separador.Position.Y - 1
+  else
+    FSeparadorLidas.Position.Y := FMensagens[ID].Position.Y - 1;
 end;
 
 procedure TChatVisualizador.OcultarSeparadorLidas;
@@ -224,45 +238,42 @@ begin
   Chat.sbxCentro.Content.RemoveObject(FSeparadorLidas);
 end;
 
-procedure TChatVisualizador.AtualizaSeparadoresData;
+procedure TChatVisualizador.AtualizaSeparadoresData(ID: Integer; bAdd: Boolean);
 var
-  Item: TOrdenador;
-  Itens: TArrayOrdenador;
+  Data: TDate;
   Separador: TChatSeparadorData;
-  Anterior: TDate;
-  frmData: TChatSeparadorData;
+  Mensagem: TChatMensagem;
 begin
-  for Separador in FSeparadorData.Values do
+  Data := Trunc(FMensagens[ID].DataEnvio);
+  if bAdd then
   begin
+    if FSeparadorData.TryGetValue(Data, Separador) then
+    begin
+      if Separador.Position.Y > FMensagens[ID].Position.Y then
+        Separador.Position.Y := FMensagens[ID].Position.Y - 1;
+    end
+    else
+    begin
+      Separador := TChatSeparadorData.Create(Self);
+      Chat.sbxCentro.Content.AddObject(Separador);
+      Separador.Data := Data;
+      FSeparadorData.Add(Data, Separador);
+      Separador.Position.Y := FMensagens[ID].Position.Y - 1;
+    end;
+  end
+  else
+  begin
+    if not FSeparadorData.ContainsKey(Data) then
+      Exit;
+
+    for Mensagem in FMensagens.Values do
+      if Mensagem.DataEnvio = Data then
+        Exit;
+
+    Separador := FSeparadorData[Data];
     Chat.sbxCentro.Content.RemoveObject(Separador);
     FreeAndNil(Separador);
-  end;
-  FSeparadorData.Clear;
-
-  for var Mensagem in FMensagens.Values do
-  begin
-    Item := Default(TOrdenador);
-    Item.ID := Mensagem.ID;
-    Item.Top := Mensagem.Position.Y;
-    Item.Height := Mensagem.Height;
-    Item.Data := Mensagem.DataEnvio;
-    Itens := Itens + [Item];
-  end;
-
-  Itens.Sort(TTipoOrdenacao.Data);
-
-  Anterior := 0;
-  for Item in Itens do
-  begin
-    if Trunc(Item.Data) <> Anterior then
-    begin
-      Anterior := Trunc(Item.Data);
-      frmData := TChatSeparadorData.Create(Self);
-      Chat.sbxCentro.Content.AddObject(frmData);
-      frmData.Data := Anterior;
-      FSeparadorData.Add(Anterior, frmData);
-      frmData.Position.Y := FMensagens[Item.ID].Position.Y - 1;
-    end;
+    FSeparadorData.Remove(Data);
   end;
 end;
 
