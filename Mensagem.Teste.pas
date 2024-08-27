@@ -39,6 +39,7 @@ type
     Button7: TButton;
     Button8: TButton;
     Label1: TLabel;
+    Button9: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnTextoEsquerdoClick(Sender: TObject);
     procedure btnTextoDireitoClick(Sender: TObject);
@@ -51,6 +52,7 @@ type
     procedure Button6Click(Sender: TObject);
     procedure Button7Click(Sender: TObject);
     procedure Button8Click(Sender: TObject);
+    procedure Button9Click(Sender: TObject);
   private
     FID: Integer;
     FUltimaSelecionada: Integer;
@@ -229,6 +231,11 @@ end;
 procedure TInicio.Button8Click(Sender: TObject);
 begin
   Visualizador.OcultarSeparadorLidas;
+end;
+
+procedure TInicio.Button9Click(Sender: TObject);
+begin
+  Editor.AdicionarAnexo('C:\Users\Eduar\Pictures\Screenshots\Captura de tela 2023-10-15 170059.png');
 end;
 
 end.

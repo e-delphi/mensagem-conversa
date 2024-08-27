@@ -1,11 +1,11 @@
 inherited ChatEditor: TChatEditor
   Align = Bottom
   Size.Width = 516.000000000000000000
-  Size.Height = 166.000000000000000000
+  Size.Height = 124.000000000000000000
   OnResized = FrameResized
   object rtgFundoMensagem: TRectangle
     Align = Bottom
-    Position.Y = 126.000000000000000000
+    Position.Y = 84.000000000000000000
     Size.Width = 516.000000000000000000
     Size.Height = 40.000000000000000000
     Size.PlatformDefault = False
@@ -185,68 +185,68 @@ inherited ChatEditor: TChatEditor
   object rtgFundoAnexo: TRectangle
     Align = Client
     Size.Width = 516.000000000000000000
-    Size.Height = 126.000000000000000000
+    Size.Height = 84.000000000000000000
     Size.PlatformDefault = False
     Stroke.Kind = None
     object rtgEditor: TRectangle
       Align = HorzCenter
-      Padding.Left = 15.000000000000000000
-      Padding.Top = 10.000000000000000000
-      Padding.Right = 15.000000000000000000
+      Padding.Left = 10.000000000000000000
+      Padding.Top = 5.000000000000000000
+      Padding.Right = 10.000000000000000000
       Padding.Bottom = 10.000000000000000000
-      Position.X = 120.000000000000000000
-      Size.Width = 276.000000000000000000
-      Size.Height = 126.000000000000000000
+      Position.X = 8.000000000000000000
+      Size.Width = 500.000000000000000000
+      Size.Height = 84.000000000000000000
       Size.PlatformDefault = False
-      XRadius = 10.000000000000000000
-      YRadius = 10.000000000000000000
-      object lytBotoes: TLayout
-        Align = Bottom
-        Position.X = 15.000000000000000000
-        Position.Y = 91.000000000000000000
-        Size.Width = 246.000000000000000000
-        Size.Height = 25.000000000000000000
-        Size.PlatformDefault = False
-        TabOrder = 0
-        object sbtCancelar: TSpeedButton
-          Align = Right
-          Position.X = 186.000000000000000000
-          Size.Width = 60.000000000000000000
-          Size.Height = 25.000000000000000000
-          Size.PlatformDefault = False
-          Text = 'Cancelar'
-          OnClick = sbtCancelarClick
-        end
-        object sbtAdicionar: TSpeedButton
-          Align = Left
-          Size.Width = 60.000000000000000000
-          Size.Height = 25.000000000000000000
-          Size.PlatformDefault = False
-          Text = 'Adicionar'
-          OnClick = sbtAdicionarClick
-        end
-      end
+      XRadius = 5.000000000000000000
+      YRadius = 5.000000000000000000
       object lbTitulo: TLabel
         Align = Top
         StyledSettings = [Family, Size, FontColor]
-        Margins.Bottom = 8.000000000000000000
-        Position.X = 15.000000000000000000
-        Position.Y = 10.000000000000000000
-        Size.Width = 246.000000000000000000
+        Margins.Bottom = 3.000000000000000000
+        Position.X = 10.000000000000000000
+        Position.Y = 5.000000000000000000
+        Size.Width = 480.000000000000000000
         Size.Height = 17.000000000000000000
         Size.PlatformDefault = False
         TextSettings.Font.StyleExt = {00070000000000000004000000}
         Text = 'Enviar'
-        TabOrder = 1
+        TabOrder = 0
+        object lytCancelar: TLayout
+          Align = Right
+          HitTest = True
+          Position.X = 463.000000000000000000
+          Size.Width = 17.000000000000000000
+          Size.Height = 17.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 4
+          OnClick = lytCancelarClick
+          object pthCancelar: TPath
+            Align = Client
+            Data.Path = {
+              0800000000000000000080410000804101000000000040410000404100000000
+              0000404100004041010000000000004100000041000000000000404100004041
+              0100000000008041000000410000000000004041000040410100000000000041
+              00008041}
+            HitTest = False
+            Margins.Left = 3.000000000000000000
+            Margins.Top = 3.000000000000000000
+            Margins.Right = 3.000000000000000000
+            Margins.Bottom = 3.000000000000000000
+            Size.Width = 11.000000000000000000
+            Size.Height = 11.000000000000000000
+            Size.PlatformDefault = False
+          end
+        end
       end
       object vsbxConteudo: TVertScrollBox
         Align = Client
-        Size.Width = 246.000000000000000000
-        Size.Height = 56.000000000000000000
+        Size.Width = 480.000000000000000000
+        Size.Height = 49.000000000000000000
         Size.PlatformDefault = False
-        TabOrder = 3
-        Viewport.Width = 246.000000000000000000
-        Viewport.Height = 56.000000000000000000
+        TabOrder = 2
+        Viewport.Width = 480.000000000000000000
+        Viewport.Height = 49.000000000000000000
       end
     end
     object odlgArquivo: TOpenDialog
