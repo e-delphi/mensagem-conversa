@@ -29,12 +29,6 @@ type
     rtgMensagem: TRectangle;
     mmMensagem: TMemo;
     txtMensagem: TText;
-    lytCarinha: TLayout;
-    pthCarinha: TPath;
-    lytAnexo: TLayout;
-    pthAnexo: TPath;
-    lytEnviar: TLayout;
-    pthEnviar: TPath;
     rtgFundoMensagem: TRectangle;
     rtgFundoAnexo: TRectangle;
     rtgEditor: TRectangle;
@@ -43,6 +37,15 @@ type
     odlgArquivo: TOpenDialog;
     lytCancelar: TLayout;
     pthCancelar: TPath;
+    lytAnexo: TLayout;
+    lytBAnexo: TLayout;
+    pthAnexo: TPath;
+    lytCarinha: TLayout;
+    lytBCarinha: TLayout;
+    pthCarinha: TPath;
+    lytEnviar: TLayout;
+    lytBEnviar: TLayout;
+    pthEnviar: TPath;
     procedure FrameResized(Sender: TObject);
     procedure mmMensagemChangeTracking(Sender: TObject);
     procedure mmMensagemKeyDown(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
@@ -144,8 +147,8 @@ begin
   begin
     Key := 0;
     KeyChar := #0;
-    if Assigned(lytEnviar.OnClick) then
-      lytEnviar.OnClick(lytEnviar);
+    if Assigned(lytBEnviar.OnClick) then
+      lytBEnviar.OnClick(lytBEnviar);
   end;
 end;
 
