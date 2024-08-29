@@ -41,7 +41,7 @@ inherited ChatEditor: TChatEditor
           Align = Left
           HitTest = False
           Size.Width = 65.000000000000000000
-          Size.Height = 50.000000000000000000
+          Size.Height = 16.000000000000000000
           Size.PlatformDefault = False
           Text = 'Mensagem'
           TextSettings.FontColor = xFF545454
@@ -232,7 +232,7 @@ inherited ChatEditor: TChatEditor
           Size.Width = 17.000000000000000000
           Size.Height = 17.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 4
+          TabOrder = 3
           OnClick = lytCancelarClick
           object pthCancelar: TPath
             Align = Client

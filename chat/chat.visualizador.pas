@@ -21,7 +21,8 @@ uses
   chat.conteudo.anexo,
   chat.separador.data,
   chat.separador.lidas,
-  chat.ordenador;
+  chat.ordenador,
+  chat.emoji;
 
 type
   TChatVisualizador = class(TControl, IControl)
@@ -136,6 +137,10 @@ begin
       begin
         frmTexto := TChatConteudoTexto.Create(Self);
         frmTexto.txtMensagem.Text := Item.Conteudo;
+
+        if TEmojiItem.SoEmoji(Item.Conteudo) then
+          frmTexto.txtMensagem.TextSettings.Font.Size := 30;
+
         frmMensagem.AddConteudo(frmTexto);
         frmTexto.Position.Y := iTop;
         Inc(iTop, Round(frmTexto.Height + frmTexto.txtMensagem.Margins.Top));

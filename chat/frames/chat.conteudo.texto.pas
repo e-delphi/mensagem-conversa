@@ -4,6 +4,10 @@ unit chat.conteudo.texto;
 interface
 
 uses
+  {$IFDEF MSWINDOWS}
+  Winapi.Windows,
+  Winapi.ShellAPI,
+  {$ENDIF MSWINDOWS}
   System.Types,
   System.Classes,
   FMX.Types,
@@ -47,10 +51,6 @@ type
 implementation
 
 uses
-  {$IFDEF MSWINDOWS}
-  Winapi.Windows,
-  Winapi.ShellAPI,
-  {$ENDIF MSWINDOWS}
   System.SysUtils,
   System.UITypes,
   System.RegularExpressions,
@@ -204,9 +204,23 @@ end;
 function TChatConteudoTexto.Target(Largura: Single): TTarget;
 var
   TamanhoTexto: TRectF;
+  Anterior: Single;
+  Correta: Single;
 begin
   TamanhoTexto := RectF(0, 0, Largura - (Self.Margins.Left + Self.Margins.Right), 10000);
-  txtMensagem.Canvas.MeasureText(TamanhoTexto, txtMensagem.Text, True, [], TTextAlign.Center, TTextAlign.Leading);
+
+  Anterior := txtMensagem.Canvas.Font.Size;
+  Correta := txtMensagem.TextSettings.Font.Size;
+
+  if Anterior = Correta then
+    txtMensagem.Canvas.MeasureText(TamanhoTexto, txtMensagem.Text, True, [], TTextAlign.Center, TTextAlign.Leading)
+  else
+  begin
+    txtMensagem.Canvas.Font.Size := Correta;
+    txtMensagem.Canvas.MeasureText(TamanhoTexto, txtMensagem.Text, True, [], TTextAlign.Center, TTextAlign.Leading);
+    txtMensagem.Canvas.Font.Size := Anterior;
+  end;
+
   Result.Width := TamanhoTexto.Width + Self.Margins.Left + Self.Margins.Right;
   Result.Height := TamanhoTexto.Bottom;
 end;
