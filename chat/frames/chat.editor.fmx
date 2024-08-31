@@ -5,6 +5,7 @@ inherited ChatEditor: TChatEditor
   OnResized = FrameResized
   object rtgFundoMensagem: TRectangle
     Align = Bottom
+    Fill.Color = claWhitesmoke
     Position.Y = 84.000000000000000000
     Size.Width = 516.000000000000000000
     Size.Height = 40.000000000000000000
@@ -16,6 +17,7 @@ inherited ChatEditor: TChatEditor
       Size.Width = 500.000000000000000000
       Size.Height = 40.000000000000000000
       Size.PlatformDefault = False
+      Stroke.Kind = None
       XRadius = 5.000000000000000000
       YRadius = 5.000000000000000000
       object mmMensagem: TMemo
@@ -46,54 +48,6 @@ inherited ChatEditor: TChatEditor
           Text = 'Mensagem'
           TextSettings.FontColor = xFF545454
           TextSettings.HorzAlign = Leading
-        end
-      end
-      object lytAnexo: TLayout
-        Align = Left
-        Size.Width = 35.000000000000000000
-        Size.Height = 40.000000000000000000
-        Size.PlatformDefault = False
-        TabOrder = 3
-        OnClick = FrameResized
-        object lytBAnexo: TLayout
-          Align = Bottom
-          Cursor = crHandPoint
-          HitTest = True
-          Size.Width = 35.000000000000000000
-          Size.Height = 40.000000000000000000
-          Size.PlatformDefault = False
-          TabOrder = 0
-          OnClick = lytAnexoClick
-          object pthAnexo: TPath
-            Align = Center
-            Data.Path = {
-              3100000000000000F0478E43562E2443010000009A2987438F42324302000000
-              A6FB8543CF973443020000000C128443CF9734430200000019E482438F423243
-              0200000025B6814391ED2F430200000025B6814360252C430200000019E48243
-              21D02943010000004A4C894319241D430200000081158A4304961B4302000000
-              E75B8B4304961B43020000003F258C4319241D430200000077EE8C432DB21E43
-              0200000077EE8C43CF372143020000003F258C43A2C52243010000000EBD8543
-              AA712F430200000073588543D5383043020000003FB58443D538304302000000
-              83508443AA712F4302000000E7EB8343C1AA2E4302000000E7EB8343F0672D43
-              0200000083508443C5A02C43010000008F028A43715D2143010000004A4C8943
-              FEF41F43010000005E9A834393382B430200000006D1824366C62C4302000000
-              06D18243084C2F43020000005E9A83435EDA3043020000009663844331683243
-              02000000FCA985433168324302000000547386431DDA30430100000064DB8C43
-              562E24430200000058098E4358D921430200000079098E43A4101E4302000000
-              85DB8C43A6BB1B430200000071AD8B436666194302000000F8C3894366661943
-              0200000004968843A6BB1B4301000000B0D28143A61B29430100000017D98143
-              3128294302000000779E8043F0472C43020000003DBA804308CC304302000000
-              D32D824302AB33430200000089A18343FC89364302000000FCE9854306C13643
-              02000000567E8743B0523443010000009C8487433B5F34430100000035FE8E43
-              C996254301000000F0478E43562E2443}
-            Fill.Color = xFF007DFF
-            HitTest = False
-            Size.Width = 20.000000000000000000
-            Size.Height = 20.000000000000000000
-            Size.PlatformDefault = False
-            Stroke.Kind = None
-            WrapMode = Fit
-          end
         end
       end
       object lytCarinha: TLayout
@@ -156,6 +110,54 @@ inherited ChatEditor: TChatEditor
           end
         end
       end
+      object lytAnexo: TLayout
+        Align = Left
+        Size.Width = 35.000000000000000000
+        Size.Height = 40.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 3
+        OnClick = FrameResized
+        object lytBAnexo: TLayout
+          Align = Bottom
+          Cursor = crHandPoint
+          HitTest = True
+          Size.Width = 35.000000000000000000
+          Size.Height = 40.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          OnClick = lytAnexoClick
+          object pthAnexo: TPath
+            Align = Center
+            Data.Path = {
+              3100000000000000F0478E43562E2443010000009A2987438F42324302000000
+              A6FB8543CF973443020000000C128443CF9734430200000019E482438F423243
+              0200000025B6814391ED2F430200000025B6814360252C430200000019E48243
+              21D02943010000004A4C894319241D430200000081158A4304961B4302000000
+              E75B8B4304961B43020000003F258C4319241D430200000077EE8C432DB21E43
+              0200000077EE8C43CF372143020000003F258C43A2C52243010000000EBD8543
+              AA712F430200000073588543D5383043020000003FB58443D538304302000000
+              83508443AA712F4302000000E7EB8343C1AA2E4302000000E7EB8343F0672D43
+              0200000083508443C5A02C43010000008F028A43715D2143010000004A4C8943
+              FEF41F43010000005E9A834393382B430200000006D1824366C62C4302000000
+              06D18243084C2F43020000005E9A83435EDA3043020000009663844331683243
+              02000000FCA985433168324302000000547386431DDA30430100000064DB8C43
+              562E24430200000058098E4358D921430200000079098E43A4101E4302000000
+              85DB8C43A6BB1B430200000071AD8B436666194302000000F8C3894366661943
+              0200000004968843A6BB1B4301000000B0D28143A61B29430100000017D98143
+              3128294302000000779E8043F0472C43020000003DBA804308CC304302000000
+              D32D824302AB33430200000089A18343FC89364302000000FCE9854306C13643
+              02000000567E8743B0523443010000009C8487433B5F34430100000035FE8E43
+              C996254301000000F0478E43562E2443}
+            Fill.Color = xFF007DFF
+            HitTest = False
+            Size.Width = 20.000000000000000000
+            Size.Height = 20.000000000000000000
+            Size.PlatformDefault = False
+            Stroke.Kind = None
+            WrapMode = Fit
+          end
+        end
+      end
       object lytEnviar: TLayout
         Align = Right
         Position.X = 465.000000000000000000
@@ -197,6 +199,7 @@ inherited ChatEditor: TChatEditor
   end
   object rtgFundoAnexo: TRectangle
     Align = Client
+    Fill.Color = claWhitesmoke
     Size.Width = 516.000000000000000000
     Size.Height = 84.000000000000000000
     Size.PlatformDefault = False
@@ -211,6 +214,7 @@ inherited ChatEditor: TChatEditor
       Size.Width = 500.000000000000000000
       Size.Height = 84.000000000000000000
       Size.PlatformDefault = False
+      Stroke.Kind = None
       XRadius = 5.000000000000000000
       YRadius = 5.000000000000000000
       object lbTitulo: TLabel

@@ -34,7 +34,6 @@ type
     procedure SetNewText(const Value: String);
   protected
     procedure Click; override;
-    procedure DblClick; override;
     procedure MouseMove(Shift: TShiftState; X, Y: Single); override;
   public
     constructor Create(AOwner: TComponent); override;
@@ -124,22 +123,6 @@ begin
     {$IFDEF POSIX}
     _system(PAnsiChar('open '+ AnsiString(sLink)));
     {$ENDIF POSIX}
-  end;
-end;
-
-procedure TText.DblClick;
-var
-  svc: IFMXExtendedClipboardService;
-  Def: TAlphaColor;
-begin
-  inherited;
-
-  if TPlatformServices.Current.SupportsPlatformService(IFMXExtendedClipboardService, svc) then
-  begin
-    svc.SetText(Text.Replace('&', '&&'));
-    Def := Self.Color;
-    Color := TAlphaColors.Green;
-    TAnimator.AnimateColor(Self, 'Color', Def, 1, TAnimationType.InOut, TInterpolationType.Cubic);
   end;
 end;
 

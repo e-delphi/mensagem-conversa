@@ -125,17 +125,16 @@ function GetFileIconAsBitmap(const FileName: String): TBitmap;
 var
   FileInfo: SHFILEINFOA;
   hIcon: Winapi.Windows.HICON;
-  IconWidth, IconHeight: Integer;
+  IconWidth: Integer;
+  IconHeight: Integer;
   IconDC, MemDC: HDC;
   DIB: HBITMAP;
   BitmapInfo: Winapi.Windows.BITMAPINFO;
   BitmapBits: Pointer;
   Row: Integer;
-  Bitmap: TBitmap;
   bitdata: TBitmapData;
 begin
   Result := nil;
-
   // Obter o ícone do arquivo
   if SHGetFileInfoA(PAnsiChar(AnsiString(FileName)), 0, FileInfo, SizeOf(FileInfo),
     SHGFI_ICON or SHGFI_SMALLICON or SHGFI_USEFILEATTRIBUTES) <> 0 then
@@ -145,7 +144,6 @@ begin
     begin
       IconWidth := GetSystemMetrics(SM_CXSMICON);
       IconHeight := GetSystemMetrics(SM_CYSMICON);
-
       // Criar um DC compatível
       IconDC := CreateCompatibleDC(0);
       try
@@ -157,7 +155,6 @@ begin
         BitmapInfo.bmiHeader.biPlanes := 1;
         BitmapInfo.bmiHeader.biBitCount := 32;  // 32 bits por pixel (RGBA)
         BitmapInfo.bmiHeader.biCompression := BI_RGB;
-
         // Criar a seção DIB e obter um ponteiro para os bits
         DIB := CreateDIBSection(IconDC, BitmapInfo, DIB_RGB_COLORS, BitmapBits, 0, 0);
         if DIB <> 0 then
@@ -165,10 +162,8 @@ begin
           MemDC := CreateCompatibleDC(IconDC);
           try
             SelectObject(MemDC, DIB);
-
             // Desenhar o ícone no DC
             DrawIconEx(MemDC, 0, 0, hIcon, IconWidth, IconHeight, 0, 0, DI_NORMAL);
-
             // Criar o TBitmap do FireMonkey
             Result := TBitmap.Create(IconWidth, IconHeight);
             Result.Map(TMapAccess.Write, bitdata);
@@ -177,12 +172,11 @@ begin
               for Row := 0 to IconHeight - 1 do
               begin
                 // Copiar a linha correspondente
-                Move(Pointer(NativeUInt(BitmapBits) + Row * IconWidth * 4)^, bitdata.GetScanline(Row)^, IconWidth * 4);
+                Move(Pointer(NativeInt(BitmapBits) + Row * IconWidth * 4)^, bitdata.GetScanline(Row)^, IconWidth * 4);
               end;
             finally
               Result.Unmap(bitdata);
             end;
-
           finally
             DeleteDC(MemDC);
             DeleteObject(DIB);

@@ -170,6 +170,7 @@ begin
           frmMensagem.AddConteudo(frmTexto);
           frmTexto.Position.Y := iTop;
           Inc(iTop, Round(frmTexto.Height + frmTexto.txtMensagem.Margins.Top));
+
           frmTexto.OnMouseDown := AoClicarInterno;
           frmTexto.txtMensagem.OnMouseDown := AoClicarInterno;
         end;

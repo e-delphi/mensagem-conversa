@@ -33,7 +33,7 @@ implementation
 function TChatConteudoAnexo.Target(Largura: Single): TTarget;
 begin
   Result.Width := 250;
-  Result.Height := 20;
+  Result.Height := 30;
 end;
 
 end.

@@ -29,6 +29,9 @@ type
     rtgMensagem: TRectangle;
     mmMensagem: TMemo;
     txtMensagem: TText;
+    lytCarinha: TLayout;
+    lytAnexo: TLayout;
+    lytEnviar: TLayout;
     rtgFundoMensagem: TRectangle;
     rtgFundoAnexo: TRectangle;
     rtgEditor: TRectangle;
@@ -37,13 +40,10 @@ type
     odlgArquivo: TOpenDialog;
     lytCancelar: TLayout;
     pthCancelar: TPath;
-    lytAnexo: TLayout;
     lytBAnexo: TLayout;
     pthAnexo: TPath;
-    lytCarinha: TLayout;
     lytBCarinha: TLayout;
     pthCarinha: TPath;
-    lytEnviar: TLayout;
     lytBEnviar: TLayout;
     pthEnviar: TPath;
     procedure FrameResized(Sender: TObject);
@@ -74,6 +74,10 @@ implementation
 uses
   System.StrUtils,
   System.Math,
+  System.IOUtils,
+  FMX.Clipboard,
+  FMX.Platform,
+  FMX.Surfaces,
   chat.so,
   chat.anexo.item;
 
@@ -142,6 +146,10 @@ begin
 end;
 
 procedure TChatEditor.mmMensagemKeyDown(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
+var
+  svc: IFMXExtendedClipboardService;
+  Bmp: TBitmapSurface;
+  sTemp: String;
 begin
   if (Key = vkReturn) and (Shift = []) then
   begin
@@ -149,6 +157,32 @@ begin
     KeyChar := #0;
     if Assigned(lytBEnviar.OnClick) then
       lytBEnviar.OnClick(lytBEnviar);
+  end
+  else
+  if (Shift = [ssCtrl]) and (Key = vkV) then
+  begin
+    if not TPlatformServices.Current.SupportsPlatformService(IFMXExtendedClipboardService, svc) then
+      Exit;
+
+    if not svc.HasImage then
+      Exit;
+
+    sTemp := ExtractFilePath(ParamStr(0)) +'clipboard';
+
+    if not TDirectory.Exists(sTemp) then
+      TDirectory.CreateDirectory(sTemp);
+
+    sTemp := sTemp + PathDelim +'clipboard'+ Length(TDirectory.GetFiles(sTemp)).ToString +'.png';
+
+    Bmp := svc.GetImage;
+    try
+      if not TBitmapCodecManager.SaveToFile(sTemp, Bmp, nil) then
+        raise EBitmapSavingFailed.Create('Erro ao converter a imagem do clipboard para png!');
+    finally
+      FreeAndNil(Bmp);
+    end;
+
+    AdicionarAnexo(sTemp);
   end;
 end;
 
