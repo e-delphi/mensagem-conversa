@@ -21,7 +21,12 @@ uses
   chat.ordenador in 'chat\chat.ordenador.pas',
   chat.separador.lidas in 'chat\frames\chat.separador.lidas.pas' {ChatSeparadorLidas: TFrame},
   chat.emoji in 'chat\chat.emoji.pas',
-  FMX.GIFImage in 'chat\GIFImage\FMX.GIFImage.pas';
+  System.Skia.API in 'chat\skia\System.Skia.API.pas',
+  System.Skia in 'chat\skia\System.Skia.pas',
+  FMX.Skia.Canvas.GL in 'chat\skia\FMX\FMX.Skia.Canvas.GL.pas',
+  FMX.Skia.Canvas.Metal in 'chat\skia\FMX\FMX.Skia.Canvas.Metal.pas',
+  FMX.Skia.Canvas in 'chat\skia\FMX\FMX.Skia.Canvas.pas',
+  FMX.Skia in 'chat\skia\FMX\FMX.Skia.pas';
 
 {$R *.res}
 
