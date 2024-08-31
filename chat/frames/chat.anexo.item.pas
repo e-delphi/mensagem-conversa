@@ -44,7 +44,10 @@ type
 implementation
 
 uses
-  System.IOUtils;
+  System.IOUtils,
+  System.StrUtils,
+  chat.so,
+  chat.tipos;
 
 {$R *.fmx}
 
@@ -55,12 +58,16 @@ begin
   inherited Create(AOwner);
   AOwner.AddObject(Self);
   FArquivo := sArquivo;
-  bmp := TBitmap.Create;
-  try
-    bmp.LoadFromFile(sArquivo);
-    imgIcon.Bitmap.Assign(bmp);
-  finally
-    FreeAndNil(bmp);
+  if IndexStr(ExtractFileExt(sArquivo).Replace('.', EmptyStr).ToLower, TipoArquivoImagem) >= 0 then
+    imgIcon.Bitmap.LoadFromFile(sArquivo)
+  else
+  begin
+    bmp := GetFileIconAsBitmap(sArquivo);
+    try
+      imgIcon.Bitmap.Assign(bmp);
+    finally
+      FreeAndNil(bmp);
+    end;
   end;
   lbNome.Text := ExtractFileName(sArquivo);
   lbTamanho.Text := FormatFloat('#,##0.00', TFile.GetSize(sArquivo) / 1024 / 1024) +' MB';

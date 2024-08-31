@@ -16,9 +16,10 @@ uses
 type
   TChatConteudoAnexo = class(TChatConteudo)
     Path: TPath;
-    Layout: TLayout;
+    lytDados: TLayout;
     lbTamanho: TLabel;
     lbNome: TLabel;
+    lytDownload: TLayout;
   public
     function Target(Largura: Single): TTarget; override;
   end;
