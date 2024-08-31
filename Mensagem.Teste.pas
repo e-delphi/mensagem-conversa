@@ -16,43 +16,56 @@ uses
   FMX.Dialogs,
   FMX.Controls.Presentation,
   FMX.StdCtrls,
+  FMX.DateTimeCtrls,
+  FMX.Menus,
   chat.visualizador,
   chat.editor,
-  chat.tipos,
-  FMX.DateTimeCtrls;
+  chat.tipos;
 
 type
   TInicio = class(TForm)
-    Panel1: TPanel;
-    btnTextoEsquerdo: TButton;
-    btnTextoDireito: TButton;
-    btnImagemDireito: TButton;
-    Button1: TButton;
-    Button2: TButton;
-    Button3: TButton;
-    Button4: TButton;
-    Button5: TButton;
-    Button6: TButton;
     Panel2: TPanel;
     dtEditor: TDateEdit;
     tmEditor: TTimeEdit;
-    Button7: TButton;
-    Button8: TButton;
     Label1: TLabel;
-    Button9: TButton;
+    MenuBar1: TMenuBar;
+    MenuItem1: TMenuItem;
+    MenuItem2: TMenuItem;
+    MenuItem3: TMenuItem;
+    MenuItem4: TMenuItem;
+    MenuItem5: TMenuItem;
+    MenuItem6: TMenuItem;
+    MenuItem7: TMenuItem;
+    MenuItem8: TMenuItem;
+    MenuItem9: TMenuItem;
+    MenuItem10: TMenuItem;
+    MenuItem11: TMenuItem;
+    MenuItem12: TMenuItem;
+    MenuItem13: TMenuItem;
+    MenuItem14: TMenuItem;
+    MenuItem15: TMenuItem;
+    MenuItem16: TMenuItem;
+    MenuItem17: TMenuItem;
+    MenuItem18: TMenuItem;
+    MenuItem19: TMenuItem;
+    MenuItem20: TMenuItem;
+    MenuItem21: TMenuItem;
     procedure FormCreate(Sender: TObject);
-    procedure btnTextoEsquerdoClick(Sender: TObject);
-    procedure btnTextoDireitoClick(Sender: TObject);
-    procedure btnImagemDireitoClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
-    procedure Button4Click(Sender: TObject);
-    procedure Button5Click(Sender: TObject);
-    procedure Button6Click(Sender: TObject);
-    procedure Button7Click(Sender: TObject);
-    procedure Button8Click(Sender: TObject);
-    procedure Button9Click(Sender: TObject);
+    procedure MenuItem2Click(Sender: TObject);
+    procedure MenuItem3Click(Sender: TObject);
+    procedure MenuItem4Click(Sender: TObject);
+    procedure MenuItem5Click(Sender: TObject);
+    procedure MenuItem7Click(Sender: TObject);
+    procedure MenuItem8Click(Sender: TObject);
+    procedure MenuItem9Click(Sender: TObject);
+    procedure MenuItem10Click(Sender: TObject);
+    procedure MenuItem11Click(Sender: TObject);
+    procedure MenuItem13Click(Sender: TObject);
+    procedure MenuItem17Click(Sender: TObject);
+    procedure MenuItem21Click(Sender: TObject);
+    procedure MenuItem19Click(Sender: TObject);
+    procedure MenuItem20Click(Sender: TObject);
+    procedure MenuItem16Click(Sender: TObject);
   private
     FID: Integer;
     FUltimaSelecionada: Integer;
@@ -125,7 +138,51 @@ begin
   Visualizador.Posicionar(FID);
 end;
 
-procedure TInicio.btnTextoDireitoClick(Sender: TObject);
+procedure TInicio.MenuItem2Click(Sender: TObject);
+var
+  I: Integer;
+  dHora: TDateTime;
+begin
+  Visualizador.OcultarSeparadoresData;
+  
+  dHora := dtEditor.Date + tmEditor.Time;
+  for I := 1 to 10 do
+  begin
+    dHora := IncMinute(dHora);
+    Inc(FID);
+    Visualizador.AdicionarMensagem(
+      FID,
+      'Usuário 1',
+      dHora,
+      [
+        TConteudo.Create(TTipo.Texto, 'Mensagem: '+ I.ToString),
+        TConteudo.Create(TTipo.Texto, FormatDateTime('dd/mm/yyyy hh:nn:ss.zzz', dHora))
+      ]
+    );
+    Visualizador.Mensagem[FID].Lado := TLado.Direito;
+    Visualizador.Posicionar(FID);
+
+
+
+    dHora := IncMinute(dHora);
+    Inc(FID);
+    Visualizador.AdicionarMensagem(
+      FID,
+      'Usuário 2',
+      dHora,
+      [
+        TConteudo.Create(TTipo.Texto, 'Mensagem: '+ I.ToString),
+        TConteudo.Create(TTipo.Texto, FormatDateTime('dd/mm/yyyy hh:nn:ss', dHora))
+      ]
+    );
+    Visualizador.Mensagem[FID].Lado := TLado.Esquerdo;
+    Visualizador.Posicionar(FID);   
+  end;
+
+  Visualizador.ExibirSeparadoresData;
+end;
+
+procedure TInicio.MenuItem3Click(Sender: TObject);
 begin
   Inc(FID);
   Visualizador.AdicionarMensagem(
@@ -144,7 +201,7 @@ begin
   dtEditor.Date := IncDay(dtEditor.Date, -1);
 end;
 
-procedure TInicio.btnTextoEsquerdoClick(Sender: TObject);
+procedure TInicio.MenuItem4Click(Sender: TObject);
 begin
   Inc(FID);
   Visualizador.AdicionarMensagem(
@@ -163,7 +220,13 @@ begin
   tmEditor.DateTime := IncMinute(tmEditor.DateTime);
 end;
 
-procedure TInicio.Button1Click(Sender: TObject);
+procedure TInicio.MenuItem5Click(Sender: TObject);
+begin
+  Visualizador.Posicionar(FUltimaSelecionada);
+  Visualizador.Mensagem[FUltimaSelecionada].Piscar(TAlphaColorRec.Green, 0.5)
+end;
+
+procedure TInicio.MenuItem7Click(Sender: TObject);
 begin
   case Visualizador.Mensagem[FUltimaSelecionada].Status of
     TStatus.Pendente:    Visualizador.Mensagem[FUltimaSelecionada].Status := TStatus.Recebida;
@@ -172,7 +235,7 @@ begin
   end;
 end;
 
-procedure TInicio.Button2Click(Sender: TObject);
+procedure TInicio.MenuItem8Click(Sender: TObject);
 begin
   case Visualizador.Mensagem[FUltimaSelecionada].Lado of
     TLado.Direito:  Visualizador.Mensagem[FUltimaSelecionada].Lado := TLado.Esquerdo;
@@ -180,27 +243,12 @@ begin
   end;
 end;
 
-procedure TInicio.Button3Click(Sender: TObject);
+procedure TInicio.MenuItem9Click(Sender: TObject);
 begin
   Visualizador.Mensagem[FUltimaSelecionada].NomeVisivel := not Visualizador.Mensagem[FUltimaSelecionada].NomeVisivel;
 end;
 
-procedure TInicio.Button4Click(Sender: TObject);
-begin
-  Visualizador.Posicionar(FUltimaSelecionada);
-  Visualizador.Mensagem[FUltimaSelecionada].Piscar(TAlphaColorRec.Green, 0.5)
-end;
-
-procedure TInicio.Button5Click(Sender: TObject);
-var
-  sTemp: String;
-begin
-  for var I in Visualizador.Visiveis do
-    sTemp := sTemp +','+ I.ToString;
-  ShowMessage(sTemp);
-end;
-
-procedure TInicio.btnImagemDireitoClick(Sender: TObject);
+procedure TInicio.MenuItem10Click(Sender: TObject);
 begin
   Inc(FID);
   Visualizador.AdicionarMensagem(
@@ -218,22 +266,41 @@ begin
   Visualizador.Mensagem[FID].NomeVisivel := True;
 end;
 
-procedure TInicio.Button6Click(Sender: TObject);
+procedure TInicio.MenuItem11Click(Sender: TObject);
+var
+  sTemp: String;
+begin
+  for var I in Visualizador.Visiveis do
+    sTemp := sTemp +','+ I.ToString;
+  ShowMessage(sTemp);
+end;
+
+procedure TInicio.MenuItem13Click(Sender: TObject);
 begin
   Visualizador.RemoverMensagem(FUltimaSelecionada);
 end;
 
-procedure TInicio.Button7Click(Sender: TObject);
+procedure TInicio.MenuItem16Click(Sender: TObject);
 begin
   Visualizador.ExibirSeparadorLidas(FUltimaSelecionada);
 end;
 
-procedure TInicio.Button8Click(Sender: TObject);
+procedure TInicio.MenuItem17Click(Sender: TObject);
 begin
   Visualizador.OcultarSeparadorLidas;
 end;
 
-procedure TInicio.Button9Click(Sender: TObject);
+procedure TInicio.MenuItem19Click(Sender: TObject);
+begin
+  Visualizador.ExibirSeparadoresData;
+end;
+
+procedure TInicio.MenuItem20Click(Sender: TObject);
+begin
+  Visualizador.OcultarSeparadoresData;
+end;
+
+procedure TInicio.MenuItem21Click(Sender: TObject);
 begin
   Editor.AdicionarAnexo('C:\Users\Eduar\Pictures\Screenshots\Captura de tela 2023-10-15 170059.png');
 end;

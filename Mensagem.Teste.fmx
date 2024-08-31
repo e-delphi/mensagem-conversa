@@ -3,153 +3,27 @@ object Inicio: TInicio
   Top = 0
   Caption = 'Form2'
   ClientHeight = 572
-  ClientWidth = 1358
+  ClientWidth = 628
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
   OnCreate = FormCreate
   DesignerMasterStyle = 0
-  object Panel1: TPanel
-    Align = Top
-    Size.Width = 1358.000000000000000000
-    Size.Height = 30.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 0
-    object btnTextoEsquerdo: TButton
-      Align = Left
-      Position.X = 110.000000000000000000
-      Size.Width = 110.000000000000000000
-      Size.Height = 30.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 11
-      Text = 'Texto Esquerdo'
-      OnClick = btnTextoEsquerdoClick
-    end
-    object btnTextoDireito: TButton
-      Align = Left
-      Size.Width = 110.000000000000000000
-      Size.Height = 30.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 9
-      Text = 'Texto Direito'
-      OnClick = btnTextoDireitoClick
-    end
-    object btnImagemDireito: TButton
-      Align = Left
-      Position.X = 695.000000000000000000
-      Size.Width = 110.000000000000000000
-      Size.Height = 30.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 8
-      Text = 'Imagem Direito'
-      OnClick = btnImagemDireitoClick
-    end
-    object Button1: TButton
-      Align = Left
-      Position.X = 330.000000000000000000
-      Size.Width = 102.000000000000000000
-      Size.Height = 30.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 2
-      Text = 'Mudar Status'
-      OnClick = Button1Click
-    end
-    object Button2: TButton
-      Align = Left
-      Position.X = 432.000000000000000000
-      Size.Width = 110.000000000000000000
-      Size.Height = 30.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 1
-      Text = 'Mudar Lado'
-      OnClick = Button2Click
-    end
-    object Button3: TButton
-      Align = Left
-      Position.X = 542.000000000000000000
-      Size.Width = 153.000000000000000000
-      Size.Height = 30.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 0
-      Text = 'Mudar Visibilidade Nome'
-      OnClick = Button3Click
-    end
-    object Button4: TButton
-      Align = Left
-      Position.X = 220.000000000000000000
-      Size.Width = 110.000000000000000000
-      Size.Height = 30.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 10
-      Text = 'Ir para'
-      OnClick = Button4Click
-    end
-    object Button5: TButton
-      Align = Left
-      Position.X = 805.000000000000000000
-      Size.Width = 110.000000000000000000
-      Size.Height = 30.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 7
-      Text = 'Visiveis'
-      OnClick = Button5Click
-    end
-    object Button6: TButton
-      Align = Left
-      Position.X = 915.000000000000000000
-      Size.Width = 110.000000000000000000
-      Size.Height = 30.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 6
-      Text = 'Remover'
-      OnClick = Button6Click
-    end
-    object Button7: TButton
-      Align = Left
-      Position.X = 1025.000000000000000000
-      Size.Width = 110.000000000000000000
-      Size.Height = 30.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 5
-      Text = 'Exibir Separador'
-      OnClick = Button7Click
-    end
-    object Button8: TButton
-      Align = Left
-      Position.X = 1135.000000000000000000
-      Size.Width = 110.000000000000000000
-      Size.Height = 30.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 4
-      Text = 'Ocultar Separador'
-      OnClick = Button8Click
-    end
-    object Button9: TButton
-      Align = Left
-      Position.X = 1245.000000000000000000
-      Size.Width = 110.000000000000000000
-      Size.Height = 30.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 3
-      Text = 'Adicionar anexo'
-      OnClick = Button9Click
-    end
-  end
   object Panel2: TPanel
     Align = Top
-    Position.Y = 30.000000000000000000
-    Size.Width = 1358.000000000000000000
+    Position.Y = 24.000000000000000000
+    Size.Width = 628.000000000000000000
     Size.Height = 40.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 1
+    TabOrder = 0
     object dtEditor: TDateEdit
-      Date = 45529.000000000000000000
+      Date = 45536.000000000000000000
       Position.X = 8.000000000000000000
       Position.Y = 8.000000000000000000
       TabOrder = 0
     end
     object tmEditor: TTimeEdit
-      Time = 0.535830393518518500
+      Time = 0.333333333333333300
       Position.X = 116.000000000000000000
       Position.Y = 8.000000000000000000
       Size.Width = 77.000000000000000000
@@ -165,6 +39,108 @@ object Inicio: TInicio
       Size.PlatformDefault = False
       Text = 'Limite: '
       TabOrder = 4
+    end
+  end
+  object MenuBar1: TMenuBar
+    Size.Width = 628.000000000000000000
+    Size.Height = 24.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object MenuItem1: TMenuItem
+      Text = 'Adicionar'
+      object MenuItem2: TMenuItem
+        Locked = True
+        Text = 'V'#225'rias'
+        OnClick = MenuItem2Click
+      end
+      object MenuItem3: TMenuItem
+        Locked = True
+        Text = 'Texto Direito'
+        OnClick = MenuItem3Click
+      end
+      object MenuItem4: TMenuItem
+        Locked = True
+        Text = 'Texto Esquerdo'
+        OnClick = MenuItem4Click
+      end
+      object MenuItem10: TMenuItem
+        Locked = True
+        Text = 'Imagem'
+        OnClick = MenuItem10Click
+      end
+      object MenuItem21: TMenuItem
+        Locked = True
+        Text = 'Anexo pelo editor'
+        OnClick = MenuItem21Click
+      end
+    end
+    object MenuItem11: TMenuItem
+      Text = 'Vis'#237'veis'
+      OnClick = MenuItem11Click
+    end
+    object MenuItem12: TMenuItem
+      Locked = True
+      Text = #218'ltima clicada'
+      object MenuItem5: TMenuItem
+        Locked = True
+        Text = 'Ir para '#250'ltima clicada'
+        OnClick = MenuItem5Click
+      end
+      object MenuItem6: TMenuItem
+        Locked = True
+        Text = 'Alterar'
+        object MenuItem7: TMenuItem
+          Locked = True
+          Text = 'Status'
+          OnClick = MenuItem7Click
+        end
+        object MenuItem8: TMenuItem
+          Locked = True
+          Text = 'Lado'
+          OnClick = MenuItem8Click
+        end
+        object MenuItem9: TMenuItem
+          Locked = True
+          Text = 'Visibilidade do nome'
+          OnClick = MenuItem9Click
+        end
+      end
+      object MenuItem13: TMenuItem
+        Locked = True
+        Text = 'Remover'
+        OnClick = MenuItem13Click
+      end
+    end
+    object MenuItem14: TMenuItem
+      Text = 'Separador'
+      object MenuItem15: TMenuItem
+        Locked = True
+        Text = 'Lidas'
+        object MenuItem16: TMenuItem
+          Locked = True
+          Text = 'Exibir'
+          OnClick = MenuItem16Click
+        end
+        object MenuItem17: TMenuItem
+          Locked = True
+          Text = 'Ocultar'
+          OnClick = MenuItem17Click
+        end
+      end
+      object MenuItem18: TMenuItem
+        Locked = True
+        Text = 'Data'
+        object MenuItem19: TMenuItem
+          Locked = True
+          Text = 'Exibir'
+          OnClick = MenuItem19Click
+        end
+        object MenuItem20: TMenuItem
+          Locked = True
+          Text = 'Ocultar'
+          OnClick = MenuItem20Click
+        end
+      end
     end
   end
 end
