@@ -117,8 +117,49 @@ begin
 end;
 
 procedure TInicio.AoChegarLimite(Limite: TLimite);
+var
+  I: Integer;
+  sBottom: Single;
 begin
   Label1.Text := 'Limite: '+ GetEnumName(TypeInfo(TLimite), Integer(Limite)) +' às '+ FormatDateTime('hh:nn:ss.zzz', Now);
+
+  if Limite = TLimite.Superior then
+  begin
+    sBottom := Visualizador.Bottom;
+    Visualizador.OcultarSeparadoresData;
+
+    for I := 1 to 10 do
+    begin
+      Inc(FID);
+      Visualizador.AdicionarMensagem(
+        FID,
+        'Usuário 1',
+        IncDay(Now, -FID),
+        [
+          TConteudo.Create(TTipo.Texto, 'Mensagem: '+ I.ToString),
+          TConteudo.Create(TTipo.Texto, FormatDateTime('dd/mm/yyyy hh:nn:ss.zzz', IncDay(Now, -FID)))
+        ]
+      );
+      Visualizador.Mensagem[FID].Lado := TLado.Direito;
+
+
+
+      Inc(FID);
+      Visualizador.AdicionarMensagem(
+        FID,
+        'Usuário 2',
+        IncDay(Now, -FID),
+        [
+          TConteudo.Create(TTipo.Texto, 'Mensagem: '+ I.ToString),
+          TConteudo.Create(TTipo.Texto, FormatDateTime('dd/mm/yyyy hh:nn:ss', IncDay(Now, -FID)))
+        ]
+      );
+      Visualizador.Mensagem[FID].Lado := TLado.Esquerdo;
+    end;
+
+    Visualizador.Bottom := sBottom;
+    Visualizador.ExibirSeparadoresData;
+  end;
 end;
 
 procedure TInicio.AoClicar(Frame: TFrame; Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
@@ -132,10 +173,14 @@ end;
 
 procedure TInicio.AoEnviar(Conteudos: TArray<TConteudo>);
 begin
+  Visualizador.OcultarSeparadoresData;
+
   Inc(FID);
   Visualizador.AdicionarMensagem(FID, 'ChatEditor', Now, Conteudos);
   Visualizador.Mensagem[FID].Lado := TLado.Direito;
   Visualizador.Posicionar(FID);
+
+  Visualizador.ExibirSeparadoresData;
 end;
 
 procedure TInicio.MenuItem2Click(Sender: TObject);
@@ -144,7 +189,7 @@ var
   dHora: TDateTime;
 begin
   Visualizador.OcultarSeparadoresData;
-  
+
   dHora := dtEditor.Date + tmEditor.Time;
   for I := 1 to 10 do
   begin
@@ -176,7 +221,7 @@ begin
       ]
     );
     Visualizador.Mensagem[FID].Lado := TLado.Esquerdo;
-    Visualizador.Posicionar(FID);   
+    Visualizador.Posicionar(FID);
   end;
 
   Visualizador.ExibirSeparadoresData;
@@ -184,6 +229,8 @@ end;
 
 procedure TInicio.MenuItem3Click(Sender: TObject);
 begin
+  Visualizador.OcultarSeparadoresData;
+
   Inc(FID);
   Visualizador.AdicionarMensagem(
     FID,
@@ -199,10 +246,14 @@ begin
   Visualizador.Posicionar(FID);
 
   dtEditor.Date := IncDay(dtEditor.Date, -1);
+
+  Visualizador.ExibirSeparadoresData;
 end;
 
 procedure TInicio.MenuItem4Click(Sender: TObject);
 begin
+  Visualizador.OcultarSeparadoresData;
+
   Inc(FID);
   Visualizador.AdicionarMensagem(
     FID,
@@ -218,6 +269,8 @@ begin
   Visualizador.Posicionar(FID);
 
   tmEditor.DateTime := IncMinute(tmEditor.DateTime);
+
+  Visualizador.ExibirSeparadoresData;
 end;
 
 procedure TInicio.MenuItem5Click(Sender: TObject);
@@ -250,6 +303,8 @@ end;
 
 procedure TInicio.MenuItem10Click(Sender: TObject);
 begin
+  Visualizador.OcultarSeparadoresData;
+
   Inc(FID);
   Visualizador.AdicionarMensagem(
     FID,
@@ -264,6 +319,8 @@ begin
   );
   Visualizador.Mensagem[FID].Lado := TLado.Direito;
   Visualizador.Mensagem[FID].NomeVisivel := True;
+
+  Visualizador.ExibirSeparadoresData;
 end;
 
 procedure TInicio.MenuItem11Click(Sender: TObject);

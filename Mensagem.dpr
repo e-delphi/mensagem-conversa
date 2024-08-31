@@ -20,7 +20,8 @@ uses
   chat.separador.data in 'chat\frames\chat.separador.data.pas' {ChatSeparadorData: TFrame},
   chat.ordenador in 'chat\chat.ordenador.pas',
   chat.separador.lidas in 'chat\frames\chat.separador.lidas.pas' {ChatSeparadorLidas: TFrame},
-  chat.emoji in 'chat\chat.emoji.pas';
+  chat.emoji in 'chat\chat.emoji.pas',
+  FMX.GIFImage in 'chat\GIFImage\FMX.GIFImage.pas';
 
 {$R *.res}
 
