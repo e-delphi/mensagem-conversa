@@ -1,7 +1,7 @@
 object Inicio: TInicio
   Left = 0
   Top = 0
-  Caption = 'Form2'
+  Caption = 'Mensagem'
   ClientHeight = 572
   ClientWidth = 628
   FormFactor.Width = 320
