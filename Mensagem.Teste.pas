@@ -57,7 +57,6 @@ type
     MenuItem18: TMenuItem;
     MenuItem19: TMenuItem;
     MenuItem20: TMenuItem;
-    Button1: TButton;
     ScrollBox: TScrollBox;
     procedure FormCreate(Sender: TObject);
     procedure MenuItem2Click(Sender: TObject);

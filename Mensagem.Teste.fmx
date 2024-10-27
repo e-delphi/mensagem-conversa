@@ -152,24 +152,14 @@ object Inicio: TInicio
         end
       end
     end
-    object Button1: TButton
-      Align = Top
-      Position.Y = 64.000000000000000000
-      Size.Width = 628.000000000000000000
-      Size.Height = 22.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 2
-      Text = 'Button1'
-      TextSettings.Trimming = None
-    end
     object ScrollBox: TScrollBox
       Align = Client
       Size.Width = 628.000000000000000000
-      Size.Height = 486.000000000000000000
+      Size.Height = 508.000000000000000000
       Size.PlatformDefault = False
-      TabOrder = 3
+      TabOrder = 2
       Viewport.Width = 628.000000000000000000
-      Viewport.Height = 486.000000000000000000
+      Viewport.Height = 508.000000000000000000
     end
   end
 end
