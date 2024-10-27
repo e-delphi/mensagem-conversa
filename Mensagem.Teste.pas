@@ -20,10 +20,17 @@ uses
   FMX.Menus,
   chat.visualizador,
   chat.editor,
-  chat.tipos;
+  chat.tipos, FMX.Layouts, FMX.Edit,
+  chat.SelectFile,
+  FMX.Objects,
+  FMX.ExtCtrls,
+  FMX.Memo.Types,
+  FMX.ScrollBox,
+  FMX.Memo;
 
 type
   TInicio = class(TForm)
+    lytClient: TLayout;
     Panel2: TPanel;
     dtEditor: TDateEdit;
     tmEditor: TTimeEdit;
@@ -33,14 +40,15 @@ type
     MenuItem2: TMenuItem;
     MenuItem3: TMenuItem;
     MenuItem4: TMenuItem;
+    MenuItem10: TMenuItem;
+    MenuItem21: TMenuItem;
+    MenuItem11: TMenuItem;
+    MenuItem12: TMenuItem;
     MenuItem5: TMenuItem;
     MenuItem6: TMenuItem;
     MenuItem7: TMenuItem;
     MenuItem8: TMenuItem;
     MenuItem9: TMenuItem;
-    MenuItem10: TMenuItem;
-    MenuItem11: TMenuItem;
-    MenuItem12: TMenuItem;
     MenuItem13: TMenuItem;
     MenuItem14: TMenuItem;
     MenuItem15: TMenuItem;
@@ -49,7 +57,8 @@ type
     MenuItem18: TMenuItem;
     MenuItem19: TMenuItem;
     MenuItem20: TMenuItem;
-    MenuItem21: TMenuItem;
+    Button1: TButton;
+    ScrollBox: TScrollBox;
     procedure FormCreate(Sender: TObject);
     procedure MenuItem2Click(Sender: TObject);
     procedure MenuItem3Click(Sender: TObject);
@@ -66,7 +75,12 @@ type
     procedure MenuItem19Click(Sender: TObject);
     procedure MenuItem20Click(Sender: TObject);
     procedure MenuItem16Click(Sender: TObject);
+    procedure FormVirtualKeyboardHidden(Sender: TObject;
+      KeyboardVisible: Boolean; const Bounds: TRect);
+    procedure FormVirtualKeyboardShown(Sender: TObject;
+      KeyboardVisible: Boolean; const Bounds: TRect);
   private
+    FKBBounds: TRectF;
     FID: Integer;
     FUltimaSelecionada: Integer;
     Visualizador: TChatVisualizador;
@@ -93,21 +107,39 @@ procedure TInicio.FormCreate(Sender: TObject);
 begin
   FUltimaSelecionada := 0;
 
-  Visualizador := TChatVisualizador.Create(Self);
-  Self.AddObject(Visualizador);
+  Visualizador := TChatVisualizador.Create(ScrollBox);
+  ScrollBox.AddObject(Visualizador);
   Visualizador.Align := TAlignLayout.Client;
   Visualizador.LarguraMaximaConteudo := 500;
   Visualizador.AoVisualizar := AoVisualizar;
   Visualizador.AoClicar := AoClicar;
   Visualizador.AoChegarLimite := AoChegarLimite;
 
-  Editor := TChatEditor.Create(Self);
-  Self.AddObject(Editor);
+  Editor := TChatEditor.Create(ScrollBox);
+  ScrollBox.AddObject(Editor);
   Editor.Align := TAlignLayout.Bottom;
+  Editor.AlturaMinimaEditor := 50;
   Editor.LarguraMaximaConteudo := 500;
   Editor.AoEnviar := AoEnviar;
 
   FID := -1;
+end;
+
+procedure TInicio.FormVirtualKeyboardHidden(Sender: TObject;
+  KeyboardVisible: Boolean; const Bounds: TRect);
+begin
+  FKBBounds.Create(0, 0, 0, 0);
+  lytClient.Align := TAlignLayout.Client;
+end;
+
+procedure TInicio.FormVirtualKeyboardShown(Sender: TObject;
+  KeyboardVisible: Boolean; const Bounds: TRect);
+begin
+  FKBBounds := TRectF.Create(Bounds);
+  FKBBounds.TopLeft := ScreenToClient(FKBBounds.TopLeft);
+  FKBBounds.BottomRight := ScreenToClient(FKBBounds.BottomRight);
+  lytClient.Align := TAlignLayout.Top;
+  lytClient.Height := Self.ClientHeight - FKBBounds.Height;
 end;
 
 procedure TInicio.AoVisualizar(Frame: TFrame);
@@ -359,7 +391,7 @@ end;
 
 procedure TInicio.MenuItem21Click(Sender: TObject);
 begin
-  Editor.AdicionarAnexo('C:\Users\Eduar\Pictures\Screenshots\Captura de tela 2023-10-15 170059.png');
+  Editor.AdicionarAnexo(TFileSelected.Create('C:\Users\Eduar\Pictures\Screenshots\Captura de tela 2023-10-15 170059.png'));
 end;
 
 end.

@@ -77,7 +77,6 @@ begin
   FComponente.HitTest := False;
   FComponente.Align := TAlignLayout.Client;
   FComponente.Cursor := crHandPoint;
-  FComponente.Margins.Top := 3;
   FComponente.Size.PlatformDefault := False;
   Self.AddObject(FComponente);
 end;

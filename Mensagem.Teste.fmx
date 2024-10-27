@@ -4,143 +4,172 @@ object Inicio: TInicio
   Caption = 'Mensagem'
   ClientHeight = 572
   ClientWidth = 628
+  Position = ScreenCenter
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
   OnCreate = FormCreate
+  OnVirtualKeyboardShown = FormVirtualKeyboardShown
+  OnVirtualKeyboardHidden = FormVirtualKeyboardHidden
   DesignerMasterStyle = 0
-  object Panel2: TPanel
-    Align = Top
-    Position.Y = 24.000000000000000000
+  object lytClient: TLayout
+    Align = Client
     Size.Width = 628.000000000000000000
-    Size.Height = 40.000000000000000000
+    Size.Height = 572.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 0
-    object dtEditor: TDateEdit
-      Date = 45536.000000000000000000
-      Position.X = 8.000000000000000000
-      Position.Y = 8.000000000000000000
+    object Panel2: TPanel
+      Align = Top
+      Position.Y = 24.000000000000000000
+      Size.Width = 628.000000000000000000
+      Size.Height = 40.000000000000000000
+      Size.PlatformDefault = False
       TabOrder = 0
+      object dtEditor: TDateEdit
+        Date = 45536.000000000000000000
+        Position.X = 8.000000000000000000
+        Position.Y = 8.000000000000000000
+        TabOrder = 0
+      end
+      object tmEditor: TTimeEdit
+        Time = 0.333333333333333300
+        Position.X = 116.000000000000000000
+        Position.Y = 8.000000000000000000
+        Size.Width = 77.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+      end
+      object Label1: TLabel
+        Position.X = 201.000000000000000000
+        Position.Y = 10.000000000000000000
+        Size.Width = 208.000000000000000000
+        Size.Height = 17.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'Limite: '
+        TabOrder = 4
+      end
     end
-    object tmEditor: TTimeEdit
-      Time = 0.333333333333333300
-      Position.X = 116.000000000000000000
-      Position.Y = 8.000000000000000000
-      Size.Width = 77.000000000000000000
+    object MenuBar1: TMenuBar
+      Size.Width = 628.000000000000000000
+      Size.Height = 24.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      object MenuItem1: TMenuItem
+        Text = 'Adicionar'
+        object MenuItem2: TMenuItem
+          Locked = True
+          Text = 'V'#225'rias'
+          OnClick = MenuItem2Click
+        end
+        object MenuItem3: TMenuItem
+          Locked = True
+          Text = 'Texto Direito'
+          OnClick = MenuItem3Click
+        end
+        object MenuItem4: TMenuItem
+          Locked = True
+          Text = 'Texto Esquerdo'
+          OnClick = MenuItem4Click
+        end
+        object MenuItem10: TMenuItem
+          Locked = True
+          Text = 'Imagem'
+          OnClick = MenuItem10Click
+        end
+        object MenuItem21: TMenuItem
+          Locked = True
+          Text = 'Anexo pelo editor'
+          OnClick = MenuItem21Click
+        end
+      end
+      object MenuItem11: TMenuItem
+        Text = 'Vis'#237'veis'
+        OnClick = MenuItem11Click
+      end
+      object MenuItem12: TMenuItem
+        Locked = True
+        Text = #218'ltima clicada'
+        object MenuItem5: TMenuItem
+          Locked = True
+          Text = 'Ir para '#250'ltima clicada'
+          OnClick = MenuItem5Click
+        end
+        object MenuItem6: TMenuItem
+          Locked = True
+          Text = 'Alterar'
+          object MenuItem7: TMenuItem
+            Locked = True
+            Text = 'Status'
+            OnClick = MenuItem7Click
+          end
+          object MenuItem8: TMenuItem
+            Locked = True
+            Text = 'Lado'
+            OnClick = MenuItem8Click
+          end
+          object MenuItem9: TMenuItem
+            Locked = True
+            Text = 'Visibilidade do nome'
+            OnClick = MenuItem9Click
+          end
+        end
+        object MenuItem13: TMenuItem
+          Locked = True
+          Text = 'Remover'
+          OnClick = MenuItem13Click
+        end
+      end
+      object MenuItem14: TMenuItem
+        Text = 'Separador'
+        object MenuItem15: TMenuItem
+          Locked = True
+          Text = 'Lidas'
+          object MenuItem16: TMenuItem
+            Locked = True
+            Text = 'Exibir'
+            OnClick = MenuItem16Click
+          end
+          object MenuItem17: TMenuItem
+            Locked = True
+            Text = 'Ocultar'
+            OnClick = MenuItem17Click
+          end
+        end
+        object MenuItem18: TMenuItem
+          Locked = True
+          Text = 'Data'
+          object MenuItem19: TMenuItem
+            Locked = True
+            Text = 'Exibir'
+            OnClick = MenuItem19Click
+          end
+          object MenuItem20: TMenuItem
+            Locked = True
+            Text = 'Ocultar'
+            OnClick = MenuItem20Click
+          end
+        end
+      end
+    end
+    object Button1: TButton
+      Align = Top
+      Position.Y = 64.000000000000000000
+      Size.Width = 628.000000000000000000
       Size.Height = 22.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 2
+      Text = 'Button1'
+      TextSettings.Trimming = None
     end
-    object Label1: TLabel
-      Position.X = 201.000000000000000000
-      Position.Y = 10.000000000000000000
-      Size.Width = 208.000000000000000000
-      Size.Height = 17.000000000000000000
+    object ScrollBox: TScrollBox
+      Align = Client
+      Size.Width = 628.000000000000000000
+      Size.Height = 486.000000000000000000
       Size.PlatformDefault = False
-      Text = 'Limite: '
-      TabOrder = 4
-    end
-  end
-  object MenuBar1: TMenuBar
-    Size.Width = 628.000000000000000000
-    Size.Height = 24.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 1
-    object MenuItem1: TMenuItem
-      Text = 'Adicionar'
-      object MenuItem2: TMenuItem
-        Locked = True
-        Text = 'V'#225'rias'
-        OnClick = MenuItem2Click
-      end
-      object MenuItem3: TMenuItem
-        Locked = True
-        Text = 'Texto Direito'
-        OnClick = MenuItem3Click
-      end
-      object MenuItem4: TMenuItem
-        Locked = True
-        Text = 'Texto Esquerdo'
-        OnClick = MenuItem4Click
-      end
-      object MenuItem10: TMenuItem
-        Locked = True
-        Text = 'Imagem'
-        OnClick = MenuItem10Click
-      end
-      object MenuItem21: TMenuItem
-        Locked = True
-        Text = 'Anexo pelo editor'
-        OnClick = MenuItem21Click
-      end
-    end
-    object MenuItem11: TMenuItem
-      Text = 'Vis'#237'veis'
-      OnClick = MenuItem11Click
-    end
-    object MenuItem12: TMenuItem
-      Locked = True
-      Text = #218'ltima clicada'
-      object MenuItem5: TMenuItem
-        Locked = True
-        Text = 'Ir para '#250'ltima clicada'
-        OnClick = MenuItem5Click
-      end
-      object MenuItem6: TMenuItem
-        Locked = True
-        Text = 'Alterar'
-        object MenuItem7: TMenuItem
-          Locked = True
-          Text = 'Status'
-          OnClick = MenuItem7Click
-        end
-        object MenuItem8: TMenuItem
-          Locked = True
-          Text = 'Lado'
-          OnClick = MenuItem8Click
-        end
-        object MenuItem9: TMenuItem
-          Locked = True
-          Text = 'Visibilidade do nome'
-          OnClick = MenuItem9Click
-        end
-      end
-      object MenuItem13: TMenuItem
-        Locked = True
-        Text = 'Remover'
-        OnClick = MenuItem13Click
-      end
-    end
-    object MenuItem14: TMenuItem
-      Text = 'Separador'
-      object MenuItem15: TMenuItem
-        Locked = True
-        Text = 'Lidas'
-        object MenuItem16: TMenuItem
-          Locked = True
-          Text = 'Exibir'
-          OnClick = MenuItem16Click
-        end
-        object MenuItem17: TMenuItem
-          Locked = True
-          Text = 'Ocultar'
-          OnClick = MenuItem17Click
-        end
-      end
-      object MenuItem18: TMenuItem
-        Locked = True
-        Text = 'Data'
-        object MenuItem19: TMenuItem
-          Locked = True
-          Text = 'Exibir'
-          OnClick = MenuItem19Click
-        end
-        object MenuItem20: TMenuItem
-          Locked = True
-          Text = 'Ocultar'
-          OnClick = MenuItem20Click
-        end
-      end
+      TabOrder = 3
+      Viewport.Width = 628.000000000000000000
+      Viewport.Height = 486.000000000000000000
     end
   end
 end
