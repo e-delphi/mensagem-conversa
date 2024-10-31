@@ -31,9 +31,6 @@ uses
   FMX.Dialogs,
   FMX.Types;
 
-var
-  OnSelectFile: TProc<TFileSelected>;
-
 const
   REQUEST_CODE_OPEN_FILE = 1; // Código para identificar a ação de abrir o arquivo
 
@@ -59,6 +56,8 @@ end;
 {$ENDIF}
 
 {$IFDEF Android}
+var
+  OnSelectFile: TProc<TFileSelected>;
 
 function GetFileNameFromURI(const AUri: Jnet_Uri): string;
 var

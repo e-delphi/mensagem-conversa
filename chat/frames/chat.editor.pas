@@ -63,6 +63,7 @@ type
     property AlturaMinimaEditor: Single read FAlturaMinimaEditor write SetAlturaMinimaEditor;
     property AoEnviar: TEventoEnvio read FAoEnviar write FAoEnviar;
     function ExibindoTecladoVirtual: Boolean;
+    function FocoEditorTexto: Boolean;
   end;
 
 implementation
@@ -261,6 +262,17 @@ begin
 
   lytBAction.Height := FAlturaMinimaEditor;
   Self.Height := Max(FAlturaMinimaEditor, NewHeight);
+end;
+
+function TChatEditor.FocoEditorTexto: Boolean;
+begin
+  if Assigned(FTexto) and FTexto.mmMensagem.CanFocus then
+  begin
+    FTexto.mmMensagem.SetFocus;
+    Result := FTexto.mmMensagem.IsFocused;
+  end
+  else
+    Result := False;
 end;
 
 procedure TChatEditor.FrameResize(Sender: TObject);

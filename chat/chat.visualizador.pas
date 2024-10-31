@@ -184,7 +184,15 @@ begin
       begin
         frmMensagem.HeightContents := [TChatMensagemHeightContent.Nome];
         frmAnexo := TChatConteudoAnexo.Create(Self);
-        frmAnexo.lbNome.Text := ExtractFileName(Item.Conteudo);
+        frmAnexo.Identificador := Item.Conteudo;
+
+        if Item.Nome.Trim.IsEmpty then
+          frmAnexo.lbNome.Text := ExtractFileName(Item.Conteudo)
+        else
+        if Item.Extensao.Trim.IsEmpty then
+          frmAnexo.lbNome.Text := Item.Nome
+        else
+          frmAnexo.lbNome.Text := Item.Nome +'.'+ Item.Extensao;
         frmMensagem.AddConteudo(frmAnexo);
         frmMensagem.lytBottom.Parent := frmAnexo.lytDados;
         frmAnexo.lbTamanho.Parent := frmMensagem.lytBottom;

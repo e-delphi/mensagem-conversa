@@ -142,14 +142,23 @@ end;
 function TChatEditorAnexo.Conteudos: TArray<TConteudo>;
 var
   I: Integer;
+  Conteudo: TConteudo;
 begin
   Result := [];
   for I := Pred(vsbxConteudo.ComponentCount) downto 0 do
-    if vsbxConteudo.Components[I] is TChatAnexoItem then
-      if IndexStr(ExtractFileExt(TChatAnexoItem(vsbxConteudo.Components[I]).Arquivo).Replace('.', EmptyStr).ToLower, TipoArquivoImagem) >= 0 then
-        Result := Result + [TConteudo.Create(TTipo.Imagem, TChatAnexoItem(vsbxConteudo.Components[I]).Arquivo)]
-      else
-        Result := Result + [TConteudo.Create(TTipo.Arquivo, TChatAnexoItem(vsbxConteudo.Components[I]).Arquivo)];
+  begin
+    if not (vsbxConteudo.Components[I] is TChatAnexoItem) then
+      Continue;
+
+    if IndexStr(ExtractFileExt(TChatAnexoItem(vsbxConteudo.Components[I]).Arquivo).Replace('.', EmptyStr).ToLower, TipoArquivoImagem) >= 0 then
+      Conteudo := TConteudo.Create(TTipo.Imagem, TChatAnexoItem(vsbxConteudo.Components[I]).Arquivo)
+    else
+      Conteudo := TConteudo.Create(TTipo.Arquivo, TChatAnexoItem(vsbxConteudo.Components[I]).Arquivo);
+
+    Conteudo.Extensao := ExtractFileExt(Conteudo.Conteudo).Trim([' ', '.']).ToLower;
+    Conteudo.Nome := ExtractFileName(TChatAnexoItem(vsbxConteudo.Components[I]).Arquivo).Replace(ExtractFileExt(Conteudo.Conteudo).Trim([' ', '.']),  '');
+    Result := Result + [Conteudo];
+  end;
 end;
 
 { TChatEditorTextoHelper }

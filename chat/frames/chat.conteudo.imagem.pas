@@ -6,6 +6,7 @@ interface
 uses
   FMX.Types,
   FMX.Controls,
+  FMX.Graphics,
   FMX.Objects,
   FMX.Skia,
   Skia,
@@ -24,6 +25,7 @@ type
     property ImageMargins: TBounds read GetImageMargins;
     property ImageWidth: Single read FWidth;
     property ImageHeight: Single read FHeight;
+    function Bitmap: TBitmap;
   end;
 
 implementation
@@ -88,6 +90,13 @@ begin
   Proporcao := Min(Largura / ImageWidth, Max(30, ImageHeight) / ImageHeight);
   Result.Width := Max(100, Round(ImageWidth * Proporcao));
   Result.Height := Round(ImageHeight * Proporcao);
+end;
+
+function TChatConteudoImagem.Bitmap: TBitmap;
+begin
+  Result := nil;
+  if FComponente.InheritsFrom(TImage) then
+    Result := TImage(FComponente).Bitmap;
 end;
 
 end.
